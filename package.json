@@ -14,6 +14,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
     "lint": "gts lint",
     "clean": "gts clean",
     "fix": "gts fix",
