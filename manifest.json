@@ -1,0 +1,12 @@
+{
+  "name": "tdu-historylog",
+  "short_name": "TDU log",
+  "description": "A log application that allows you to keep a history of your actions.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "lang": "ja-JP",
+  "icons": []
+}
