@@ -23,6 +23,8 @@ jobs:
         run: yarn run export
       - name: Setting jekyll...
         run: touch ./.nojekyll
+      - name: add CNAME
+        run: cp ./path/to/CNAME ./out/
         
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
