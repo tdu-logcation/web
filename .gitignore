@@ -259,4 +259,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-**/public/*.js
+public/*.js
+public/*.map
