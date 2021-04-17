@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
+import QrCode from './QrCode';
 
 function SettingButton() {
   return (
@@ -22,6 +23,7 @@ export default function Top() {
   return (
     <React.Fragment>
       <SettingButton />
+      <QrCode />
     </React.Fragment>
   );
 }
