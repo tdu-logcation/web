@@ -10,18 +10,21 @@ import {
 } from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
+import Link from 'next/link';
 
-const SettingButton = () => (
-  <Button
-    borderRadius="2rem"
-    leftIcon={<IoSettingsSharp />}
-    colorScheme="blue"
-    backgroundColor="#f2f2f2"
-    color="#636363"
-    width="6.2rem"
-  >
-    <Text color="black">設定</Text>
-  </Button>
+const SettingButton = ({link}: {link: string}) => (
+  <Link href={link}>
+    <Button
+      borderRadius="2rem"
+      leftIcon={<IoSettingsSharp />}
+      colorScheme="blue"
+      backgroundColor="#f2f2f2"
+      color="#636363"
+      width="6.2rem"
+    >
+      <Text color="black">設定</Text>
+    </Button>
+  </Link>
 );
 
 /**
@@ -39,7 +42,7 @@ const Top = () => {
             </Text>
           </Box>
           <Spacer />
-          <SettingButton />
+          <SettingButton link="" />
         </Flex>
       </Center>
       <QrCode />

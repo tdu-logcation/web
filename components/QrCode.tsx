@@ -9,6 +9,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import {IoCameraSharp} from 'react-icons/io5';
+import Link from 'next/link';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -42,11 +43,13 @@ const StatusText = ({isReaded}: {isReaded: boolean}) => (
   <Box color="#2f3e4e">{isReaded ? '読み取り完了' : '読み取り待機中'}</Box>
 );
 
-const UtilButton = ({title, heaf}: {title: string; heaf: string}) => (
+const UtilButton = ({title, link}: {title: string; link: string}) => (
   <Box>
-    <Button borderRadius="1.5rem" width="20rem" backgroundColor="#f2f2f2">
-      <Text margin="1rem 0 1rem 0">{title}</Text>
-    </Button>
+    <Link href={link}>
+      <Button borderRadius="1.5rem" width="20rem" backgroundColor="#f2f2f2">
+        <Text margin="1rem 0 1rem 0">{title}</Text>
+      </Button>
+    </Link>
   </Box>
 );
 
@@ -93,10 +96,10 @@ const QrCode = () => {
         <Divider colorScheme="#f2f2f2" borderWidth="1px" />
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <UtilButton title="着席履歴の確認" heaf="" />
+        <UtilButton title="着席履歴の確認" link="" />
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <UtilButton title="更新履歴" heaf="" />
+        <UtilButton title="更新履歴" link="" />
       </Center>
     </React.Fragment>
   );
