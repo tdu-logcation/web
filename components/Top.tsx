@@ -11,25 +11,23 @@ import {
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 
-function SettingButton() {
-  return (
-    <Button
-      borderRadius="2rem"
-      leftIcon={<IoSettingsSharp />}
-      colorScheme="blue"
-      backgroundColor="#f2f2f2"
-      color="#636363"
-      width="6.2rem"
-    >
-      <Text color="black">設定</Text>
-    </Button>
-  );
-}
+const SettingButton = () => (
+  <Button
+    borderRadius="2rem"
+    leftIcon={<IoSettingsSharp />}
+    colorScheme="blue"
+    backgroundColor="#f2f2f2"
+    color="#636363"
+    width="6.2rem"
+  >
+    <Text color="black">設定</Text>
+  </Button>
+);
 
 /**
  * トップページ
  */
-export default function Top() {
+const Top = () => {
   return (
     <React.Fragment>
       <Center>
@@ -47,4 +45,6 @@ export default function Top() {
       <QrCode />
     </React.Fragment>
   );
-}
+};
+
+export default Top;

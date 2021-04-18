@@ -10,55 +10,47 @@ import {
 } from '@chakra-ui/react';
 import {IoCameraSharp} from 'react-icons/io5';
 
-function QrTitle({text}: {text: string}) {
-  return (
-    <Flex>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        margin="0 1rem 0 0"
-        color="#406b94"
-      >
-        <IoCameraSharp size="2rem" />
-      </Box>
-      <Text fontWeight="bold" fontSize="1.3rem" color="#26292e">
-        {text}
-      </Text>
-    </Flex>
-  );
-}
-
-function Qr() {
-  return (
-    <AspectRatio maxw="100px" ratio={1}>
-      <Box
-        width="100px"
-        border="solid 3px #fff"
-        backgroundColor="#fff"
-        borderRadius="2rem"
-      ></Box>
-    </AspectRatio>
-  );
-}
-
-function StatusText({isReaded}: {isReaded: boolean}) {
-  return (
-    <Box color="#2f3e4e">{isReaded ? '読み取り完了' : '読み取り待機中'}</Box>
-  );
-}
-
-function UtilButton({title, heaf}: {title: string; heaf: string}) {
-  return (
-    <Box>
-      <Button borderRadius="1.5rem" width="20rem" backgroundColor="#f2f2f2">
-        <Text margin="1rem 0 1rem 0">{title}</Text>
-      </Button>
+const QrTitle = ({text}: {text: string}) => (
+  <Flex>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      margin="0 1rem 0 0"
+      color="#406b94"
+    >
+      <IoCameraSharp size="2rem" />
     </Box>
-  );
-}
+    <Text fontWeight="bold" fontSize="1.3rem" color="#26292e">
+      {text}
+    </Text>
+  </Flex>
+);
 
-export default function QrCode() {
+const Qr = () => (
+  <AspectRatio maxw="100px" ratio={1}>
+    <Box
+      width="100px"
+      border="solid 3px #fff"
+      backgroundColor="#fff"
+      borderRadius="2rem"
+    ></Box>
+  </AspectRatio>
+);
+
+const StatusText = ({isReaded}: {isReaded: boolean}) => (
+  <Box color="#2f3e4e">{isReaded ? '読み取り完了' : '読み取り待機中'}</Box>
+);
+
+const UtilButton = ({title, heaf}: {title: string; heaf: string}) => (
+  <Box>
+    <Button borderRadius="1.5rem" width="20rem" backgroundColor="#f2f2f2">
+      <Text margin="1rem 0 1rem 0">{title}</Text>
+    </Button>
+  </Box>
+);
+
+const QrCode = () => {
   return (
     <React.Fragment>
       <Center>
@@ -108,4 +100,6 @@ export default function QrCode() {
       </Center>
     </React.Fragment>
   );
-}
+};
+
+export default QrCode;
