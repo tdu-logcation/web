@@ -4,12 +4,15 @@
 import QrReader from '../components/QrReader';
 import React from 'react';
 
-export default function Index() {
-  const [data, setData] = React.useState<string>(null);
+import Top from '../components/Top';
+import {Box} from '@chakra-ui/react';
+
+const Index = () => {
   return (
-    <div>
-      <QrReader setData={setData} />
-      <p>{data}</p>
-    </div>
+    <Box margin="2.3rem 1.6rem 1rem 1.6rem">
+      <Top />
+    </Box>
   );
-}
+};
+
+export default Index;
