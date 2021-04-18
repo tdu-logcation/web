@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import {IoCameraSharp} from 'react-icons/io5';
 import Link from 'next/link';
+import QrReader from './QrReader';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -28,16 +29,22 @@ const QrTitle = ({text}: {text: string}) => (
   </Flex>
 );
 
-const Qr = () => (
+const Qr = () => {
+  const [data, setData] = React.useState<string>(null);
+  React.useEffect(() => {
+    console.log(data)
+  }, [data])
+
+  return(
   <AspectRatio maxw="100px" ratio={1}>
     <Box
       width="100px"
-      border="solid 3px #fff"
+      border="solid 1px #fff"
       backgroundColor="#fff"
       borderRadius="2rem"
-    ></Box>
+    ><QrReader setData={setData}/></Box>
   </AspectRatio>
-);
+)};
 
 const StatusText = ({isReaded}: {isReaded: boolean}) => (
   <Box color="#2f3e4e">{isReaded ? '読み取り完了' : '読み取り待機中'}</Box>

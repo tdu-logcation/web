@@ -21,7 +21,8 @@ const QrReader = (props: Props) => {
     props.setData(null);
     // カメラ接続
     navigator.mediaDevices
-      .getUserMedia({video: {facingMode: 'environment'}})
+      .getUserMedia({video: {facingMode: 'environment', width: { ideal: 1 },
+      height: { ideal: 1 }}})
       .then(stream => {
         videoElement.current.srcObject = stream;
         videoElement.current.setAttribute('playsinline', 'true');
@@ -50,6 +51,8 @@ const QrReader = (props: Props) => {
       canvas.height = video.videoHeight;
       canvas.width = video.videoWidth;
       canvasContext.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      console.log(`width: ${canvas.width}, height: ${canvas.height}`)
 
       const imageData = canvasContext.getImageData(
         0,
