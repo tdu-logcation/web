@@ -1,7 +1,6 @@
 /**!
  * Copyright (C) 2021 tdu-historylog project
  */
-import QrReader from '../components/QrReader';
 import React from 'react';
 
 import Top from '../components/Top';

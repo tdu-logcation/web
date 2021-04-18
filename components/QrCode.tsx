@@ -32,19 +32,22 @@ const QrTitle = ({text}: {text: string}) => (
 const Qr = () => {
   const [data, setData] = React.useState<string>(null);
   React.useEffect(() => {
-    console.log(data)
-  }, [data])
+    console.log(data);
+  }, [data]);
 
-  return(
-  <AspectRatio maxw="100px" ratio={1}>
-    <Box
-      width="100px"
-      border="solid 1px #fff"
-      backgroundColor="#fff"
-      borderRadius="2rem"
-    ><QrReader setData={setData}/></Box>
-  </AspectRatio>
-)};
+  return (
+    <AspectRatio maxw="100px" ratio={1}>
+      <Box
+        width="100px"
+        border="solid 1px #fff"
+        backgroundColor="#fff"
+        borderRadius="2rem"
+      >
+        <QrReader setData={setData} />
+      </Box>
+    </AspectRatio>
+  );
+};
 
 const StatusText = ({isReaded}: {isReaded: boolean}) => (
   <Box color="#2f3e4e">{isReaded ? '読み取り完了' : '読み取り待機中'}</Box>
