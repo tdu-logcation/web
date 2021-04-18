@@ -1,7 +1,15 @@
 /**!
  * Copyright (C) 2021 tdu-historylog project
  */
+import QrReader from '../components/QrReader';
+import React from 'react';
 
 export default function Index() {
-  return <div>Hello world</div>;
+  const [data, setData] = React.useState<string>(null);
+  return (
+    <div>
+      <QrReader setData={setData} />
+      <p>{data}</p>
+    </div>
+  );
 }

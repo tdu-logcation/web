@@ -7,7 +7,7 @@ function MyApp({Component, pageProps}: AppProps) {
   return (
     <RecoilRoot>
       <ChakraProvider>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </ChakraProvider>
     </RecoilRoot>
   );
