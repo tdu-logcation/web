@@ -44,13 +44,16 @@ const StatusText = ({isReaded}: {isReaded: boolean}) => (
 );
 
 const UtilButton = ({title, link}: {title: string; link: string}) => (
-  <Box>
-    <Link href={link}>
-      <Button borderRadius="1.5rem" width="20rem" backgroundColor="#f2f2f2">
-        <Text margin="1rem 0 1rem 0">{title}</Text>
-      </Button>
-    </Link>
-  </Box>
+  <Link href={link}>
+    <Button
+      borderRadius="1.5rem"
+      width="20rem"
+      backgroundColor="#f2f2f2"
+      padding="1rem .5rem 1rem .5rem"
+    >
+      <Text>{title}</Text>
+    </Button>
+  </Link>
 );
 
 const QrCode = () => {
@@ -93,7 +96,7 @@ const QrCode = () => {
         </Button>
       </Center>
       <Center margin="2rem 0 2rem 0">
-        <Divider colorScheme="#f2f2f2" borderWidth="1px" />
+        <Divider colorScheme="#f2f2f2" borderWidth="1px" width="20rem" />
       </Center>
       <Center margin="1rem 0 1rem 0">
         <UtilButton title="着席履歴の確認" link="" />
