@@ -7,6 +7,7 @@ import {
   Center,
   Button,
   Divider,
+  Spinner,
 } from '@chakra-ui/react';
 import {IoCameraSharp} from 'react-icons/io5';
 import Link from 'next/link';
@@ -31,9 +32,12 @@ const QrTitle = ({text}: {text: string}) => (
 
 const Qr = () => {
   const [data, setData] = React.useState<string>(null);
+  const [load, setLoad] = React.useState<boolean>(false);
+  const [isRead, setIsRead] = React.useState<boolean>(true);
   React.useEffect(() => {
     console.log(data);
-  }, [data]);
+    console.log(load);
+  }, [data, load]);
 
   return (
     <AspectRatio maxw="100px" ratio={1}>
@@ -43,7 +47,14 @@ const Qr = () => {
         backgroundColor="#fff"
         borderRadius="2rem"
       >
-        <QrReader setData={setData} />
+        <Spinner thickness="4px" size="xl" hidden={load} color="#bdd7ee" />
+        <QrReader
+          setData={setData}
+          reserve={() => setLoad(true)}
+          isRead={isRead}
+          setIsRead={setIsRead}
+          hidden={!load}
+        />
       </Box>
     </AspectRatio>
   );
