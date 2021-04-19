@@ -12,6 +12,7 @@ import {
 import {IoCameraSharp} from 'react-icons/io5';
 import Link from 'next/link';
 import QrReader from './QrReader';
+import {cameraStatusText} from '../utils/qrUtil';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -30,10 +31,18 @@ const QrTitle = ({text}: {text: string}) => (
   </Flex>
 );
 
-const Qr = () => {
+const Qr = ({
+  load,
+  setLoad,
+  isRead,
+  setIsRead,
+}: {
+  load: boolean;
+  setLoad: React.Dispatch<React.SetStateAction<boolean>>;
+  isRead: boolean;
+  setIsRead: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [data, setData] = React.useState<string>(null);
-  const [load, setLoad] = React.useState<boolean>(false);
-  const [isRead, setIsRead] = React.useState<boolean>(true);
   React.useEffect(() => {
     console.log(data);
     console.log(load);
@@ -60,9 +69,9 @@ const Qr = () => {
   );
 };
 
-const StatusText = ({isReaded}: {isReaded: boolean}) => (
-  <Box color="#2f3e4e">{isReaded ? '読み取り完了' : '読み取り待機中'}</Box>
-);
+const StatusText = ({isLoad, isRead}: {isLoad: boolean; isRead: boolean}) => {
+  return <Box color="#2f3e4e">{cameraStatusText(isLoad, isRead)}</Box>;
+};
 
 const UtilButton = ({title, link}: {title: string; link: string}) => (
   <Link href={link}>
@@ -78,6 +87,9 @@ const UtilButton = ({title, link}: {title: string; link: string}) => (
 );
 
 const QrCode = () => {
+  const [load, setLoad] = React.useState<boolean>(false);
+  const [isRead, setIsRead] = React.useState<boolean>(true);
+
   return (
     <React.Fragment>
       <Center>
@@ -92,10 +104,15 @@ const QrCode = () => {
             <QrTitle text="QRコード読み取り" />
           </Box>
           <Box margin="1rem .2rem .2rem .2rem">
-            <Qr />
+            <Qr
+              load={load}
+              setLoad={setLoad}
+              isRead={isRead}
+              setIsRead={setIsRead}
+            />
           </Box>
           <Center padding=".8rem 0 .8rem 0">
-            <StatusText isReaded={false} />
+            <StatusText isRead={isRead} isLoad={load} />
           </Center>
         </Box>
       </Center>

@@ -40,3 +40,13 @@ export function qrHighlight(
   canvas.fillStyle = 'rgba(245, 27, 60, 0.5)';
   canvas.fill();
 }
+
+export function cameraStatusText(isLoad: boolean, isRead: boolean) {
+  if (!isLoad) {
+    return 'カメラ待機中';
+  }
+  if (isRead) {
+    return '読み取り待機中';
+  }
+  return '読み取り完了';
+}
