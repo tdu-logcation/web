@@ -24,12 +24,6 @@ const QrReader = (props: Props) => {
       .getUserMedia({
         video: {
           facingMode: 'environment',
-          width: {
-            ideal: 1,
-          },
-          height: {
-            ideal: 1,
-          },
         },
       })
       .then(stream => {
