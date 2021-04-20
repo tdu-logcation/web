@@ -7,6 +7,7 @@ import {
   Box,
   Avatar,
   Center,
+  Divider,
 } from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
@@ -23,6 +24,19 @@ const SettingButton = ({link}: {link: string}) => (
       width="6.2rem"
     >
       <Text color="black">設定</Text>
+    </Button>
+  </Link>
+);
+
+const UtilButton = ({title, link}: {title: string; link: string}) => (
+  <Link href={link}>
+    <Button
+      borderRadius="1.5rem"
+      width="20rem"
+      backgroundColor="#f2f2f2"
+      padding="1rem .5rem 1rem .5rem"
+    >
+      <Text>{title}</Text>
     </Button>
   </Link>
 );
@@ -46,6 +60,15 @@ const Top = () => {
         </Flex>
       </Center>
       <QrCode />
+      <Center margin="2rem 0 2rem 0">
+        <Divider colorScheme="#f2f2f2" borderWidth="1px" width="20rem" />
+      </Center>
+      <Center margin="1rem 0 1rem 0">
+        <UtilButton title="着席履歴の確認" link="" />
+      </Center>
+      <Center margin="1rem 0 1rem 0">
+        <UtilButton title="更新履歴" link="" />
+      </Center>
     </React.Fragment>
   );
 };

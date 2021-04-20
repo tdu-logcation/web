@@ -6,11 +6,9 @@ import {
   AspectRatio,
   Center,
   Button,
-  Divider,
   Spinner,
 } from '@chakra-ui/react';
 import {IoCameraSharp} from 'react-icons/io5';
-import Link from 'next/link';
 import QrReader from './QrReader';
 import {cameraStatusText} from '../utils/qrUtil';
 
@@ -73,19 +71,6 @@ const StatusText = ({isLoad, isRead}: {isLoad: boolean; isRead: boolean}) => {
   return <Box color="#2f3e4e">{cameraStatusText(isLoad, isRead)}</Box>;
 };
 
-const UtilButton = ({title, link}: {title: string; link: string}) => (
-  <Link href={link}>
-    <Button
-      borderRadius="1.5rem"
-      width="20rem"
-      backgroundColor="#f2f2f2"
-      padding="1rem .5rem 1rem .5rem"
-    >
-      <Text>{title}</Text>
-    </Button>
-  </Link>
-);
-
 const QrCode = () => {
   const [load, setLoad] = React.useState<boolean>(false);
   const [isRead, setIsRead] = React.useState<boolean>(true);
@@ -132,15 +117,6 @@ const QrCode = () => {
             座席コードを直接入力する
           </Text>
         </Button>
-      </Center>
-      <Center margin="2rem 0 2rem 0">
-        <Divider colorScheme="#f2f2f2" borderWidth="1px" width="20rem" />
-      </Center>
-      <Center margin="1rem 0 1rem 0">
-        <UtilButton title="着席履歴の確認" link="" />
-      </Center>
-      <Center margin="1rem 0 1rem 0">
-        <UtilButton title="更新履歴" link="" />
       </Center>
     </React.Fragment>
   );
