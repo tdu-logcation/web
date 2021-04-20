@@ -1,49 +1,23 @@
-<h1  align="center">TDU History Log</h1>
+<h1  align="center">Logcation</h1>
 
 ## is何？
 
-[着座履歴記録アプリ「リレキログ」](https://www.dendai.ac.jp/news/20201116-01.html)のPWAバージョン。
+新型コロナウイルス感染症を発症した場合、その人がどこにいたかを確認する事ができる[着座履歴記録アプリ「リレキログ」](https://www.dendai.ac.jp/news/20201116-01.html)のProgressive Web Appsバージョンです。。
 
-## Usage
+- 履歴はすべてローカル(local storage)で保存しています。
+- Webベースのアプリケーションのため、iOS、Android含むさまざまなプラットフォームで動作します。
 
-依存関係をインストールしてください。
+**注意**: このプロジェクトは学生主導で開発されており、大学非公式です。使用の際は自己責任でお願いします。
 
-```bash
-yarn install --dev
-```
+## 使い方
 
-### Build and Run
+お使いの端末で[log.tdu.app](https://log.tdu.app)にアクセスし、ホームなどにショートカットを追加してご使用ください。
 
-```bash
-# build
-yarn build
+## Dev
 
-# start
-yarn start
+[Usage](./documents/usage.md)
 
-# dev start
-yarn dev
-
-# create static file
-yarn export
-```
-
-### Linter
-
-- GTSを使用
-
-```bash
-# lint
-yarn lint
-
-# clean
-yarn clean
-
-# fix
-yarn fix
-```
-
-## 連絡先
+## お問い合わせ
 
 - Yuto Watanabe
   - [お問い合わせページ](https://cateiru.com/contact)
