@@ -54,7 +54,7 @@ const Qr = ({
     <AspectRatio maxw="100px" ratio={1}>
       <Box
         width="100px"
-        border="solid 1px #fff"
+        border="solid 2px #fff"
         backgroundColor="#fff"
         borderRadius="2rem"
         position="relative"
@@ -70,7 +70,7 @@ const Qr = ({
         <Box hidden={useCamera}>
           <IoVideocamOff size="3rem" color="406b94" />
         </Box>
-        <Box position="absolute" zIndex="0">
+        <Box position="absolute" zIndex="0" borderRadius="2rem">
           <QrReader
             setData={setData}
             reserve={() => setLoad(true)}
