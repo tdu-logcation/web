@@ -44,8 +44,6 @@ const QrTitle = ({text}: {text: string}) => (
  * @param isUseCamera カメラ使用可否状態
  */
 const qrStatus = (isLoad: boolean, isUseCamera: boolean) => {
-  const [, setCameraComponent] = useRecoilState(cameraComponentState);
-
   if (isLoad && isUseCamera) {
     return (
       <Spinner
@@ -59,7 +57,11 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean) => {
   }
   if (!isUseCamera) {
     return (
-      <button onClick={() => setCameraComponent(true)}>
+      <button
+        onClick={() => {
+          location.reload();
+        }}
+      >
         <IoVideocamOff size="3rem" color="#406b94" />
       </button>
     );
@@ -90,9 +92,10 @@ const Qr = () => {
         backgroundColor="#fff"
         borderRadius="2rem"
         position="relative"
+        zIndex="1"
       >
         {qrStatus(isQrLoad, useCamera)}
-        <Box position="absolute" zIndex="0" borderRadius="2rem">
+        <Box position="absolute" zIndex="0" borderRadius="2rem" width="100%">
           {cameraComponent ? <QrReader /> : null}
         </Box>
       </Box>
