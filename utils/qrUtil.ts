@@ -49,10 +49,10 @@ export function cameraStatusText(
   if (!isUseCamera) {
     return 'カメラ停止中';
   }
-  if (!isLoad) {
+  if (isLoad) {
     return 'カメラ待機中';
   }
-  if (isRead) {
+  if (!isRead) {
     return '読み取り待機中';
   }
   return '読み取り完了';

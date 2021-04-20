@@ -7,39 +7,44 @@ import {
   canvasWidth,
   webRTCConfig,
 } from '../utils/qrUtil';
-import {ScaleFade} from '@chakra-ui/react';
+import {useRecoilState} from 'recoil';
+import {
+  qrReadState,
+  qrLoadState,
+  useCameraState,
+  qrDataState,
+} from '../utils/recoilAtoms';
 
-interface Props {
-  setData: React.Dispatch<React.SetStateAction<string>>;
-  reserve: () => void;
-  isRead: boolean;
-  setIsRead: React.Dispatch<React.SetStateAction<boolean>>;
-  hidden: boolean;
-  setUseCamera: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const QrReader = () => {
+  const [isQrRead, setIsQrRead] = useRecoilState(qrReadState);
+  const [isQrLoad, setIsQrLoad] = useRecoilState(qrLoadState);
+  const [, setUseCamera] = useRecoilState(useCameraState);
+  const [, setQrData] = useRecoilState(qrDataState);
 
-const QrReader = (props: Props) => {
-  const videoElement: HTMLVideoElement = document.createElement('video');
+  const videoElement = document.createElement('video');
   const canvasElement = React.useRef<HTMLCanvasElement>(null);
 
   let canvasContext: CanvasRenderingContext2D | null = null;
+  let animationFrame = 0;
+  let videoStream: MediaStream = null;
 
   React.useEffect(() => {
     canvasContext = canvasElement.current.getContext('2d');
 
-    props.setData(null);
+    setQrData(null);
     // カメラ接続
     navigator.mediaDevices
       .getUserMedia(webRTCConfig)
       .then(stream => {
         videoElement.srcObject = stream;
+        videoStream = stream;
         videoElement.setAttribute('playsinline', 'true');
         videoElement.play();
-        props.reserve();
-        requestAnimationFrame(tick);
+        setIsQrLoad(false);
+        animationFrame = requestAnimationFrame(tick);
       })
       .catch(() => {
-        props.setUseCamera(false);
+        setUseCamera(false);
       });
   }, []);
 
@@ -65,7 +70,7 @@ const QrReader = (props: Props) => {
       });
 
       if (code) {
-        props.setData(code.data);
+        setQrData(code.data);
 
         qrHighlight(
           code.location.topLeftCorner,
@@ -77,17 +82,19 @@ const QrReader = (props: Props) => {
 
         setTimeout(() => {
           if (code.data && code.data !== '') {
-            props.setIsRead(false);
+            setIsQrRead(true);
+            cancelAnimationFrame(animationFrame);
+            const tracks = videoStream.getTracks();
+            tracks.forEach(track => track.stop());
+            return;
           }
         }, readDelay);
       }
     }
-    requestAnimationFrame(tick);
+    animationFrame = requestAnimationFrame(tick);
   };
 
-  return (
-    <canvas ref={canvasElement} hidden={!props.isRead || props.hidden}></canvas>
-  );
+  return <canvas ref={canvasElement} hidden={isQrRead || isQrLoad}></canvas>;
 };
 
 export default QrReader;

@@ -11,6 +11,13 @@ import {
 import {IoCameraSharp, IoVideocamOff} from 'react-icons/io5';
 import QrReader from './QrReader';
 import {cameraStatusText} from '../utils/qrUtil';
+import {useRecoilState} from 'recoil';
+import {
+  qrReadState,
+  qrLoadState,
+  useCameraState,
+  cameraComponentState,
+} from '../utils/recoilAtoms';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -28,8 +35,18 @@ const QrTitle = ({text}: {text: string}) => (
   </Flex>
 );
 
+/**
+ * カメラのステータスを表示します
+ * - ロード中: プログレス。ロード中かつカメラが使用可の場合
+ * - カメラの使用拒否: アイコン
+ *
+ * @param isLoad ロード中の状態
+ * @param isUseCamera カメラ使用可否状態
+ */
 const qrStatus = (isLoad: boolean, isUseCamera: boolean) => {
-  if (!isLoad && isUseCamera) {
+  const [, setCameraComponent] = useRecoilState(cameraComponentState);
+
+  if (isLoad && isUseCamera) {
     return (
       <Spinner
         thickness="4px"
@@ -41,36 +58,32 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean) => {
     );
   }
   if (!isUseCamera) {
-    return <IoVideocamOff size="3rem" color="406b94" />;
+    return (
+      <button onClick={() => setCameraComponent(true)}>
+        <IoVideocamOff size="3rem" color="#406b94" />
+      </button>
+    );
   }
 
   return;
 };
 
-const Qr = ({
-  load,
-  setLoad,
-  isRead,
-  setIsRead,
-  useCamera,
-  setUseCamera,
-}: {
-  load: boolean;
-  setLoad: React.Dispatch<React.SetStateAction<boolean>>;
-  isRead: boolean;
-  setIsRead: React.Dispatch<React.SetStateAction<boolean>>;
-  useCamera: boolean;
-  setUseCamera: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const [data, setData] = React.useState<string>(null);
+const Qr = () => {
+  const [isQrRead] = useRecoilState(qrReadState);
+  const [isQrLoad] = useRecoilState(qrLoadState);
+  const [useCamera] = useRecoilState(useCameraState);
+  const [cameraComponent, setCameraComponent] = useRecoilState(
+    cameraComponentState
+  );
 
   React.useEffect(() => {
-    console.log(data);
-    console.log(useCamera);
-  }, [data, useCamera]);
+    if (isQrRead || !useCamera) {
+      setCameraComponent(false);
+    }
+  }, [isQrRead, useCamera]);
 
   return (
-    <AspectRatio maxw="100px" ratio={1}>
+    <AspectRatio max="100px" ratio={1}>
       <Box
         width="100px"
         border="solid 2px #fff"
@@ -78,41 +91,28 @@ const Qr = ({
         borderRadius="2rem"
         position="relative"
       >
-        {qrStatus(load, useCamera)}
+        {qrStatus(isQrLoad, useCamera)}
         <Box position="absolute" zIndex="0" borderRadius="2rem">
-          <QrReader
-            setData={setData}
-            reserve={() => setLoad(true)}
-            isRead={isRead}
-            setIsRead={setIsRead}
-            hidden={!load}
-            setUseCamera={setUseCamera}
-          />
+          {cameraComponent ? <QrReader /> : null}
         </Box>
       </Box>
     </AspectRatio>
   );
 };
 
-const StatusText = ({
-  isLoad,
-  isRead,
-  isUseCamera,
-}: {
-  isLoad: boolean;
-  isRead: boolean;
-  isUseCamera: boolean;
-}) => {
+/**
+ * ステータステキストを表示
+ */
+const StatusText = () => {
+  const [isQrLoad] = useRecoilState(qrLoadState);
+  const [useCamera] = useRecoilState(useCameraState);
+  const [isQrRead] = useRecoilState(qrReadState);
   return (
-    <Box color="#2f3e4e">{cameraStatusText(isLoad, isRead, isUseCamera)}</Box>
+    <Box color="#2f3e4e">{cameraStatusText(isQrLoad, isQrRead, useCamera)}</Box>
   );
 };
 
 const QrCode = () => {
-  const [load, setLoad] = React.useState<boolean>(false);
-  const [isRead, setIsRead] = React.useState<boolean>(true);
-  const [useCamera, setUseCamera] = React.useState<boolean>(true);
-
   return (
     <React.Fragment>
       <Center>
@@ -127,17 +127,10 @@ const QrCode = () => {
             <QrTitle text="QRコード読み取り" />
           </Box>
           <Box margin="1rem .2rem .2rem .2rem">
-            <Qr
-              load={load}
-              setLoad={setLoad}
-              isRead={isRead}
-              setIsRead={setIsRead}
-              useCamera={useCamera}
-              setUseCamera={setUseCamera}
-            />
+            <Qr />
           </Box>
           <Center padding=".8rem 0 .8rem 0">
-            <StatusText isRead={isRead} isLoad={load} isUseCamera={useCamera} />
+            <StatusText />
           </Center>
         </Box>
       </Center>
