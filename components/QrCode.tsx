@@ -8,7 +8,7 @@ import {
   Button,
   Spinner,
 } from '@chakra-ui/react';
-import {IoCameraSharp} from 'react-icons/io5';
+import {IoCameraSharp, IoVideocamOff} from 'react-icons/io5';
 import QrReader from './QrReader';
 import {cameraStatusText} from '../utils/qrUtil';
 
@@ -19,9 +19,8 @@ const QrTitle = ({text}: {text: string}) => (
       justifyContent="center"
       alignItems="center"
       margin="0 1rem 0 0"
-      color="#406b94"
     >
-      <IoCameraSharp size="2rem" />
+      <IoCameraSharp size="2rem" color="#406b94" />
     </Box>
     <Text fontWeight="bold" fontSize="1.3rem" color="#26292e">
       {text}
@@ -34,17 +33,22 @@ const Qr = ({
   setLoad,
   isRead,
   setIsRead,
+  useCamera,
+  setUseCamera,
 }: {
   load: boolean;
   setLoad: React.Dispatch<React.SetStateAction<boolean>>;
   isRead: boolean;
   setIsRead: React.Dispatch<React.SetStateAction<boolean>>;
+  useCamera: boolean;
+  setUseCamera: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [data, setData] = React.useState<string>(null);
+
   React.useEffect(() => {
     console.log(data);
-    console.log(load);
-  }, [data, load]);
+    console.log(useCamera);
+  }, [data, useCamera]);
 
   return (
     <AspectRatio maxw="100px" ratio={1}>
@@ -53,27 +57,52 @@ const Qr = ({
         border="solid 1px #fff"
         backgroundColor="#fff"
         borderRadius="2rem"
+        position="relative"
       >
-        <Spinner thickness="4px" size="xl" hidden={load} color="#bdd7ee" />
-        <QrReader
-          setData={setData}
-          reserve={() => setLoad(true)}
-          isRead={isRead}
-          setIsRead={setIsRead}
-          hidden={!load}
+        <Spinner
+          thickness="4px"
+          size="xl"
+          hidden={load || !useCamera}
+          color="#bdd7ee"
+          position="absolute"
+          zIndex="1"
         />
+        <Box hidden={useCamera}>
+          <IoVideocamOff size="3rem" color="406b94" />
+        </Box>
+        <Box position="absolute" zIndex="0">
+          <QrReader
+            setData={setData}
+            reserve={() => setLoad(true)}
+            isRead={isRead}
+            setIsRead={setIsRead}
+            hidden={!load}
+            setUseCamera={setUseCamera}
+          />
+        </Box>
       </Box>
     </AspectRatio>
   );
 };
 
-const StatusText = ({isLoad, isRead}: {isLoad: boolean; isRead: boolean}) => {
-  return <Box color="#2f3e4e">{cameraStatusText(isLoad, isRead)}</Box>;
+const StatusText = ({
+  isLoad,
+  isRead,
+  isUseCamera,
+}: {
+  isLoad: boolean;
+  isRead: boolean;
+  isUseCamera: boolean;
+}) => {
+  return (
+    <Box color="#2f3e4e">{cameraStatusText(isLoad, isRead, isUseCamera)}</Box>
+  );
 };
 
 const QrCode = () => {
   const [load, setLoad] = React.useState<boolean>(false);
   const [isRead, setIsRead] = React.useState<boolean>(true);
+  const [useCamera, setUseCamera] = React.useState<boolean>(true);
 
   return (
     <React.Fragment>
@@ -94,10 +123,12 @@ const QrCode = () => {
               setLoad={setLoad}
               isRead={isRead}
               setIsRead={setIsRead}
+              useCamera={useCamera}
+              setUseCamera={setUseCamera}
             />
           </Box>
           <Center padding=".8rem 0 .8rem 0">
-            <StatusText isRead={isRead} isLoad={load} />
+            <StatusText isRead={isRead} isLoad={load} isUseCamera={useCamera} />
           </Center>
         </Box>
       </Center>

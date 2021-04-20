@@ -7,6 +7,7 @@ import {
   canvasWidth,
   webRTCConfig,
 } from '../utils/qrUtil';
+import {ScaleFade} from '@chakra-ui/react';
 
 interface Props {
   setData: React.Dispatch<React.SetStateAction<string>>;
@@ -14,6 +15,7 @@ interface Props {
   isRead: boolean;
   setIsRead: React.Dispatch<React.SetStateAction<boolean>>;
   hidden: boolean;
+  setUseCamera: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const QrReader = (props: Props) => {
@@ -27,13 +29,18 @@ const QrReader = (props: Props) => {
 
     props.setData(null);
     // カメラ接続
-    navigator.mediaDevices.getUserMedia(webRTCConfig).then(stream => {
-      videoElement.srcObject = stream;
-      videoElement.setAttribute('playsinline', 'true');
-      videoElement.play();
-      props.reserve();
-      requestAnimationFrame(tick);
-    });
+    navigator.mediaDevices
+      .getUserMedia(webRTCConfig)
+      .then(stream => {
+        videoElement.srcObject = stream;
+        videoElement.setAttribute('playsinline', 'true');
+        videoElement.play();
+        props.reserve();
+        requestAnimationFrame(tick);
+      })
+      .catch(() => {
+        props.setUseCamera(false);
+      });
   }, []);
 
   const tick = () => {
@@ -79,12 +86,9 @@ const QrReader = (props: Props) => {
   };
 
   return (
-    <React.Fragment>
-      <canvas
-        ref={canvasElement}
-        hidden={!props.isRead || props.hidden}
-      ></canvas>
-    </React.Fragment>
+    <ScaleFade initialScale={1} in={props.isRead && !props.hidden}>
+      <canvas ref={canvasElement}></canvas>
+    </ScaleFade>
   );
 };
 

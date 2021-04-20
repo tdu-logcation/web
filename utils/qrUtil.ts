@@ -41,7 +41,14 @@ export function qrHighlight(
   canvas.fill();
 }
 
-export function cameraStatusText(isLoad: boolean, isRead: boolean) {
+export function cameraStatusText(
+  isLoad: boolean,
+  isRead: boolean,
+  isUseCamera: boolean
+) {
+  if (!isUseCamera) {
+    return 'カメラ停止中';
+  }
   if (!isLoad) {
     return 'カメラ待機中';
   }
