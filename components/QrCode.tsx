@@ -28,6 +28,25 @@ const QrTitle = ({text}: {text: string}) => (
   </Flex>
 );
 
+const qrStatus = (isLoad: boolean, isUseCamera: boolean) => {
+  if (!isLoad && isUseCamera) {
+    return (
+      <Spinner
+        thickness="4px"
+        size="xl"
+        color="#bdd7ee"
+        position="absolute"
+        zIndex="1"
+      />
+    );
+  }
+  if (!isUseCamera) {
+    return <IoVideocamOff size="3rem" color="406b94" />;
+  }
+
+  return;
+};
+
 const Qr = ({
   load,
   setLoad,
@@ -59,17 +78,7 @@ const Qr = ({
         borderRadius="2rem"
         position="relative"
       >
-        <Spinner
-          thickness="4px"
-          size="xl"
-          hidden={load || !useCamera}
-          color="#bdd7ee"
-          position="absolute"
-          zIndex="1"
-        />
-        <Box hidden={useCamera}>
-          <IoVideocamOff size="3rem" color="406b94" />
-        </Box>
+        {qrStatus(load, useCamera)}
         <Box position="absolute" zIndex="0" borderRadius="2rem">
           <QrReader
             setData={setData}

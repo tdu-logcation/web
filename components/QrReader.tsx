@@ -86,9 +86,7 @@ const QrReader = (props: Props) => {
   };
 
   return (
-    <ScaleFade initialScale={1} in={props.isRead && !props.hidden}>
-      <canvas ref={canvasElement}></canvas>
-    </ScaleFade>
+    <canvas ref={canvasElement} hidden={!props.isRead || props.hidden}></canvas>
   );
 };
 
