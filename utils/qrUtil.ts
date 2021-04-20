@@ -41,6 +41,14 @@ export function qrHighlight(
   canvas.fill();
 }
 
+/**
+ * ステータステキストを作成します。
+ *
+ * @param isLoad ロード中か
+ * @param isRead 読み取り完了か
+ * @param isUseCamera カメラ使用可か
+ * @returns ステータステキスト
+ */
 export function cameraStatusText(
   isLoad: boolean,
   isRead: boolean,
