@@ -14,6 +14,7 @@ import {
   useCameraState,
   qrDataState,
 } from '../utils/recoilAtoms';
+import {Center} from '@chakra-ui/react';
 
 const QrReader = () => {
   const [isQrRead, setIsQrRead] = useRecoilState(qrReadState);
@@ -94,7 +95,11 @@ const QrReader = () => {
     animationFrame = requestAnimationFrame(tick);
   };
 
-  return <canvas ref={canvasElement} hidden={isQrRead || isQrLoad}></canvas>;
+  return (
+    <Center>
+      <canvas ref={canvasElement} hidden={isQrRead || isQrLoad}></canvas>
+    </Center>
+  );
 };
 
 export default QrReader;
