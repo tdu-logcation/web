@@ -18,6 +18,7 @@ import {
   useCameraState,
   cameraComponentState,
 } from '../utils/recoilAtoms';
+import * as colors from '../utils/colors';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -27,9 +28,9 @@ const QrTitle = ({text}: {text: string}) => (
       alignItems="center"
       margin="0 1rem 0 0"
     >
-      <IoCameraSharp size="2rem" color="#406b94" />
+      <IoCameraSharp size="2rem" color={colors.mainSecondly} />
     </Box>
-    <Text fontWeight="bold" fontSize="1.3rem" color="#26292e">
+    <Text fontWeight="bold" fontSize="1.3rem" color={colors.textPrimary}>
       {text}
     </Text>
   </Flex>
@@ -50,7 +51,7 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
       <Spinner
         thickness="4px"
         size="xl"
-        color="#bdd7ee"
+        color={colors.mainSecondly}
         position="absolute"
         zIndex="1"
       />
@@ -64,9 +65,9 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
         }}
       >
         {isQrRead ? (
-          <IoReloadOutline size="3rem" color="#406b94" />
+          <IoReloadOutline size="3rem" color={colors.mainSecondly} />
         ) : (
-          <IoVideocamOff size="3rem" color="#406b94" />
+          <IoVideocamOff size="3rem" color={colors.mainSecondly} />
         )}
       </button>
     );
@@ -116,7 +117,9 @@ const StatusText = () => {
   const [useCamera] = useRecoilState(useCameraState);
   const [isQrRead] = useRecoilState(qrReadState);
   return (
-    <Box color="#2f3e4e">{cameraStatusText(isQrLoad, isQrRead, useCamera)}</Box>
+    <Box color={colors.textSecondly}>
+      {cameraStatusText(isQrLoad, isQrRead, useCamera)}
+    </Box>
   );
 };
 
@@ -125,7 +128,7 @@ const QrCode = () => {
     <React.Fragment>
       <Center>
         <Box
-          backgroundColor="#bdd7ee"
+          backgroundColor={colors.mainPrimary}
           margin="2rem 0 0 0"
           padding="1.5rem 1.5rem 0 1.5rem"
           borderRadius="1.5rem"
@@ -143,18 +146,22 @@ const QrCode = () => {
         </Box>
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <Text fontWeight="bold" fontSize=".9rem">
+        <Text fontWeight="bold" fontSize=".9rem" color={colors.textPrimary}>
           または
         </Text>
       </Center>
       <Center>
         <Button
-          backgroundColor="#eebdc0"
+          backgroundColor={colors.buttonPrimary}
           borderRadius="1.5rem"
           padding="2rem 3rem 2rem 3rem"
           width="20rem"
         >
-          <Text fontWeight="medium" fontSize="1.2rem">
+          <Text
+            fontWeight="medium"
+            fontSize="1.2rem"
+            color={colors.textPrimary}
+          >
             座席コードを直接入力する
           </Text>
         </Button>
