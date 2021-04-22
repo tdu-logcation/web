@@ -12,18 +12,18 @@ import {
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import Link from 'next/link';
+import * as colors from '../utils/colors';
 
 const SettingButton = ({link}: {link: string}) => (
   <Link href={link}>
     <Button
       borderRadius="2rem"
       leftIcon={<IoSettingsSharp />}
-      colorScheme="blue"
-      backgroundColor="#f2f2f2"
-      color="#636363"
+      backgroundColor={colors.buttonSecondly}
+      color={colors.buttonIconSecondly}
       width="6.2rem"
     >
-      <Text color="black">設定</Text>
+      <Text color={colors.textPrimary}>設定</Text>
     </Button>
   </Link>
 );
@@ -33,10 +33,10 @@ const UtilButton = ({title, link}: {title: string; link: string}) => (
     <Button
       borderRadius="1.5rem"
       width="20rem"
-      backgroundColor="#f2f2f2"
+      backgroundColor={colors.buttonSecondly}
       padding="1rem .5rem 1rem .5rem"
     >
-      <Text>{title}</Text>
+      <Text color={colors.textPrimary}>{title}</Text>
     </Button>
   </Link>
 );
@@ -51,7 +51,12 @@ const Top = () => {
         <Flex width="20rem">
           <Box display="flex" justifyContent="center" alignItems="center">
             <Avatar name="app icon" src="" size="sm" />
-            <Text fontSize="1.3rem" fontWeight="bold" marginLeft="1.2rem">
+            <Text
+              fontSize="1.3rem"
+              fontWeight="bold"
+              marginLeft="1.2rem"
+              color={colors.textPrimary}
+            >
               リレキログ
             </Text>
           </Box>
@@ -61,7 +66,7 @@ const Top = () => {
       </Center>
       <QrCode />
       <Center margin="2rem 0 2rem 0">
-        <Divider colorScheme="#f2f2f2" borderWidth="1px" width="20rem" />
+        <Divider colorScheme={colors.divider} borderWidth="1px" width="20rem" />
       </Center>
       <Center margin="1rem 0 1rem 0">
         <UtilButton title="着席履歴の確認" link="" />
