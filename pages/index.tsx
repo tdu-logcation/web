@@ -1,6 +1,7 @@
 /**!
  * Copyright (C) 2021 tdu-historylog project
  */
+import React from 'react';
 
 import Top from '../components/Top';
 import {Box} from '@chakra-ui/react';

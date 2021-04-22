@@ -6,10 +6,18 @@ import {
   AspectRatio,
   Center,
   Button,
-  Divider,
+  Spinner,
 } from '@chakra-ui/react';
-import {IoCameraSharp} from 'react-icons/io5';
-import Link from 'next/link';
+import {IoCameraSharp, IoVideocamOff, IoReloadOutline} from 'react-icons/io5';
+import QrReader from './QrReader';
+import {cameraStatusText} from '../utils/qrUtil';
+import {useRecoilState} from 'recoil';
+import {
+  qrReadState,
+  qrLoadState,
+  useCameraState,
+  cameraComponentState,
+} from '../utils/recoilAtoms';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -18,9 +26,8 @@ const QrTitle = ({text}: {text: string}) => (
       justifyContent="center"
       alignItems="center"
       margin="0 1rem 0 0"
-      color="#406b94"
     >
-      <IoCameraSharp size="2rem" />
+      <IoCameraSharp size="2rem" color="#406b94" />
     </Box>
     <Text fontWeight="bold" fontSize="1.3rem" color="#26292e">
       {text}
@@ -28,33 +35,90 @@ const QrTitle = ({text}: {text: string}) => (
   </Flex>
 );
 
-const Qr = () => (
-  <AspectRatio maxw="100px" ratio={1}>
-    <Box
-      width="100px"
-      border="solid 3px #fff"
-      backgroundColor="#fff"
-      borderRadius="2rem"
-    ></Box>
-  </AspectRatio>
-);
+/**
+ * カメラのステータスを表示します
+ * - ロード中: プログレス。ロード中かつカメラが使用可の場合
+ * - カメラの使用拒否: アイコン
+ *
+ * @param isLoad ロード中の状態
+ * @param isUseCamera カメラ使用可否状態
+ * @param isQrRead 読み取り完了したか
+ */
+const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
+  if (isLoad && isUseCamera) {
+    return (
+      <Spinner
+        thickness="4px"
+        size="xl"
+        color="#bdd7ee"
+        position="absolute"
+        zIndex="1"
+      />
+    );
+  }
+  if (!isUseCamera || isQrRead) {
+    return (
+      <button
+        onClick={() => {
+          location.reload();
+        }}
+      >
+        {isQrRead ? (
+          <IoReloadOutline size="3rem" color="#406b94" />
+        ) : (
+          <IoVideocamOff size="3rem" color="#406b94" />
+        )}
+      </button>
+    );
+  }
 
-const StatusText = ({isReaded}: {isReaded: boolean}) => (
-  <Box color="#2f3e4e">{isReaded ? '読み取り完了' : '読み取り待機中'}</Box>
-);
+  return;
+};
 
-const UtilButton = ({title, link}: {title: string; link: string}) => (
-  <Link href={link}>
-    <Button
-      borderRadius="1.5rem"
-      width="20rem"
-      backgroundColor="#f2f2f2"
-      padding="1rem .5rem 1rem .5rem"
-    >
-      <Text>{title}</Text>
-    </Button>
-  </Link>
-);
+const Qr = () => {
+  const [isQrRead] = useRecoilState(qrReadState);
+  const [isQrLoad] = useRecoilState(qrLoadState);
+  const [useCamera] = useRecoilState(useCameraState);
+  const [cameraComponent, setCameraComponent] = useRecoilState(
+    cameraComponentState
+  );
+
+  React.useEffect(() => {
+    if (isQrRead || !useCamera) {
+      setCameraComponent(false);
+    }
+  }, [isQrRead, useCamera]);
+
+  return (
+    <AspectRatio max="100px" ratio={1}>
+      <Box
+        width="100px"
+        border="solid 2px #fff"
+        backgroundColor="#fff"
+        borderRadius="2rem"
+        position="relative"
+        zIndex="1"
+      >
+        {qrStatus(isQrLoad, useCamera, isQrRead)}
+        <Box position="absolute" zIndex="0" borderRadius="2rem" width="100%">
+          {cameraComponent ? <QrReader /> : null}
+        </Box>
+      </Box>
+    </AspectRatio>
+  );
+};
+
+/**
+ * ステータステキストを表示
+ */
+const StatusText = () => {
+  const [isQrLoad] = useRecoilState(qrLoadState);
+  const [useCamera] = useRecoilState(useCameraState);
+  const [isQrRead] = useRecoilState(qrReadState);
+  return (
+    <Box color="#2f3e4e">{cameraStatusText(isQrLoad, isQrRead, useCamera)}</Box>
+  );
+};
 
 const QrCode = () => {
   return (
@@ -74,7 +138,7 @@ const QrCode = () => {
             <Qr />
           </Box>
           <Center padding=".8rem 0 .8rem 0">
-            <StatusText isReaded={false} />
+            <StatusText />
           </Center>
         </Box>
       </Center>
@@ -94,15 +158,6 @@ const QrCode = () => {
             座席コードを直接入力する
           </Text>
         </Button>
-      </Center>
-      <Center margin="2rem 0 2rem 0">
-        <Divider colorScheme="#f2f2f2" borderWidth="1px" width="20rem" />
-      </Center>
-      <Center margin="1rem 0 1rem 0">
-        <UtilButton title="着席履歴の確認" link="" />
-      </Center>
-      <Center margin="1rem 0 1rem 0">
-        <UtilButton title="更新履歴" link="" />
       </Center>
     </React.Fragment>
   );
