@@ -2,8 +2,8 @@ import {Point} from 'jsqr/dist/locator';
 
 export const readDelay = 500;
 
-export const canvasWidth = 300;
-export const canvasHeight = 300;
+export const canvasWidth = 270;
+export const canvasHeight = 270;
 
 export const webRTCConfig: MediaStreamConstraints = {
   video: {
