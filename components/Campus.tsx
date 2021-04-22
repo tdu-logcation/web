@@ -42,23 +42,21 @@ export const SelectCampus = () => {
             <ModalBody pb={3}>
               <Center>
                 <Button
-                  colorScheme="teal"
                   size="lg"
                   onClick={() => setCampus(Campus.senju)}
                   margin="0 1rem 0 .5rem"
                   color={colors.textPrimary}
-                  backgroundColor={colors.buttonSecondly}
+                  backgroundColor={colors.mainPrimary}
                   borderRadius="1rem"
                 >
                   千住
                 </Button>
                 <Button
-                  colorScheme="teal"
                   size="lg"
                   onClick={() => setCampus(Campus.hatoyama)}
                   margin="0 .5rem 0 1rem"
                   color={colors.textPrimary}
-                  backgroundColor={colors.buttonSecondly}
+                  backgroundColor={colors.mainPrimary}
                   borderRadius="1rem"
                 >
                   鳩山
