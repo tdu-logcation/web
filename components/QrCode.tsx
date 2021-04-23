@@ -7,6 +7,7 @@ import {
   Center,
   Button,
   Spinner,
+  useToast,
 } from '@chakra-ui/react';
 import {IoCameraSharp, IoVideocamOff, IoReloadOutline} from 'react-icons/io5';
 import QrReader from './QrReader';
@@ -17,6 +18,7 @@ import {
   qrLoadState,
   useCameraState,
   cameraComponentState,
+  qrDataState,
 } from '../utils/recoilAtoms';
 import * as colors from '../utils/colors';
 
@@ -77,9 +79,11 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
 };
 
 const Qr = () => {
+  const toast = useToast();
   const [isQrRead] = useRecoilState(qrReadState);
   const [isQrLoad] = useRecoilState(qrLoadState);
   const [useCamera] = useRecoilState(useCameraState);
+  const [qrData] = useRecoilState(qrDataState);
   const [cameraComponent, setCameraComponent] = useRecoilState(
     cameraComponentState
   );
@@ -87,6 +91,15 @@ const Qr = () => {
   React.useEffect(() => {
     if (isQrRead || !useCamera) {
       setCameraComponent(false);
+    }
+    if (isQrRead) {
+      toast({
+        title: '読み取り完了',
+        description: qrData,
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+      });
     }
   }, [isQrRead, useCamera]);
 
