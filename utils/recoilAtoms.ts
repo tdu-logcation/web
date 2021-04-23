@@ -1,4 +1,20 @@
-import {atom} from 'recoil';
+import {atom, DefaultValue} from 'recoil';
+import {Campus} from '../@types/campus';
+
+const localStorageEffect = (key: string) => ({setSelf, onSet}) => {
+  const savedValue = localStorage.getItem(key);
+  if (savedValue !== null) {
+    setSelf(JSON.parse(savedValue));
+  }
+
+  onSet((newValue: DefaultValue | string) => {
+    if (newValue instanceof DefaultValue) {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, JSON.stringify(newValue));
+    }
+  });
+};
 
 /**
  * - 読み取り完了: true
@@ -38,7 +54,16 @@ export const cameraComponentState = atom({
 /**
  * QR読み取りデータ
  */
-export const qrDataState = atom({
+export const qrDataState = atom<string>({
   key: 'qrData',
   default: null,
+});
+
+/**
+ * キャンパス情報
+ */
+export const campusState = atom<Campus>({
+  key: 'campus',
+  default: Campus.null,
+  effects_UNSTABLE: [localStorageEffect('campus')],
 });
