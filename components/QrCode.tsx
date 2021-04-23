@@ -19,7 +19,9 @@ import {
   useCameraState,
   cameraComponentState,
   qrDataState,
+  campusState,
 } from '../utils/recoilAtoms';
+import {Campus} from '../@types/campus';
 import * as colors from '../utils/colors';
 
 const QrTitle = ({text}: {text: string}) => (
@@ -84,6 +86,7 @@ const Qr = () => {
   const [isQrLoad] = useRecoilState(qrLoadState);
   const [useCamera] = useRecoilState(useCameraState);
   const [qrData] = useRecoilState(qrDataState);
+  const [isCampus] = useRecoilState(campusState);
   const [cameraComponent, setCameraComponent] = useRecoilState(
     cameraComponentState
   );
@@ -115,7 +118,7 @@ const Qr = () => {
       >
         {qrStatus(isQrLoad, useCamera, isQrRead)}
         <Box position="absolute" zIndex="0" borderRadius="2rem" width="100%">
-          {cameraComponent ? <QrReader /> : null}
+          {cameraComponent && isCampus !== Campus.null ? <QrReader /> : null}
         </Box>
       </Box>
     </AspectRatio>
