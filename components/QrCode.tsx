@@ -98,7 +98,7 @@ const Qr = () => {
     if (isQrRead) {
       toast({
         title: '読み取り完了',
-        description: qrData,
+        description: <Text wordBreak="break-all">{qrData}</Text>,
         status: 'success',
         duration: 4000,
         isClosable: true,
