@@ -6,5 +6,5 @@ export interface Log {
   floorNumber: string;
   roomNumber: string;
   seatNumber: string;
-  stayingTime: Date;
+  stayingTime: string;
 }

@@ -86,6 +86,6 @@ export function parseQrData(qrData: string): Log {
     floorNumber: floorNumber(),
     roomNumber: roomNumber(),
     seatNumber: seatNumber(),
-    stayingTime: new Date(),
+    stayingTime: new Date().toLocaleString('ja-JP'),
   };
 }
