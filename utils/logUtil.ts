@@ -7,7 +7,6 @@ import {Log} from '../@types/log';
  * @returns 正しいデータか否か
  */
 export function validateQrData(qrData: string): boolean {
-  console.log(qrData);
   if (!/^jp.ac.dendai\/(20)?([1-9])([01]?[0-9])([0-9][0-9])-.+$/.test(qrData)) {
     return false;
   }
