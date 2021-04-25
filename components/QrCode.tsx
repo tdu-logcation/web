@@ -102,9 +102,9 @@ const Qr = () => {
     if (isQrRead) {
       if (validateQrData(qrData)) {
         const nextLog = [...log];
-        const parsedQrDate = parseQrData(qrData.slice(qrData.indexOf('/') + 1));
+        const parsedQrData = parseQrData(qrData.slice(qrData.indexOf('/') + 1));
 
-        nextLog.push(parsedQrDate);
+        nextLog.push(parsedQrData);
 
         setLog(nextLog);
 
@@ -112,8 +112,8 @@ const Qr = () => {
           title: '読み取り完了',
           description: (
             <Text wordBreak="break-all">
-              {parsedQrDate.buildingNumber}号館&nbsp;
-              {parsedQrDate.floorNumber}階
+              {parsedQrData.buildingNumber}号館&nbsp;
+              {parsedQrData.floorNumber}階
             </Text>
           ),
           status: 'info',
