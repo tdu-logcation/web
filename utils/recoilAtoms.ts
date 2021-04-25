@@ -1,5 +1,6 @@
 import {atom, DefaultValue} from 'recoil';
 import {Campus} from '../@types/campus';
+import {Log} from '../@types/log';
 
 const localStorageEffect = (key: string) => ({setSelf, onSet}) => {
   const savedValue = localStorage.getItem(key);
@@ -66,4 +67,13 @@ export const campusState = atom<Campus>({
   key: 'campus',
   default: Campus.null,
   effects_UNSTABLE: [localStorageEffect('campus')],
+});
+
+/**
+ * ログ情報
+ */
+export const logState = atom<Log[]>({
+  key: 'log',
+  default: [],
+  effects_UNSTABLE: [localStorageEffect('log')],
 });
