@@ -28,6 +28,7 @@ import {
   logState,
 } from '../utils/recoilAtoms';
 import {Campus} from '../@types/campus';
+import {LogType} from '../@types/log';
 import * as colors from '../utils/colors';
 import {parseQrData, validateQrData} from '../utils/logUtil';
 
@@ -109,7 +110,13 @@ const Qr = () => {
         const nextLog = [...log];
         const parsedQrData = parseQrData(qrData.slice(qrData.indexOf('/') + 1));
 
-        nextLog.push(parsedQrData);
+        const datum = {
+          log: qrData,
+          date: new Date().toLocaleString('ja-JP'),
+          type: LogType.normal,
+        };
+
+        nextLog.push(datum);
 
         setLog(nextLog);
 
@@ -118,7 +125,8 @@ const Qr = () => {
           description: (
             <Text wordBreak="break-all">
               {parsedQrData.buildingNumber}号館&nbsp;
-              {parsedQrData.floorNumber}階
+              {parsedQrData.floorNumber}階&nbsp;
+              {parsedQrData.roomNumber}教室
             </Text>
           ),
           status: 'info',
