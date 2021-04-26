@@ -26,6 +26,7 @@ import React from 'react';
 import {useRecoilState} from 'recoil';
 import {directText, logState} from '../utils/recoilAtoms';
 import {parseQrData, validateQrData} from '../utils/logUtil';
+import {LogType} from '../@types/log';
 
 export const Direct = () => {
   const toast = useToast();
@@ -49,7 +50,13 @@ export const Direct = () => {
       const nextLog = [...log];
       const parsedQrData = parseQrData(data.slice(data.indexOf('/') + 1));
 
-      nextLog.push(parsedQrData);
+      const datum = {
+        log: data,
+        date: new Date().toLocaleString('ja-JP'),
+        type: LogType.normal,
+      };
+
+      nextLog.push(datum);
 
       setLog(nextLog);
       onClose();
@@ -60,7 +67,8 @@ export const Direct = () => {
         description: (
           <Text wordBreak="break-all">
             {parsedQrData.buildingNumber}号館&nbsp;
-            {parsedQrData.floorNumber}階
+            {parsedQrData.floorNumber}階&nbsp;
+            {parsedQrData.roomNumber}教室
           </Text>
         ),
         status: 'info',
