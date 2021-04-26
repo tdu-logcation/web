@@ -1,3 +1,9 @@
+/**!
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 import React from 'react';
 import {useRecoilState} from 'recoil';
 import {campusState} from '../utils/recoilAtoms';
