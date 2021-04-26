@@ -104,7 +104,12 @@ const Qr = () => {
         const nextLog = [...log];
         const parsedQrData = parseQrData(qrData.slice(qrData.indexOf('/') + 1));
 
-        nextLog.push(parsedQrData);
+        const datum = {
+          log: qrData,
+          date: new Date().toLocaleString('ja-JP'),
+        };
+
+        nextLog.push(datum);
 
         setLog(nextLog);
 
@@ -113,7 +118,8 @@ const Qr = () => {
           description: (
             <Text wordBreak="break-all">
               {parsedQrData.buildingNumber}号館&nbsp;
-              {parsedQrData.floorNumber}階
+              {parsedQrData.floorNumber}階&nbsp;
+              {parsedQrData.roomNumber}教室
             </Text>
           ),
           status: 'info',
