@@ -21,11 +21,12 @@ import {
   qrDataState,
 } from '../utils/recoilAtoms';
 import {Center} from '@chakra-ui/react';
+import {exception} from 'node:console';
 
 const QrReader = () => {
   const [isQrRead, setIsQrRead] = useRecoilState(qrReadState);
   const [isQrLoad, setIsQrLoad] = useRecoilState(qrLoadState);
-  const [, setUseCamera] = useRecoilState(useCameraState);
+  const [useCamera, setUseCamera] = useRecoilState(useCameraState);
   const [, setQrData] = useRecoilState(qrDataState);
 
   const videoElement = document.createElement('video');
@@ -58,47 +59,63 @@ const QrReader = () => {
   const tick = () => {
     const canvas = canvasElement.current;
 
-    if (
-      videoElement.readyState === videoElement.HAVE_ENOUGH_DATA &&
-      canvasContext
-    ) {
-      canvas.height = canvasHeight;
-      canvas.width = canvasWidth;
-      canvasContext.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-      const imageData = canvasContext.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-      const code = jsQR(imageData.data, imageData.width, imageData.height, {
-        inversionAttempts: 'dontInvert',
-      });
-
-      if (code) {
-        setQrData(code.data);
-
-        qrHighlight(
-          code.location.topLeftCorner,
-          code.location.topRightCorner,
-          code.location.bottomLeftCorner,
-          code.location.bottomRightCorner,
-          canvasContext
+    try {
+      if (
+        videoElement.readyState === videoElement.HAVE_ENOUGH_DATA &&
+        canvasContext
+      ) {
+        canvas.height = canvasHeight;
+        canvas.width = canvasWidth;
+        canvasContext.drawImage(
+          videoElement,
+          0,
+          0,
+          canvas.width,
+          canvas.height
         );
 
-        setTimeout(() => {
-          if (code.data && code.data !== '') {
-            setIsQrRead(true);
-            cancelAnimationFrame(animationFrame);
-            const tracks = videoStream.getTracks();
-            tracks.forEach(track => track.stop());
-            return;
-          }
-        }, readDelay);
+        const imageData = canvasContext.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        const code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: 'dontInvert',
+        });
+
+        if (code) {
+          setQrData(code.data);
+
+          qrHighlight(
+            code.location.topLeftCorner,
+            code.location.topRightCorner,
+            code.location.bottomLeftCorner,
+            code.location.bottomRightCorner,
+            canvasContext
+          );
+
+          setTimeout(() => {
+            if (code.data && code.data !== '') {
+              setIsQrRead(true);
+              cancelAnimationFrame(animationFrame);
+              const tracks = videoStream.getTracks();
+              tracks.forEach(track => track.stop());
+              return;
+            }
+          }, readDelay);
+        }
+        if (!useCamera) {
+          cancelAnimationFrame(animationFrame);
+        }
       }
+      animationFrame = requestAnimationFrame(tick);
+    } catch (error) {
+      cancelAnimationFrame(animationFrame);
+      const tracks = videoStream.getTracks();
+      tracks.forEach(track => track.stop());
+      return;
     }
-    animationFrame = requestAnimationFrame(tick);
   };
 
   return (
