@@ -31,7 +31,7 @@ import {
 import {Campus} from '../@types/campus';
 import {LogType} from '../@types/log';
 import * as colors from '../utils/colors';
-import {parseQrData, validateQrData} from '../utils/logUtil';
+import {getLogCampus, parseQrData, validateQrData} from '../utils/logUtil';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -109,12 +109,13 @@ const Qr = () => {
     if (isQrRead) {
       if (validateQrData(qrData)) {
         const nextLog = [...log];
-        const parsedQrData = parseQrData(qrData.slice(qrData.indexOf('/') + 1));
+        const parsedQrData = parseQrData(qrData);
 
         const datum = {
-          log: qrData,
+          code: qrData,
           date: new Date().toLocaleString('ja-JP'),
           type: LogType.normal,
+          campus: getLogCampus(qrData),
         };
 
         nextLog.push(datum);

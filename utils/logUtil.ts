@@ -3,7 +3,12 @@
  * Copyright (C) 2021 logcation
  */
 
-import {ParsedLog} from '../@types/log';
+import {ParsedLog, LogCampus} from '../@types/log';
+
+const REG_EXP = /^(2)?(?<buildingNumber>[01]?[0-9])(?<floorNumber>[01]?[0-9])(?<roomNumber>[0-9][0-9])-(?<seatNumber>.+)$/;
+
+const HATOYAMA_MIN = 6;
+const HATOYAMA_MAX = 7;
 
 /**
  * 読み取ったデータをバリデートします
@@ -12,7 +17,9 @@ import {ParsedLog} from '../@types/log';
  * @returns 正しいデータか否か
  */
 export function validateQrData(qrData: string): boolean {
-  if (!/^jp.ac.dendai\/(20)?([1-9])([01]?[0-9])([0-9][0-9])-.+$/.test(qrData)) {
+  const code = qrData.slice(qrData.indexOf('/') + 1);
+
+  if (!REG_EXP.test(code)) {
     return false;
   }
 
@@ -26,69 +33,30 @@ export function validateQrData(qrData: string): boolean {
  * @returns Log
  */
 export function parseQrData(qrData: string): ParsedLog {
-  const isHatoyama = () => {
-    if (qrData.slice(0, 2) === '20' && qrData.length > 5) {
-      return true;
-    }
-    return false;
-  };
-
-  /**
-   * true: 2ケタの階
-   * false: 1ケタの階
-   */
-  const isHeight = () => {
-    const index = qrData.indexOf('-');
-    const length = qrData.slice(0, index).length;
-
-    if (isHatoyama()) {
-      if (length === 6) {
-        return false;
-      }
-      return true;
-    }
-
-    if (length === 4) {
-      return false;
-    }
-    return true;
-  };
-
-  const buildingNumber = () => {
-    if (isHatoyama()) {
-      return qrData.slice(2, 3);
-    }
-    return qrData.slice(0, 1);
-  };
-
-  const floorNumber = () => {
-    if (isHatoyama()) {
-      if (isHeight()) {
-        return qrData.slice(3, 5);
-      }
-      return qrData.slice(3, 4);
-    }
-
-    if (isHeight()) {
-      return qrData.slice(1, 3);
-    }
-    return qrData.slice(1, 2);
-  };
-
-  const roomNumber = () => {
-    const index = qrData.indexOf('-');
-    return qrData.slice(0, index);
-  };
-
-  const seatNumber = () => {
-    const index = qrData.indexOf('-');
-    return qrData.slice(index + 1);
-  };
+  const code = qrData.slice(qrData.indexOf('/') + 1);
+  const data = code.match(REG_EXP).groups;
 
   return {
-    buildingNumber: buildingNumber(),
-    floorNumber: floorNumber(),
-    roomNumber: roomNumber(),
-    seatNumber: seatNumber(),
+    buildingNumber: data.buildingNumber,
+    floorNumber: data.floorNumber,
+    roomNumber: data.buildingNumber + data.floorNumber + data.roomNumber,
+    seatNumber: data.seatNumber,
   };
+}
+
+/**
+ * 座席コードからキャンパスの逆引き
+ *
+ * @param qrData QRコードのデータ
+ * @returns LogType
+ */
+export function getLogCampus(qrData: string): LogCampus {
+  const code = qrData.slice(qrData.indexOf('/') + 1);
+  const headCode = code.slice(0, code.indexOf('-'));
+
+  if (headCode.length >= HATOYAMA_MIN && headCode.length <= HATOYAMA_MAX) {
+    return LogCampus.hatoyama;
+  }
+
+  return LogCampus.senju;
 }
