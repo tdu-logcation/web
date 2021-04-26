@@ -11,7 +11,6 @@ import {
   Text,
   AspectRatio,
   Center,
-  Button,
   Spinner,
   useToast,
 } from '@chakra-ui/react';
@@ -205,22 +204,6 @@ const QrCode = () => {
         <Text fontWeight="bold" fontSize=".9rem" color={colors.textPrimary}>
           または
         </Text>
-      </Center>
-      <Center>
-        <Button
-          backgroundColor={colors.buttonPrimary}
-          borderRadius="1.5rem"
-          padding="2rem 3rem 2rem 3rem"
-          width="20rem"
-        >
-          <Text
-            fontWeight="medium"
-            fontSize="1.2rem"
-            color={colors.textPrimary}
-          >
-            座席コードを直接入力する
-          </Text>
-        </Button>
       </Center>
     </React.Fragment>
   );
