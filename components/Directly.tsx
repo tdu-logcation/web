@@ -106,6 +106,7 @@ export const Direct = () => {
           <ModalBody pb={6}>
             <FormControl>
               <Input
+                size="lg"
                 value={text}
                 onChange={handleChange}
                 placeholder="座席コード"
