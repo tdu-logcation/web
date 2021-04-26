@@ -1,6 +1,9 @@
 /**!
- * Copyright (C) 2021 tdu-historylog project
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
  */
+
 import React from 'react';
 
 import Top from '../components/Top';

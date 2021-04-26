@@ -1,3 +1,9 @@
+/**!
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 export const mainPrimary = '#bdd7ee';
 export const mainSecondly = '#406b94';
 

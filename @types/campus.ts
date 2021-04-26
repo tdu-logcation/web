@@ -1,3 +1,9 @@
+/**!
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 /**
  * キャンパス定義
  */

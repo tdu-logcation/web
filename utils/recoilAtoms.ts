@@ -1,3 +1,9 @@
+/**!
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 import {atom, DefaultValue} from 'recoil';
 import {Campus} from '../@types/campus';
 import {Log} from '../@types/log';

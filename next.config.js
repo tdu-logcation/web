@@ -1,7 +1,7 @@
 /**!
  * Next.js config.
  *
- * Copyright (C) 2021 tdu-historylog project
+ * Copyright (C) 2021 logcation
  */
 
 const withPWA = require('next-pwa');
