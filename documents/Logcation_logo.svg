@@ -1,4 +1,5 @@
 <svg width="1280" height="720" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden">
+  <path d="M0 0 L 1280 0 L 1280 720 L 0 720" style="fill:#FFFFFF;stroke-width:0" />
   <defs>
     <clipPath id="clip0">
       <rect x="0" y="0" width="1280" height="720" />
