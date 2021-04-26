@@ -1,9 +1,14 @@
 /**
  * ログ定義
  */
+export enum LogType {
+  normal,
+}
+
 export interface Log {
   log: string;
   date: string;
+  type: LogType;
 }
 
 export interface ParsedLog {

@@ -23,6 +23,7 @@ import {
   logState,
 } from '../utils/recoilAtoms';
 import {Campus} from '../@types/campus';
+import {LogType} from '../@types/log';
 import * as colors from '../utils/colors';
 import {parseQrData, validateQrData} from '../utils/logUtil';
 
@@ -107,6 +108,7 @@ const Qr = () => {
         const datum = {
           log: qrData,
           date: new Date().toLocaleString('ja-JP'),
+          type: LogType.normal,
         };
 
         nextLog.push(datum);
