@@ -20,9 +20,11 @@ import {
   cameraComponentState,
   qrDataState,
   campusState,
+  logState,
 } from '../utils/recoilAtoms';
 import {Campus} from '../@types/campus';
 import * as colors from '../utils/colors';
+import {parseQrData, validateQrData} from '../utils/logUtil';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -91,18 +93,42 @@ const Qr = () => {
     cameraComponentState
   );
 
+  const [log, setLog] = useRecoilState(logState);
+
   React.useEffect(() => {
     if (isQrRead || !useCamera) {
       setCameraComponent(false);
     }
     if (isQrRead) {
-      toast({
-        title: '読み取り完了',
-        description: <Text wordBreak="break-all">{qrData}</Text>,
-        status: 'success',
-        duration: 4000,
-        isClosable: true,
-      });
+      if (validateQrData(qrData)) {
+        const nextLog = [...log];
+        const parsedQrData = parseQrData(qrData.slice(qrData.indexOf('/') + 1));
+
+        nextLog.push(parsedQrData);
+
+        setLog(nextLog);
+
+        toast({
+          title: '読み取り完了',
+          description: (
+            <Text wordBreak="break-all">
+              {parsedQrData.buildingNumber}号館&nbsp;
+              {parsedQrData.floorNumber}階
+            </Text>
+          ),
+          status: 'info',
+          duration: 4000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: 'QRコードが正しくありません',
+          description: <Text wordBreak="break-all">{qrData}</Text>,
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+        });
+      }
     }
   }, [isQrRead, useCamera]);
 
