@@ -20,6 +20,7 @@ import QrCode from './QrCode';
 import Link from 'next/link';
 import * as colors from '../utils/colors';
 import {SelectCampus} from './Campus';
+import {Direct} from './Directly';
 
 const SettingButton = ({link}: {link: string}) => (
   <Link href={link}>
@@ -73,6 +74,7 @@ const Top = () => {
         </Flex>
       </Center>
       <QrCode />
+      <Direct />
       <Center margin="2rem 0 2rem 0">
         <Divider colorScheme={colors.divider} borderWidth="1px" width="20rem" />
       </Center>

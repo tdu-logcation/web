@@ -83,3 +83,11 @@ export const logState = atom<Log[]>({
   default: [],
   effects_UNSTABLE: [localStorageEffect('log')],
 });
+
+/**
+ * ダイレクト入力情報
+ */
+export const directText = atom<string>({
+  key: 'directText',
+  default: null,
+});
