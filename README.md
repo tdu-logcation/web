@@ -1,3 +1,6 @@
+<div aligin="center" style="background-color: white;">
+  <img src="./documents/Logcation_logo.svg">
+</div>
 <h1  align="center">Logcation</h1>
 
 ## is何？
