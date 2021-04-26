@@ -1,3 +1,8 @@
+/**!
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 import {Log} from '../@types/log';
 
 /**

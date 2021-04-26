@@ -1,3 +1,9 @@
+/**!
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 import {Point} from 'jsqr/dist/locator';
 
 export const readDelay = 500;
