@@ -98,5 +98,6 @@ export const directText = atom<string>({
  */
 export const tableShowState = atom<boolean[]>({
   key: 'tableShow',
-  default: new Array(tableShow.length).fill(false),
+  // [日時, キャンパス, 号館, 階数, 教室名, 座席位置]
+  default: [true, false, true, false, true, false],
 });

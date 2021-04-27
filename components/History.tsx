@@ -17,6 +17,7 @@ import {
   Text,
   Box,
   Button,
+  Checkbox,
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {logState, tableShowState} from '../utils/recoilAtoms';
@@ -32,11 +33,6 @@ export const History = () => {
   const [log] = useRecoilState(logState);
   const [show, setShow] = useRecoilState(tableShowState);
   const [dateType, setDateType] = React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    // [日時, キャンパス, 号館, 階数, 教室名, 座席位置]
-    setShow([true, false, true, false, true, false]);
-  }, []);
 
   const data: TableData[] = React.useMemo(
     () =>
@@ -96,20 +92,44 @@ export const History = () => {
     headerGroups,
     rows,
     prepareRow,
+    setHiddenColumns,
   } = useTable(
     {
       columns,
       data,
       initialState: {
-        hiddenColumns: formatTableShow(show),
+        // [日時, キャンパス, 号館, 階数, 教室名, 座席位置]
+        hiddenColumns: formatTableShow([true, false, true, false, true, false]),
       },
     },
     useSortBy
   );
 
+  React.useEffect(() => {
+    setHiddenColumns(formatTableShow(show));
+  }, [show]);
+
+  const showButton = () => {
+    return tableShow.map((element, index) => {
+      return (
+        <Checkbox
+          isChecked={show[index]}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            const buffer = [...show];
+            buffer[index] = event.target.checked;
+            setShow(buffer);
+          }}
+          key={index}
+        >
+          {element.name}
+        </Checkbox>
+      );
+    });
+  };
+
   return (
     <React.Fragment>
-      <Button onClick={() => setDateType(!dateType)}>あ</Button>
+      <Box>{showButton()}</Box>
       <Center>
         <Box margin="1rem .5rem 1rem .5rem">
           <Table
@@ -124,7 +144,7 @@ export const History = () => {
                   {headerGroup.headers.map(column => (
                     <Th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
-                      padding=".5rem 0 .5rem 0"
+                      padding=".5rem .1rem .5rem .1rem"
                       backgroundColor={colors.mainPrimary}
                       color={colors.textPrimary}
                     >

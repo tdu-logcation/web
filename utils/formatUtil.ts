@@ -42,7 +42,7 @@ export function formatTableShow(showData: boolean[]) {
   const show = [];
 
   showData.forEach((element, index) => {
-    if (element) {
+    if (!element) {
       show.push(tableShow[index].id);
     }
   });
