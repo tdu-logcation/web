@@ -7,6 +7,7 @@
 import {atom, DefaultValue} from 'recoil';
 import {Campus} from '../@types/campus';
 import {Log} from '../@types/log';
+import {tableShow} from './table';
 
 const localStorageEffect = (key: string) => ({setSelf, onSet}) => {
   const savedValue = localStorage.getItem(key);
@@ -90,4 +91,12 @@ export const logState = atom<Log[]>({
 export const directText = atom<string>({
   key: 'directText',
   default: '',
+});
+
+/**
+ * 履歴テーブルの表示
+ */
+export const tableShowState = atom<boolean[]>({
+  key: 'tableShow',
+  default: new Array(tableShow.length).fill(false),
 });
