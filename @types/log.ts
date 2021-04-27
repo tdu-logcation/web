@@ -10,10 +10,16 @@ export enum LogType {
   normal,
 }
 
+export enum LogCampus {
+  senju,
+  hatoyama,
+}
+
 export interface Log {
-  log: string;
+  code: string;
   date: string;
   type: LogType;
+  campus: LogCampus;
 }
 
 export interface ParsedLog {
