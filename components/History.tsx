@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {logState} from '../utils/recoilAtoms';
-import {parseQrData} from '../utils/logUtil';
+import LogUtil from '../utils/LogUtil';
 import {useTable, useSortBy} from 'react-table';
 import {IoArrowUpOutline, IoArrowDownOutline} from 'react-icons/io5';
 import * as colors from '../utils/colors';
@@ -21,17 +21,19 @@ import * as colors from '../utils/colors';
 export const History = () => {
   const [log] = useRecoilState(logState);
 
-  const data = React.useMemo(() => {
-    return log.reverse().map(log => {
-      const parsedData = parseQrData(log.log.replace('jp.ac.dendai/', ''));
+  const data = log.reverse().map(log => {
+    const logUtil = new LogUtil(log.code);
+    if (logUtil.validateQrData()) {
+      const parsedData = logUtil.parseQrData();
+      // const campus = logUtil.getLogCampus();
       return {
         date: log.date,
         building: parsedData.buildingNumber,
         floors: parsedData.floorNumber,
         rooms: parsedData.roomNumber,
       };
-    });
-  }, []);
+    }
+  });
 
   const columns = React.useMemo(
     () => [
