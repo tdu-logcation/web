@@ -89,5 +89,5 @@ export const logState = atom<Log[]>({
  */
 export const directText = atom<string>({
   key: 'directText',
-  default: null,
+  default: '',
 });
