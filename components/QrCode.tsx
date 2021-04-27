@@ -31,7 +31,7 @@ import {
 import {Campus} from '../@types/campus';
 import {LogType} from '../@types/log';
 import * as colors from '../utils/colors';
-import {getLogCampus, parseQrData, validateQrData} from '../utils/logUtil';
+import LogUtil from '../utils/LogUtil';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -107,18 +107,20 @@ const Qr = () => {
       setCameraComponent(false);
     }
     if (isQrRead) {
-      if (validateQrData(qrData)) {
-        const nextLog = [...log];
-        const parsedQrData = parseQrData(qrData);
+      const logUtil = new LogUtil(qrData);
 
-        const datum = {
+      if (logUtil.validateQrData()) {
+        const nextLog = [...log];
+        const parsedQrData = logUtil.parseQrData();
+
+        const data = {
           code: qrData,
           date: new Date().toLocaleString('ja-JP'),
           type: LogType.normal,
-          campus: getLogCampus(qrData),
+          campus: logUtil.getLogCampus(),
         };
 
-        nextLog.push(datum);
+        nextLog.push(data);
 
         setLog(nextLog);
 
