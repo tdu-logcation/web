@@ -25,8 +25,8 @@ import * as colors from '../utils/colors';
 import React from 'react';
 import {useRecoilState} from 'recoil';
 import {directText, logState} from '../utils/recoilAtoms';
-import {parseQrData, validateQrData} from '../utils/logUtil';
-import {LogType} from '../@types/log';
+import LogUtil from '../utils/LogUtil';
+import {LogType, Log} from '../@types/log';
 
 export const Direct = () => {
   const toast = useToast();
@@ -46,14 +46,16 @@ export const Direct = () => {
 
   const save = () => {
     const data = `jp.ac.dendai/${text}`;
-    if (validateQrData(data)) {
+    const logUtil = new LogUtil(data);
+    if (logUtil.validateQrData()) {
       const nextLog = [...log];
-      const parsedQrData = parseQrData(data.slice(data.indexOf('/') + 1));
+      const parsedQrData = logUtil.parseQrData();
 
-      const datum = {
-        log: data,
+      const datum: Log = {
+        code: data,
         date: new Date().toLocaleString('ja-JP'),
         type: LogType.normal,
+        campus: logUtil.getLogCampus(),
       };
 
       nextLog.push(datum);
