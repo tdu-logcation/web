@@ -21,7 +21,6 @@ import {
   qrDataState,
 } from '../utils/recoilAtoms';
 import {Center} from '@chakra-ui/react';
-import {exception} from 'node:console';
 
 const QrReader = () => {
   const [isQrRead, setIsQrRead] = useRecoilState(qrReadState);
@@ -39,7 +38,7 @@ const QrReader = () => {
   React.useEffect(() => {
     canvasContext = canvasElement.current.getContext('2d');
 
-    setQrData(null);
+    setUseCamera(true);
     // カメラ接続
     navigator.mediaDevices
       .getUserMedia(webRTCConfig)

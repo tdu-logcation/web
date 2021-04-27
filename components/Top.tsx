@@ -22,7 +22,7 @@ import * as colors from '../utils/colors';
 import {SelectCampus} from './Campus';
 import {Direct} from './Directly';
 import {useRecoilState} from 'recoil';
-import {useCameraState} from '../utils/recoilAtoms';
+import {useCameraState, qrReadState} from '../utils/recoilAtoms';
 
 const SettingButton = ({link}: {link: string}) => (
   <Link href={link}>
@@ -40,9 +40,11 @@ const SettingButton = ({link}: {link: string}) => (
 
 const UtilButton = ({title, link}: {title: string; link: string}) => {
   const [, SetUseCamera] = useRecoilState(useCameraState);
+  const [, setQrRead] = useRecoilState(qrReadState);
 
   const qrClose = () => {
     SetUseCamera(false);
+    setQrRead(false);
   };
 
   return (

@@ -4,22 +4,14 @@
  * Copyright (C) 2021 logcation
  */
 import {Box} from '@chakra-ui/react';
-import {useRecoilState} from 'recoil';
-import {logState} from '../utils/recoilAtoms';
+import {History} from '../components/History';
 
-const History = () => {
-  const [log] = useRecoilState(logState);
+const HistoryPage = () => {
   return (
-    <Box>
-      {log.map((log, index) => {
-        return (
-          <div key={index}>
-            {log.date}:{log.log}
-          </div>
-        );
-      })}
+    <Box margin="2.3rem 1.6rem 1rem 1.6rem">
+      <History />
     </Box>
   );
 };
 
-export default History;
+export default HistoryPage;
