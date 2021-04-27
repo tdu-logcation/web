@@ -21,19 +21,23 @@ import * as colors from '../utils/colors';
 export const History = () => {
   const [log] = useRecoilState(logState);
 
-  const data = log.reverse().map(log => {
-    const logUtil = new LogUtil(log.code);
-    if (logUtil.validateQrData()) {
-      const parsedData = logUtil.parseQrData();
-      // const campus = logUtil.getLogCampus();
-      return {
-        date: log.date,
-        building: parsedData.buildingNumber,
-        floors: parsedData.floorNumber,
-        rooms: parsedData.roomNumber,
-      };
-    }
-  });
+  const data = React.useMemo(
+    () =>
+      log.reverse().map(log => {
+        const logUtil = new LogUtil(log.code);
+        if (logUtil.validateQrData()) {
+          const parsedData = logUtil.parseQrData();
+          // const campus = logUtil.getLogCampus();
+          return {
+            date: log.date,
+            building: parsedData.buildingNumber,
+            floors: parsedData.floorNumber,
+            rooms: parsedData.roomNumber,
+          };
+        }
+      }),
+    []
+  );
 
   const columns = React.useMemo(
     () => [
