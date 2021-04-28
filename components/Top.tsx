@@ -59,14 +59,18 @@ const Top = () => {
       <Center>
         <Flex width="20rem">
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Avatar name="app icon" src="" size="sm" />
+            <Avatar
+              name="app icon"
+              src="/static/icons/icon-512x512.png"
+              size="sm"
+            />
             <Text
               fontSize="1.3rem"
               fontWeight="bold"
               marginLeft="1.2rem"
               color={colors.textPrimary}
             >
-              リレキログ
+              Logcation
             </Text>
           </Box>
           <Spacer />
