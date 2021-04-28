@@ -5,7 +5,6 @@
  */
 
 import {atom, DefaultValue} from 'recoil';
-import {Campus} from '../@types/campus';
 import {Log} from '../@types/log';
 
 const localStorageEffect = (key: string) => ({setSelf, onSet}) => {
@@ -64,15 +63,6 @@ export const cameraComponentState = atom({
 export const qrDataState = atom<string>({
   key: 'qrData',
   default: null,
-});
-
-/**
- * キャンパス情報
- */
-export const campusState = atom<Campus>({
-  key: 'campus',
-  default: Campus.null,
-  effects_UNSTABLE: [localStorageEffect('campus')],
 });
 
 /**
