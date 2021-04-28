@@ -11,11 +11,12 @@ export enum LogType {
 }
 
 export enum LogCampus {
-  senju,
-  hatoyama,
+  senju = '千住',
+  hatoyama = '鳩山',
 }
 
 export interface Log {
+  label: string;
   code: string;
   date: string;
   type: LogType;

@@ -20,6 +20,8 @@ import QrCode from './QrCode';
 import Link from 'next/link';
 import * as colors from '../utils/colors';
 import {Direct} from './Directly';
+import {useRecoilState} from 'recoil';
+import {useCameraState, qrReadState} from '../utils/recoilAtoms';
 
 const SettingButton = ({link}: {link: string}) => (
   <Link href={link}>
@@ -35,19 +37,29 @@ const SettingButton = ({link}: {link: string}) => (
   </Link>
 );
 
-const UtilButton = ({title, link}: {title: string; link: string}) => (
-  <Link href={link}>
-    <Button
-      borderRadius="1.5rem"
-      width="20rem"
-      backgroundColor={colors.buttonSecondly}
-      padding="1rem .5rem 1rem .5rem"
-    >
-      <Text color={colors.textPrimary}>{title}</Text>
-    </Button>
-  </Link>
-);
+const UtilButton = ({title, link}: {title: string; link: string}) => {
+  const [, SetUseCamera] = useRecoilState(useCameraState);
+  const [, setQrRead] = useRecoilState(qrReadState);
 
+  const qrClose = () => {
+    SetUseCamera(false);
+    setQrRead(false);
+  };
+
+  return (
+    <Link href={link}>
+      <Button
+        borderRadius="1.5rem"
+        width="20rem"
+        backgroundColor={colors.buttonSecondly}
+        padding="1rem .5rem 1rem .5rem"
+        onClick={qrClose}
+      >
+        <Text color={colors.textPrimary}>{title}</Text>
+      </Button>
+    </Link>
+  );
+};
 /**
  * トップページ
  */
@@ -81,10 +93,7 @@ const Top = () => {
         <Divider colorScheme={colors.divider} borderWidth="1px" width="20rem" />
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <UtilButton title="着席履歴の確認" link="" />
-      </Center>
-      <Center margin="1rem 0 1rem 0">
-        <UtilButton title="更新履歴" link="" />
+        <UtilButton title="着席履歴の確認" link="/history" />
       </Center>
     </React.Fragment>
   );

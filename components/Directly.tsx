@@ -52,6 +52,7 @@ export const Direct = () => {
       const parsedQrData = logUtil.parseQrData();
 
       const datum: Log = {
+        label: '',
         code: data,
         date: new Date().toLocaleString('ja-JP'),
         type: LogType.normal,
