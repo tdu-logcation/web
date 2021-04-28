@@ -19,7 +19,6 @@ import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import Link from 'next/link';
 import * as colors from '../utils/colors';
-import {SelectCampus} from './Campus';
 import {Direct} from './Directly';
 
 const SettingButton = ({link}: {link: string}) => (
@@ -55,7 +54,6 @@ const UtilButton = ({title, link}: {title: string; link: string}) => (
 const Top = () => {
   return (
     <React.Fragment>
-      <SelectCampus />
       <Center>
         <Flex width="20rem">
           <Box display="flex" justifyContent="center" alignItems="center">
