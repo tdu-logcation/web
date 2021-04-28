@@ -9,6 +9,7 @@ export const mainSecondly = '#406b94';
 
 export const textPrimary = '#2b2b2b';
 export const textSecondly = '#4a4a4a';
+export const textTertiary = '#fafafa';
 
 export const buttonPrimary = '#eebdc0';
 export const buttonSecondly = '#f2f2f2';
