@@ -7,7 +7,7 @@
 import {atom, DefaultValue} from 'recoil';
 import {Campus} from '../@types/campus';
 import {Log} from '../@types/log';
-import {tableShow} from './table';
+import {tableInit} from './table';
 
 const localStorageEffect = (key: string) => ({setSelf, onSet}) => {
   const savedValue = localStorage.getItem(key);
@@ -98,6 +98,10 @@ export const directText = atom<string>({
  */
 export const tableShowState = atom<boolean[]>({
   key: 'tableShow',
-  // [日時, キャンパス, 号館, 階数, 教室名, 座席位置]
-  default: [true, false, true, false, true, false],
+  default: tableInit,
+});
+
+export const tableDateShortState = atom<boolean>({
+  key: 'tableDateShort',
+  default: false,
 });

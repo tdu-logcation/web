@@ -16,23 +16,26 @@ import {
   Flex,
   Text,
   Box,
-  Button,
   Checkbox,
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
-import {logState, tableShowState} from '../utils/recoilAtoms';
+import {
+  logState,
+  tableShowState,
+  tableDateShortState,
+} from '../utils/recoilAtoms';
 import LogUtil from '../utils/LogUtil';
 import {formatDate, formatTableShow} from '../utils/formatUtil';
 import {useTable, useSortBy} from 'react-table';
 import {IoArrowUpOutline, IoArrowDownOutline} from 'react-icons/io5';
 import * as colors from '../utils/colors';
-import {HistoryTable, TableData} from '../@types/historyTable';
-import {tableShow} from '../utils/table';
+import {TableData} from '../@types/historyTable';
+import {tableShow, tableInit} from '../utils/table';
 
 export const History = () => {
   const [log] = useRecoilState(logState);
   const [show, setShow] = useRecoilState(tableShowState);
-  const [dateType, setDateType] = React.useState<boolean>(false);
+  const [dateType, setDateType] = useRecoilState(tableDateShortState);
 
   const data: TableData[] = React.useMemo(
     () =>
@@ -55,34 +58,11 @@ export const History = () => {
   );
 
   const columns = React.useMemo(
-    () => [
-      {
-        Header: '日付',
-        accessor: HistoryTable.date,
-      },
-      {
-        Header: 'キャンパス',
-        accessor: HistoryTable.campus,
-      },
-      {
-        Header: '号館',
-        accessor: HistoryTable.building,
-        isNumeric: true,
-      },
-      {
-        Header: '階数',
-        accessor: HistoryTable.floor,
-        isNumeric: true,
-      },
-      {
-        Header: '部屋番号',
-        accessor: HistoryTable.room,
-      },
-      {
-        Header: '座席位置',
-        accessor: HistoryTable.seat,
-      },
-    ],
+    () =>
+      tableShow.map(element => ({
+        Header: element.name,
+        accessor: element.id,
+      })),
     []
   );
 
@@ -98,8 +78,7 @@ export const History = () => {
       columns,
       data,
       initialState: {
-        // [日時, キャンパス, 号館, 階数, 教室名, 座席位置]
-        hiddenColumns: formatTableShow([true, false, true, false, true, false]),
+        hiddenColumns: formatTableShow(tableInit),
       },
     },
     useSortBy
@@ -130,6 +109,16 @@ export const History = () => {
   return (
     <React.Fragment>
       <Box>{showButton()}</Box>
+      <Box>
+        <Checkbox
+          isChecked={dateType}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setDateType(event.target.checked);
+          }}
+        >
+          日付短縮
+        </Checkbox>
+      </Box>
       <Center>
         <Box margin="1rem .5rem 1rem .5rem">
           <Table
