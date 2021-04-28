@@ -19,7 +19,7 @@ export function formatDate(dateStr: string, isShort: boolean) {
   const week = ['日', '月', '火', '水', '木', '金', '土'];
 
   const year = date.getFullYear();
-  const month = date.getMonth();
+  const month = date.getMonth() + 1;
   const weekDay = week[date.getDay()];
   const day = date.getDate();
   const hour = date.getHours();
@@ -64,7 +64,7 @@ export function exportLog(log: Log[]): string {
   const formattedLogs = log.map(element => {
     const date = new Date(element.date);
     return `"${element.label}",${date.getFullYear()}/${padding(
-      date.getMonth()
+      date.getMonth() + 1
     )}/${padding(date.getDate())},${padding(date.getHours())}:${padding(
       date.getMinutes()
     )}:${padding(date.getSeconds())},"${element.code}"`;
