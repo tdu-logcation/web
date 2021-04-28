@@ -174,7 +174,7 @@ export const History = () => {
         <Text color={colors.textPrimary}>クリップボードにコピー</Text>
       </UtilButton>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="sm">
+      <Modal isOpen={isOpen} onClose={onClose} size="sm" isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>フィルター</ModalHeader>
@@ -191,11 +191,11 @@ export const History = () => {
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setDateType(event.target.checked);
                 }}
-                id="date-short"
+                id="dateShort"
                 size="lg"
               />
               <FormLabel
-                htmlFor="date-short"
+                htmlFor="dateShort"
                 mb="0"
                 marginLeft="1rem"
                 fontSize="1.2em"
@@ -217,7 +217,9 @@ export const History = () => {
           display="block"
           overflowX="scroll"
           whiteSpace="nowrap"
-          css={{'&::-webkit-overflow-scrolling': 'touch'}}
+          style={{
+            WebkitOverflowScrolling: 'touch',
+          }}
         >
           <Thead>
             {headerGroups.map(headerGroup => (
