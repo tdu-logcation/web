@@ -7,11 +7,8 @@ import {ParsedLog, LogCampus} from '../@types/log';
 
 export default class LogUtil {
   /* 正規表現 */
-  private REG_EXP = /^jp.ac.dendai\/(?<headCode>(2)?(?<buildingNumber>[01]?[0-9])(?<floorNumber>[01]?[0-9])(?<roomNumber>[0-9][0-9]))-(?<seatNumber>.+)$/;
-
-  /* 鳩山キャンパス判定用 しきい値 */
-  private HATOYAMA_MIN = 6;
-  private HATOYAMA_MAX = 7;
+  private senju_regular_expression = /^jp.ac.dendai\/(?<buildingNumber>[1-5])(?<floorNumber>1?[0-9])(?<roomNumber>[01][0-9][AB]?)-(?<seatNumber>[^-]+)$/;
+  private hatoyama_regular_expression = /^jp.ac.dendai\/2(?<buildingNumber>[01][0-9])(?<floorNumber>[01][0-9])(?<roomNumber>[01][0-9])-(?<seatNumber>[^-]+)$/;
 
   /* 座席コード */
   qrData: string;
@@ -26,11 +23,10 @@ export default class LogUtil {
    * @returns 正しいデータか否か
    */
   public validateQrData(): boolean {
-    if (!this.REG_EXP.test(this.qrData)) {
-      return false;
-    }
-
-    return true;
+    return (
+      this.senju_regular_expression.test(this.qrData) ||
+      this.hatoyama_regular_expression.test(this.qrData)
+    );
   }
 
   /**
@@ -39,7 +35,11 @@ export default class LogUtil {
    * @returns Log
    */
   public parseQrData(): ParsedLog {
-    const data = this.qrData.match(this.REG_EXP).groups;
+    const data = this.qrData.match(
+      this.getLogCampus() === LogCampus.senju
+        ? this.senju_regular_expression
+        : this.hatoyama_regular_expression
+    ).groups;
 
     return {
       buildingNumber: data.buildingNumber,
@@ -55,15 +55,10 @@ export default class LogUtil {
    * @returns LogType
    */
   public getLogCampus(): LogCampus {
-    const headCode = this.qrData.match(this.REG_EXP).groups.headCode;
-
-    if (
-      headCode.length >= this.HATOYAMA_MIN &&
-      headCode.length <= this.HATOYAMA_MAX
-    ) {
+    if (this.senju_regular_expression.test(this.qrData)) {
+      return LogCampus.senju;
+    } else if (this.hatoyama_regular_expression.test(this.qrData)) {
       return LogCampus.hatoyama;
     }
-
-    return LogCampus.senju;
   }
 }
