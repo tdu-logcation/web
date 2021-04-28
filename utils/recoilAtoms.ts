@@ -101,7 +101,18 @@ export const tableShowState = atom<boolean[]>({
   default: tableInit,
 });
 
+/**
+ * テーブルの日付短縮表示
+ */
 export const tableDateShortState = atom<boolean>({
   key: 'tableDateShort',
+  default: false,
+});
+
+/**
+ * クリップボード
+ */
+export const isCopyState = atom<boolean>({
+  key: 'isCopy',
   default: false,
 });

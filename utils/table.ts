@@ -1,7 +1,7 @@
 import {TableShow, HistoryTable} from '../@types/historyTable';
 
 // [日時, キャンパス, 号館, 階数, 教室名, 座席位置]
-export const tableInit = [true, false, true, false, true, false];
+export const tableInit = [true, true, true, true, true, true];
 
 export const tableShow: TableShow[] = [
   {

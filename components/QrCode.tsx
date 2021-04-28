@@ -113,6 +113,7 @@ const Qr = () => {
         const parsedQrData = logUtil.parseQrData();
 
         const data = {
+          label: '',
           code: qrData,
           date: new Date().toLocaleString('ja-JP'),
           type: LogType.normal,

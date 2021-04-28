@@ -5,6 +5,7 @@
  */
 
 import {tableShow} from './table';
+import {Log} from '../@types/log';
 
 /**
  * 日付をフォーマットします。
@@ -49,3 +50,33 @@ export function formatTableShow(showData: boolean[]) {
 
   return show;
 }
+
+/**
+ * ログをリレキログフォーマットに変換します。
+ *
+ * "label",YYYY/MM/DD,HH:mm:ss,"read string"\n
+ *
+ * @param log ログデータ
+ * @returns フォーマットした文字列
+ */
+export function exportLog(log: Log[]): string {
+  // TODO: 日時を指定してその期間のみにする
+  const formattedLogs = log.map(element => {
+    const date = new Date(element.date);
+    return `"${element.label}",${date.getFullYear()}/${padding(
+      date.getMonth()
+    )}/${padding(date.getDate())},${padding(date.getHours())}:${padding(
+      date.getMinutes()
+    )}:${padding(date.getSeconds())},"${element.code}"`;
+  });
+
+  return formattedLogs.join('\n');
+}
+
+/**
+ * 0埋めします。
+ *
+ * @param element number
+ * @returns 0埋めした文字
+ */
+const padding = (element: number): string => ('00' + element).slice(-2);

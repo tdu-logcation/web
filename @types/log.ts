@@ -16,6 +16,7 @@ export enum LogCampus {
 }
 
 export interface Log {
+  label: string;
   code: string;
   date: string;
   type: LogType;
