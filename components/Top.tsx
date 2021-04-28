@@ -19,7 +19,6 @@ import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import Link from 'next/link';
 import * as colors from '../utils/colors';
-import {SelectCampus} from './Campus';
 import {Direct} from './Directly';
 import {useRecoilState} from 'recoil';
 import {useCameraState, qrReadState} from '../utils/recoilAtoms';
@@ -67,18 +66,21 @@ const UtilButton = ({title, link}: {title: string; link: string}) => {
 const Top = () => {
   return (
     <React.Fragment>
-      <SelectCampus />
       <Center>
         <Flex width="20rem">
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Avatar name="app icon" src="" size="sm" />
+            <Avatar
+              name="app icon"
+              src="/static/icons/icon-512x512.png"
+              size="sm"
+            />
             <Text
               fontSize="1.3rem"
               fontWeight="bold"
               marginLeft="1.2rem"
               color={colors.textPrimary}
             >
-              リレキログ
+              Logcation
             </Text>
           </Box>
           <Spacer />
