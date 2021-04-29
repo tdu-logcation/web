@@ -103,7 +103,6 @@ const Qr = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(useCamera);
     if (isQrRead || !useCamera) {
       setCameraComponent(false);
     }
