@@ -70,16 +70,16 @@ const Top = () => {
   return (
     <React.Fragment>
       <Center>
-        <Flex width="20rem">
-          <Box display="flex" justifyContent="right">
+        <Flex width="20rem" justifyContent="center" alignItems="center">
+          <Box>
             <Image
               src="/static/images/logcation.svg"
-              htmlWidth="60%"
-              htmlHeight="60%"
+              htmlWidth="70%"
+              htmlHeight="70%"
               alt="Logcation"
             />
           </Box>
-          <Box display="flex" justifyContent="left">
+          <Box>
             <SettingButton link="" />
           </Box>
         </Flex>
