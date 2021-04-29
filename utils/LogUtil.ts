@@ -42,9 +42,12 @@ export default class LogUtil {
     ).groups;
 
     return {
-      buildingNumber: data.buildingNumber,
-      floorNumber: data.floorNumber,
-      roomNumber: data.buildingNumber + data.floorNumber + data.roomNumber,
+      buildingNumber: String(Number(data.buildingNumber)),
+      floorNumber: String(Number(data.floorNumber)),
+      roomNumber:
+        String(Number(data.buildingNumber)) +
+        String(Number(data.floorNumber)) +
+        data.roomNumber,
       seatNumber: data.seatNumber,
     };
   }
