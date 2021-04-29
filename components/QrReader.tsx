@@ -113,6 +113,7 @@ const QrReader = () => {
       cancelAnimationFrame(animationFrame);
       const tracks = videoStream.getTracks();
       tracks.forEach(track => track.stop());
+      setUseCamera(true);
       return;
     }
   };
