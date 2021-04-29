@@ -82,6 +82,11 @@ export function exportLog(log: Log[]): string {
  */
 const padding = (element: number): string => ('00' + element).slice(-2);
 
+/**
+ * ツイートリンクを作成します。
+ * @param log ログデータ
+ * @returns ツイートURL
+ */
 export function tweetLink(log: Log[]): string {
   const hashTag = 'Logcation';
   const link = window.location.href;
