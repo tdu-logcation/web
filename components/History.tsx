@@ -63,7 +63,7 @@ export const History = () => {
 
   const data: TableData[] = React.useMemo(
     () =>
-      log.reverse().map(log => {
+      [...log].reverse().map(log => {
         const logUtil = new LogUtil(log.code);
         if (logUtil.validateQrData()) {
           const parsedData = logUtil.parseQrData();

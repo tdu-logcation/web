@@ -91,7 +91,7 @@ export function tweetLink(log: Log[]): string {
   const hashTag = 'Logcation';
   const link = window.location.href;
 
-  const logLatest = log.reverse()[0];
+  const logLatest = [...log].reverse()[0];
   const logUtil = new LogUtil(logLatest.code);
   if (logUtil.validateQrData()) {
     const logData = logUtil.parseQrData();
