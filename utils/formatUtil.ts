@@ -92,13 +92,15 @@ export function tweetLink(log: Log[]): string {
   const link = window.location.href;
 
   const logLatest = [...log].reverse()[0];
-  const logUtil = new LogUtil(logLatest.code);
-  if (logUtil.validateQrData()) {
-    const logData = logUtil.parseQrData();
+  if (logLatest) {
+    const logUtil = new LogUtil(logLatest.code);
+    if (logUtil.validateQrData()) {
+      const logData = logUtil.parseQrData();
 
-    const tweet = `I'm at ${logData.roomNumber}教室%0d`;
+      const tweet = `I'm at ${logData.roomNumber}教室%0d`;
 
-    return `https://twitter.com/intent/tweet?text=${tweet}&url=${link}&hashtags=${hashTag}`;
+      return `https://twitter.com/intent/tweet?text=${tweet}&url=${link}&hashtags=${hashTag}`;
+    }
   }
   return `https://twitter.com/intent/tweet?text=読み込めなかった%0d&url=${link}&hashtags=${hashTag}`;
 }
