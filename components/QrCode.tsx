@@ -99,6 +99,11 @@ const Qr = () => {
   const [log, setLog] = useRecoilState(logState);
 
   React.useEffect(() => {
+    setCameraComponent(true);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(useCamera);
     if (isQrRead || !useCamera) {
       setCameraComponent(false);
     }
