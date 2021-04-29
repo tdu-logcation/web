@@ -20,6 +20,21 @@
 
 [Usage](./documents/usage.md)
 
+## 貢献者
+
+### 開発
+
+- [@cateiru](https://twitter.com/cateiru)
+- [@fujiwaraizuho](https://twitter.com/fujiwaraizuho)
+
+### ロゴ作成、名前発案
+
+- [@LinChan0826](https://twitter.com/LinChan0826)
+
+### デザイン作成
+
+- [@kazuemon0602](https://twitter.com/kazuemon0602)
+
 ## お問い合わせ
 
 - Yuto Watanabe
