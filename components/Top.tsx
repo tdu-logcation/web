@@ -21,7 +21,8 @@ import Link from 'next/link';
 import * as colors from '../utils/colors';
 import {Direct} from './Directly';
 import {useRecoilState} from 'recoil';
-import {useCameraState, qrReadState} from '../utils/recoilAtoms';
+import {useCameraState, qrReadState, logState} from '../utils/recoilAtoms';
+import {tweetLink} from '../utils/formatUtil';
 
 const SettingButton = ({link}: {link: string}) => (
   <Link href={link}>
@@ -37,7 +38,7 @@ const SettingButton = ({link}: {link: string}) => (
   </Link>
 );
 
-const UtilButton = ({title, link}: {title: string; link: string}) => {
+const OtherPage = ({title, link}: {title: string; link: string}) => {
   const [, SetUseCamera] = useRecoilState(useCameraState);
   const [, setQrRead] = useRecoilState(qrReadState);
 
@@ -60,10 +61,13 @@ const UtilButton = ({title, link}: {title: string; link: string}) => {
     </Link>
   );
 };
+
 /**
  * トップページ
  */
 const Top = () => {
+  const [log] = useRecoilState(logState);
+
   return (
     <React.Fragment>
       <Center>
@@ -93,7 +97,10 @@ const Top = () => {
         <Divider colorScheme={colors.divider} borderWidth="1px" width="20rem" />
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <UtilButton title="着席履歴の確認" link="/history" />
+        <OtherPage title="着席履歴の確認" link="/history" />
+      </Center>
+      <Center margin="1rem 0 1rem 0">
+        <OtherPage title="ツイート" link={tweetLink(log)} />
       </Center>
     </React.Fragment>
   );
