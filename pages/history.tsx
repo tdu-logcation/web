@@ -5,12 +5,15 @@
  */
 import {Box} from '@chakra-ui/react';
 import {History} from '../components/History';
+import {Page} from '../components/Page';
 
 const HistoryPage = () => {
   return (
-    <Box margin="2.3rem .1rem 1rem .1rem">
-      <History />
-    </Box>
+    <Page>
+      <Box margin="2.3rem .1rem 1rem .1rem">
+        <History />
+      </Box>
+    </Page>
   );
 };
 
