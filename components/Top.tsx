@@ -9,11 +9,10 @@ import {
   Button,
   Flex,
   Text,
-  Spacer,
   Box,
-  Avatar,
   Center,
   Divider,
+  Image,
 } from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
@@ -72,23 +71,17 @@ const Top = () => {
     <React.Fragment>
       <Center>
         <Flex width="20rem">
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Avatar
-              name="app icon"
-              src="/static/icons/icon-512x512.png"
-              size="sm"
+          <Box display="flex" justifyContent="right">
+            <Image
+              src="/static/images/logcation.svg"
+              htmlWidth="60%"
+              htmlHeight="60%"
+              alt="Logcation"
             />
-            <Text
-              fontSize="1.3rem"
-              fontWeight="bold"
-              marginLeft="1.2rem"
-              color={colors.textPrimary}
-            >
-              Logcation
-            </Text>
           </Box>
-          <Spacer />
-          <SettingButton link="" />
+          <Box display="flex" justifyContent="left">
+            <SettingButton link="" />
+          </Box>
         </Flex>
       </Center>
       <QrCode />
