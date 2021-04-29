@@ -45,7 +45,9 @@ export default class LogUtil {
       buildingNumber: String(Number(data.buildingNumber)),
       floorNumber: String(Number(data.floorNumber)),
       roomNumber:
-        String(Number(data.buildingNumber)) +
+        (Number(data.buildingNumber) < 10
+          ? String(Number(data.buildingNumber))
+          : '') +
         String(Number(data.floorNumber)) +
         data.roomNumber,
       seatNumber: data.seatNumber,
