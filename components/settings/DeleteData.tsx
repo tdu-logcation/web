@@ -37,7 +37,7 @@ export const DeleteData = () => {
       });
     } else {
       toast({
-        title: 'ログデータは空です',
+        title: 'ログデータはすでに空です',
         status: 'error',
         duration: 9000,
         isClosable: true,

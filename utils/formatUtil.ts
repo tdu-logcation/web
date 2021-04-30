@@ -5,7 +5,7 @@
  */
 
 import {tableShow} from './table';
-import {Log} from '../@types/log';
+import {Log, LogType} from '../@types/log';
 import LogUtil from './LogUtil';
 
 /**
@@ -103,4 +103,41 @@ export function tweetLink(log: Log[]): string {
     }
   }
   return `https://twitter.com/intent/tweet?text=読み込めなかった%0d&url=${link}&hashtags=${hashTag}`;
+}
+
+/**
+ * 外部のログデータをフォーマットします。
+ *
+ * @param otherLog 外部ログデータ
+ * @returns ログデータ
+ */
+export function formatOtherLog(otherLog: string): Log | null {
+  const regularExpression = /^"(?<label>[^"]+)",\s?(?<date>.+),\s?(?<time>.+),\s?"(?<code>jp.ac.dendai\/[^"]+)"$/;
+  const dateExpression = /^(?<year>[0-9]{4})\/(?<month>[0-1][0-9])\/(?<date>[0-3][0-9])$/;
+  const timeExpression = /^(?<hour>[0-2][0-9]):(?<minute>[0-5][0-9]):(?<sec>[0-5][0-9])$/;
+
+  if (regularExpression.test(otherLog)) {
+    const logData = otherLog.match(regularExpression).groups;
+    const logUtil = new LogUtil(logData.code);
+    if (logUtil.parseQrData) {
+      const date = logData.date.match(dateExpression).groups;
+      const time = logData.time.match(timeExpression).groups;
+      return {
+        label: logData.label,
+        code: logData.code,
+        date: new Date(
+          Number(date.year),
+          Number(date.month),
+          Number(date.date),
+          Number(time.hour),
+          Number(time.minute),
+          Number(time.sec)
+        ).toLocaleString('ja-JP'),
+        type: LogType.normal,
+        campus: logUtil.getLogCampus(),
+      };
+    }
+  }
+
+  return null;
 }
