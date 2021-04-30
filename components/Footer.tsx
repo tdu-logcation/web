@@ -1,3 +1,9 @@
+/**!
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 import {Box, Text, Center, Flex, Spacer, Link} from '@chakra-ui/react';
 import * as colors from '../utils/colors';
 import {HiExternalLink} from 'react-icons/hi';
