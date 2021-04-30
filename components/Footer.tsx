@@ -1,3 +1,9 @@
+/**!
+ * @author Yuto Watanabe
+ *
+ * Copyright (C) 2021 logcation
+ */
+
 import {Box, Text, Center, Flex, Spacer, Link} from '@chakra-ui/react';
 import * as colors from '../utils/colors';
 import {HiExternalLink} from 'react-icons/hi';
@@ -9,12 +15,12 @@ export const Footer = () => {
         <Flex width="20rem" justifyContent="center" alignItems="center">
           <Box>
             <Link href="https://github.com/tdu-logcation/web" isExternal>
-              <Text color={colors.textSecondly} fontSize=".7rem">
+              <Box color={colors.textSecondly} fontSize=".7rem">
                 <Flex>
                   GitHub
                   <HiExternalLink />
                 </Flex>
-              </Text>
+              </Box>
             </Link>
           </Box>
           <Spacer />

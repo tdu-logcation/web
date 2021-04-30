@@ -106,3 +106,8 @@ export const isCopyState = atom<boolean>({
   key: 'isCopy',
   default: false,
 });
+
+export const otherLogState = atom<string>({
+  key: 'otherLog',
+  default: '',
+});
