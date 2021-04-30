@@ -1,5 +1,5 @@
 import React from 'react';
-import {Textarea, Box, Button, useToast, Text} from '@chakra-ui/react';
+import {Textarea, Box, Button, useToast} from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {logState, otherLogState} from '../../utils/recoilAtoms';
 import {formatOtherLog} from '../../utils/formatUtil';
@@ -66,14 +66,6 @@ export const ReadLog = () => {
 
   return (
     <Box>
-      <Text
-        margin="1rem 0 1rem 0"
-        fontSize="1.2rem"
-        fontWeight="bold"
-        color={colors.textPrimary}
-      >
-        別のログデータを読み込む
-      </Text>
       <Textarea
         placeholder="ログデータを入力"
         value={otherLog}
@@ -83,7 +75,7 @@ export const ReadLog = () => {
       />
       <Button
         onClick={handleChange}
-        float="right"
+        marginLeft="66%"
         color={colors.textPrimary}
         variant="ghost"
       >
