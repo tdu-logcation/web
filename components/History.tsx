@@ -31,7 +31,6 @@ import {
   ButtonProps,
   useToast,
   Divider,
-  Spacer,
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {
@@ -43,15 +42,12 @@ import {
 import LogUtil from '../utils/LogUtil';
 import {formatDate, formatTableShow, exportLog} from '../utils/formatUtil';
 import {useTable, useSortBy} from 'react-table';
-import {
-  IoArrowUpOutline,
-  IoArrowDownOutline,
-  IoHomeSharp,
-} from 'react-icons/io5';
+import {IoArrowUpOutline, IoArrowDownOutline} from 'react-icons/io5';
 import * as colors from '../utils/colors';
 import {TableData} from '../@types/historyTable';
 import {tableShow, tableInit} from '../utils/table';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {OtherPage} from './OtherPage';
 
 export const History = () => {
   const [log] = useRecoilState(logState);
@@ -184,33 +180,7 @@ export const History = () => {
   }, [isCopy]);
 
   return (
-    <React.Fragment>
-      <Center marginBottom="2rem">
-        <Flex width="20rem">
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Text
-              fontSize="1.3rem"
-              fontWeight="bold"
-              marginLeft="1.2rem"
-              color={colors.textPrimary}
-            >
-              履歴
-            </Text>
-          </Box>
-          <Spacer />
-          <Link href="/">
-            <Button
-              borderRadius="2rem"
-              leftIcon={<IoHomeSharp />}
-              backgroundColor={colors.buttonSecondly}
-              color={colors.buttonIconSecondly}
-              width="9rem"
-            >
-              <Text color={colors.textPrimary}>ホームへ戻る</Text>
-            </Button>
-          </Link>
-        </Flex>
-      </Center>
+    <OtherPage title="履歴">
       <UtilButton onClick={onOpen}>
         <Text color={colors.textPrimary}>フィルター</Text>
       </UtilButton>
@@ -314,6 +284,6 @@ export const History = () => {
           </Tbody>
         </Table>
       </Center>
-    </React.Fragment>
+    </OtherPage>
   );
 };

@@ -20,43 +20,35 @@ import Link from 'next/link';
 import * as colors from '../utils/colors';
 import {Direct} from './Directly';
 import {useRecoilState} from 'recoil';
-import {useCameraState, qrReadState, logState} from '../utils/recoilAtoms';
+import {logState} from '../utils/recoilAtoms';
 import {tweetLink} from '../utils/formatUtil';
+import {PageJump} from './OtherPage';
 
 const SettingButton = ({link}: {link: string}) => (
-  <Link href={link}>
-    <Button
-      borderRadius="2rem"
-      leftIcon={<IoSettingsSharp />}
-      backgroundColor={colors.buttonSecondly}
-      color={colors.buttonIconSecondly}
-      width="6.2rem"
-    >
-      <Text color={colors.textPrimary}>設定</Text>
-    </Button>
-  </Link>
+  <PageJump
+    borderRadius="2rem"
+    leftIcon={<IoSettingsSharp />}
+    backgroundColor={colors.buttonSecondly}
+    color={colors.buttonIconSecondly}
+    width="6.2rem"
+    link={link}
+  >
+    <Text color={colors.textPrimary}>設定</Text>
+  </PageJump>
 );
 
 const OtherPage = ({title, link}: {title: string; link: string}) => {
-  const [, SetUseCamera] = useRecoilState(useCameraState);
-  const [, setQrRead] = useRecoilState(qrReadState);
-
-  const qrClose = () => {
-    SetUseCamera(false);
-    setQrRead(false);
-  };
-
   return (
     <Link href={link}>
-      <Button
+      <PageJump
         borderRadius="1.5rem"
         width="20rem"
         backgroundColor={colors.buttonSecondly}
         padding="1rem .5rem 1rem .5rem"
-        onClick={qrClose}
+        link={link}
       >
         <Text color={colors.textPrimary}>{title}</Text>
-      </Button>
+      </PageJump>
     </Link>
   );
 };
@@ -80,7 +72,7 @@ const Top = () => {
             />
           </Box>
           <Box>
-            <SettingButton link="" />
+            <SettingButton link="/setting" />
           </Box>
         </Flex>
       </Center>
