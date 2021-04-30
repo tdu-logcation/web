@@ -8,7 +8,6 @@ import React from 'react';
 import {Flex, Text, Box, Center, Divider, Image} from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
-import Link from 'next/link';
 import * as colors from '../utils/colors';
 import {Direct} from './Directly';
 import {useRecoilState} from 'recoil';

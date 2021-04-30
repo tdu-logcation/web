@@ -112,7 +112,7 @@ export function tweetLink(log: Log[]): string {
  * @returns ログデータ
  */
 export function formatOtherLog(otherLog: string): Log | null {
-  const regularExpression = /^"(?<label>[^"]+)",\s?(?<date>.+),\s?(?<time>.+),\s?"(?<code>jp.ac.dendai\/[^"]+)"$/;
+  const regularExpression = /^"(?<label>[^"]*)",\s?(?<date>.+),\s?(?<time>.+),\s?"(?<code>jp.ac.dendai\/[^"]+)"$/;
   const dateExpression = /^(?<year>[0-9]{4})\/(?<month>[0-1][0-9])\/(?<date>[0-3][0-9])$/;
   const timeExpression = /^(?<hour>[0-2][0-9]):(?<minute>[0-5][0-9]):(?<sec>[0-5][0-9])$/;
 
