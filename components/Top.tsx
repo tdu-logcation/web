@@ -5,15 +5,7 @@
  */
 
 import React from 'react';
-import {
-  Button,
-  Flex,
-  Text,
-  Box,
-  Center,
-  Divider,
-  Image,
-} from '@chakra-ui/react';
+import {Flex, Text, Box, Center, Divider, Image} from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import Link from 'next/link';
@@ -26,30 +18,32 @@ import {PageJump} from './OtherPage';
 
 const SettingButton = ({link}: {link: string}) => (
   <PageJump
-    borderRadius="2rem"
-    leftIcon={<IoSettingsSharp />}
-    backgroundColor={colors.buttonSecondly}
-    color={colors.buttonIconSecondly}
-    width="6.2rem"
+    buttonProps={{
+      borderRadius: '2rem',
+      leftIcon: <IoSettingsSharp />,
+      backgroundColor: colors.buttonSecondly,
+      color: colors.buttonIconSecondly,
+      width: '6.2rem',
+    }}
     link={link}
   >
     <Text color={colors.textPrimary}>設定</Text>
   </PageJump>
 );
 
-const OtherPage = ({title, link}: {title: string; link: string}) => {
+const OtherPageButton = ({title, link}: {title: string; link: string}) => {
   return (
-    <Link href={link}>
-      <PageJump
-        borderRadius="1.5rem"
-        width="20rem"
-        backgroundColor={colors.buttonSecondly}
-        padding="1rem .5rem 1rem .5rem"
-        link={link}
-      >
-        <Text color={colors.textPrimary}>{title}</Text>
-      </PageJump>
-    </Link>
+    <PageJump
+      buttonProps={{
+        borderRadius: '1.5rem',
+        width: '20rem',
+        backgroundColor: colors.buttonSecondly,
+        padding: '1rem .5rem 1rem .5rem',
+      }}
+      link={link}
+    >
+      <Text color={colors.textPrimary}>{title}</Text>
+    </PageJump>
   );
 };
 
@@ -82,10 +76,10 @@ const Top = () => {
         <Divider colorScheme={colors.divider} borderWidth="1px" width="20rem" />
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <OtherPage title="着席履歴の確認" link="/history" />
+        <OtherPageButton title="着席履歴の確認" link="/history" />
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <OtherPage title="ツイート" link={tweetLink(log)} />
+        <OtherPageButton title="ツイート" link={tweetLink(log)} />
       </Center>
     </React.Fragment>
   );

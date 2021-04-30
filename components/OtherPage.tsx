@@ -54,7 +54,10 @@ export const OtherPage: React.FC<{title: string}> = props => {
   );
 };
 
-export const PageJump: React.FC<{link: string} & ButtonProps> = props => {
+export const PageJump: React.FC<{
+  link: string;
+  buttonProps: ButtonProps;
+}> = props => {
   const [, SetUseCamera] = useRecoilState(useCameraState);
   const [, setQrRead] = useRecoilState(qrReadState);
 
@@ -65,7 +68,7 @@ export const PageJump: React.FC<{link: string} & ButtonProps> = props => {
 
   return (
     <Link href={props.link}>
-      <Button onClick={qrClose} {...props}>
+      <Button onClick={qrClose} {...props.buttonProps}>
         {props.children}
       </Button>
     </Link>

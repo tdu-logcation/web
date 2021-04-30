@@ -27,14 +27,23 @@ export const DeleteData = () => {
   const toast = useToast();
 
   const deleteLog = () => {
-    setLog([]);
+    if (log.length !== 0) {
+      setLog([]);
+      toast({
+        title: '完全に削除しました',
+        status: 'info',
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: 'ログデータは空です',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
     onClose();
-    toast({
-      title: '完全に削除しました',
-      status: 'info',
-      duration: 9000,
-      isClosable: true,
-    });
   };
 
   return (
@@ -47,7 +56,7 @@ export const DeleteData = () => {
       >
         ログデータをすべて削除する
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>本当に削除しますか？</ModalHeader>
