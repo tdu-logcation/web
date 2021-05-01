@@ -127,7 +127,7 @@ export function formatOtherLog(otherLog: string): Log | null {
         code: logData.code,
         date: new Date(
           Number(date.year),
-          Number(date.month),
+          Number(date.month) - 1,
           Number(date.date),
           Number(time.hour),
           Number(time.minute),
