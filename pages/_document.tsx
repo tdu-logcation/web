@@ -88,7 +88,7 @@ class MyDocument extends Document {
           />
           <meta
             name="twitter:image"
-            content="https://log.tdu.app/static/images/ogp.png"
+            content="https://log.tdu.app/static/images/ogp.jpg"
           />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="Logcation" />
