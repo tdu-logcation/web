@@ -183,8 +183,9 @@ const Qr = () => {
     <AspectRatio max="100px" ratio={1}>
       <Box
         width="100px"
-        border="solid 2px #fff"
-        backgroundColor="#fff"
+        border={'solid 2px'}
+        borderColor={useColorModeValue('#fff', 'gray.800')}
+        backgroundColor={useColorModeValue('#fff', 'gray.800')}
         borderRadius="2rem"
         position="relative"
         zIndex="1"
