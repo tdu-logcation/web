@@ -5,14 +5,14 @@
  */
 
 export const dark = {
-  mainPrimary: '#bdd7ee', // TODO: 調整
-  mainSecondly: '#406b94', // TODO: 調整
+  mainPrimary: '#344350', // TODO: 調整
+  mainSecondly: '#bdd7ee', // TODO: 調整
 
   textPrimary: '#d6d6d6',
   textSecondly: '#b5b5b5',
   textTertiary: '#050505',
 
-  buttonPrimary: '#eebdc0', // TODO: 調整
+  buttonPrimary: '#8a585b', // TODO: 調整
   buttonSecondly: '#0f0f0f',
   buttonIconSecondly: '#b5b5b5',
 
