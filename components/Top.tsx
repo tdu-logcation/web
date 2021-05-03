@@ -22,6 +22,7 @@ import {useRecoilState} from 'recoil';
 import {logState} from '../utils/recoilAtoms';
 import {tweetLink} from '../utils/formatUtil';
 import {PageJump} from './OtherPage';
+import ColorModeSwitch from './settings/ColorModeSwitch';
 
 const SettingButton = ({link}: {link: string}) => (
   <PageJump
@@ -95,6 +96,7 @@ const Top = () => {
               alt="Logcation"
             />
           </Box>
+          <ColorModeSwitch />
           <Box>
             <SettingButton link="/setting" />
           </Box>

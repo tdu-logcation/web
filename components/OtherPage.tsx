@@ -20,6 +20,7 @@ import {IoHomeSharp} from 'react-icons/io5';
 import Link from 'next/link';
 import {useRecoilState} from 'recoil';
 import {useCameraState, qrReadState} from '../utils/recoilAtoms';
+import ColorModeSwitch from './settings/ColorModeSwitch';
 
 export const OtherPage: React.FC<{title: string}> = props => {
   return (
@@ -40,6 +41,7 @@ export const OtherPage: React.FC<{title: string}> = props => {
             </Text>
           </Box>
           <Spacer />
+          <ColorModeSwitch />
           <Link href="/">
             <Button
               borderRadius="2rem"
