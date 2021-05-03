@@ -1,6 +1,12 @@
 import {VFC} from 'react';
-import {Icon, IconButton, useColorMode} from '@chakra-ui/react';
+import {
+  Icon,
+  IconButton,
+  useColorMode,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import {IoMoon, IoSunny} from 'react-icons/io5';
+import * as colors from '../../utils/colors';
 
 const ColorModeSwitch: VFC = () => {
   const {colorMode, toggleColorMode} = useColorMode();
@@ -17,6 +23,10 @@ const ColorModeSwitch: VFC = () => {
       icon={
         colorMode === 'light' ? <Icon as={IoMoon} /> : <Icon as={IoSunny} />
       }
+      color={useColorModeValue(
+        colors.light.buttonIconSecondly,
+        colors.dark.buttonIconSecondly
+      )}
       bgColor={'transparent'}
       onClick={() => toggleColorMode()}
     />
