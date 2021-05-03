@@ -12,7 +12,7 @@ import {
   AspectRatio,
   Center,
   Spinner,
-  useToast,
+  useToast, useColorModeValue,
 } from '@chakra-ui/react';
 import {IoCameraSharp, IoVideocamOff, IoReloadOutline} from 'react-icons/io5';
 import QrReader from './QrReader';
@@ -38,9 +38,9 @@ const QrTitle = ({text}: {text: string}) => (
       alignItems="center"
       margin="0 1rem 0 0"
     >
-      <IoCameraSharp size="2rem" color={colors.mainSecondly} />
+      <IoCameraSharp size="2rem" color={useColorModeValue(colors.light.mainSecondly, colors.dark.mainSecondly)} />
     </Box>
-    <Text fontWeight="bold" fontSize="1.3rem" color={colors.textPrimary}>
+    <Text fontWeight="bold" fontSize="1.3rem" color={useColorModeValue(colors.light.textPrimary, colors.dark.textPrimary)}>
       {text}
     </Text>
   </Flex>
@@ -61,7 +61,7 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
       <Spinner
         thickness="4px"
         size="xl"
-        color={colors.mainSecondly}
+        color={useColorModeValue(colors.light.mainSecondly, colors.dark.mainSecondly)}
         position="absolute"
         zIndex="1"
       />
@@ -75,9 +75,9 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
         }}
       >
         {isQrRead ? (
-          <IoReloadOutline size="3rem" color={colors.mainSecondly} />
+          <IoReloadOutline size="3rem" color={useColorModeValue(colors.light.mainSecondly, colors.dark.mainSecondly)} />
         ) : (
-          <IoVideocamOff size="3rem" color={colors.mainSecondly} />
+          <IoVideocamOff size="3rem" color={useColorModeValue(colors.light.mainSecondly, colors.dark.mainSecondly)} />
         )}
       </button>
     );
@@ -177,7 +177,7 @@ const StatusText = () => {
   const [useCamera] = useRecoilState(useCameraState);
   const [isQrRead] = useRecoilState(qrReadState);
   return (
-    <Box color={colors.textSecondly}>
+    <Box color={useColorModeValue(colors.light.textSecondly, colors.dark.textSecondly)}>
       {cameraStatusText(isQrLoad, isQrRead, useCamera)}
     </Box>
   );
@@ -188,7 +188,7 @@ const QrCode = () => {
     <React.Fragment>
       <Center>
         <Box
-          backgroundColor={colors.mainPrimary}
+          backgroundColor={useColorModeValue(colors.light.mainPrimary, colors.dark.mainPrimary)}
           margin="2rem 0 0 0"
           padding="1.5rem 1.5rem 0 1.5rem"
           borderRadius="1.5rem"
@@ -206,7 +206,7 @@ const QrCode = () => {
         </Box>
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <Text fontWeight="bold" fontSize=".9rem" color={colors.textPrimary}>
+        <Text fontWeight="bold" fontSize=".9rem" color={useColorModeValue(colors.light.textPrimary, colors.dark.textPrimary)}>
           または
         </Text>
       </Center>

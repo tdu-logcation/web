@@ -1,5 +1,5 @@
 import React from 'react';
-import {Textarea, Box, Button, useToast} from '@chakra-ui/react';
+import {Textarea, Box, Button, useToast, useColorModeValue} from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {logState, otherLogState} from '../../utils/recoilAtoms';
 import {formatOtherLog} from '../../utils/formatUtil';
@@ -76,7 +76,7 @@ export const ReadLog = () => {
       <Button
         onClick={handleChange}
         marginLeft="66%"
-        color={colors.textPrimary}
+        color={useColorModeValue(colors.light.textPrimary, colors.dark.textPrimary)}
         variant="ghost"
       >
         読み込む

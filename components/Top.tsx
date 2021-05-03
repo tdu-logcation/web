@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import {Flex, Text, Box, Center, Divider, Image} from '@chakra-ui/react';
+import {Flex, Text, Box, Center, Divider, Image, useColorModeValue} from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import * as colors from '../utils/colors';
@@ -20,13 +20,13 @@ const SettingButton = ({link}: {link: string}) => (
     buttonProps={{
       borderRadius: '2rem',
       leftIcon: <IoSettingsSharp />,
-      backgroundColor: colors.buttonSecondly,
-      color: colors.buttonIconSecondly,
+      backgroundColor: useColorModeValue(colors.light.buttonSecondly, colors.dark.buttonSecondly),
+      color: useColorModeValue(colors.light.buttonIconSecondly, colors.dark.buttonIconSecondly),
       width: '6.2rem',
     }}
     link={link}
   >
-    <Text color={colors.textPrimary}>設定</Text>
+    <Text color={useColorModeValue(colors.light.textPrimary, colors.dark.textPrimary)}>設定</Text>
   </PageJump>
 );
 
@@ -36,12 +36,12 @@ const OtherPageButton = ({title, link}: {title: string; link: string}) => {
       buttonProps={{
         borderRadius: '1.5rem',
         width: '20rem',
-        backgroundColor: colors.buttonSecondly,
+        backgroundColor: useColorModeValue(colors.light.buttonSecondly, colors.dark.buttonSecondly),
         padding: '1rem .5rem 1rem .5rem',
       }}
       link={link}
     >
-      <Text color={colors.textPrimary}>{title}</Text>
+      <Text color={useColorModeValue(colors.light.textPrimary, colors.dark.textPrimary)}>{title}</Text>
     </PageJump>
   );
 };
@@ -72,7 +72,7 @@ const Top = () => {
       <QrCode />
       <Direct />
       <Center margin="2rem 0 2rem 0">
-        <Divider colorScheme={colors.divider} borderWidth="1px" width="20rem" />
+        <Divider colorScheme={useColorModeValue(colors.light.divider, colors.dark.divider)} borderWidth="1px" width="20rem" />
       </Center>
       <Center margin="1rem 0 1rem 0">
         <OtherPageButton title="着席履歴の確認" link="/history" />

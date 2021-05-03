@@ -12,7 +12,7 @@ import {
   ListItem,
   ListIcon,
   Link,
-  Flex,
+  Flex, useColorModeValue,
 } from '@chakra-ui/react';
 import {
   IoCloudUploadOutline,
@@ -35,13 +35,13 @@ export const Setting = () => {
           listStyleType="none"
         >
           <ListItem>
-            <ListIcon as={IoCloudUploadOutline} color={colors.mainSecondly} />
+            <ListIcon as={IoCloudUploadOutline} color={useColorModeValue(colors.light.mainSecondly, colors.dark.mainSecondly)} />
             別のログデータを読み込む
             <ReadLog />
           </ListItem>
           <ListItem>
             <Flex>
-              <ListIcon as={IoBugOutline} color={colors.mainSecondly} />
+              <ListIcon as={IoBugOutline} color={useColorModeValue(colors.light.mainSecondly, colors.dark.mainSecondly)} />
               <Link
                 href="https://github.com/tdu-logcation/web/issues"
                 isExternal
@@ -55,7 +55,7 @@ export const Setting = () => {
           </ListItem>
           <ListItem>
             <Flex>
-              <ListIcon as={IoLogoGithub} color={colors.mainSecondly} />
+              <ListIcon as={IoLogoGithub} color={useColorModeValue(colors.light.mainSecondly, colors.dark.mainSecondly)} />
               <Link href="https://github.com/tdu-logcation/web" isExternal>
                 <Flex>
                   ソースコードを見る

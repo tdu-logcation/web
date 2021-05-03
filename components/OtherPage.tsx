@@ -12,7 +12,7 @@ import {
   Spacer,
   Button,
   Center,
-  ButtonProps,
+  ButtonProps, useColorModeValue,
 } from '@chakra-ui/react';
 import * as colors from '../utils/colors';
 import {IoHomeSharp} from 'react-icons/io5';
@@ -30,7 +30,7 @@ export const OtherPage: React.FC<{title: string}> = props => {
               fontSize="1.3rem"
               fontWeight="bold"
               marginLeft="1.2rem"
-              color={colors.textPrimary}
+              color={useColorModeValue(colors.light.textPrimary, colors.dark.textPrimary)}
             >
               {props.title}
             </Text>
@@ -40,11 +40,11 @@ export const OtherPage: React.FC<{title: string}> = props => {
             <Button
               borderRadius="2rem"
               leftIcon={<IoHomeSharp />}
-              backgroundColor={colors.buttonSecondly}
-              color={colors.buttonIconSecondly}
+              backgroundColor={useColorModeValue(colors.light.buttonSecondly, colors.dark.buttonSecondly)}
+              color={useColorModeValue(colors.light.buttonIconSecondly, colors.dark.buttonIconSecondly)}
               width="9rem"
             >
-              <Text color={colors.textPrimary}>ホームへ戻る</Text>
+              <Text color={useColorModeValue(colors.light.textPrimary, colors.dark.textPrimary)}>ホームへ戻る</Text>
             </Button>
           </Link>
         </Flex>
