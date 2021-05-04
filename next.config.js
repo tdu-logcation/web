@@ -5,10 +5,31 @@
  */
 
 const withPWA = require('next-pwa');
+const {withPlugins} = require('next-compose-plugins');
+const withImages = require('next-images');
+const withReactSvg = require('next-react-svg');
+const path = require('path');
 
-module.exports = withPWA({
-  pwa: {
-    dest: 'public',
-    // runtimeCaching: []
-  },
-});
+module.exports = withPlugins([
+  [
+    withImages,
+    {
+      exclude: path.resolve('./assets/svgs'),
+    },
+  ],
+  [
+    withReactSvg,
+    {
+      include: path.resolve('./assets/svgs'),
+    },
+  ],
+  [
+    withPWA,
+    {
+      pwa: {
+        dest: 'public',
+        // runtimeCaching: []
+      },
+    },
+  ],
+]);
