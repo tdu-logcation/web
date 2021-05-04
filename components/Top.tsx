@@ -5,15 +5,7 @@
  */
 
 import React from 'react';
-import {
-  Flex,
-  Text,
-  Box,
-  Center,
-  Divider,
-  Image,
-  useColorMode,
-} from '@chakra-ui/react';
+import {Flex, Text, Box, Center, Divider, useColorMode} from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import {colors} from '../utils/colors';
@@ -22,6 +14,8 @@ import {useRecoilState} from 'recoil';
 import {logState} from '../utils/recoilAtoms';
 import {tweetLink} from '../utils/formatUtil';
 import {PageJump} from './OtherPage';
+import LogoLight from '../assets/svgs/logcation.svg';
+import LogoDark from '../assets/svgs/logcation_dark.svg';
 
 const SettingButton = ({link}: {link: string}) => (
   <PageJump
@@ -66,16 +60,11 @@ const Top = () => {
       <Center>
         <Flex width="20rem" justifyContent="center" alignItems="center">
           <Box>
-            <Image
-              src={
-                colorMode === 'light'
-                  ? '/static/images/logcation.svg'
-                  : '/static/images/logcation_dark.svg'
-              }
-              htmlWidth="70%"
-              htmlHeight="70%"
-              alt="Logcation"
-            />
+            {colorMode === 'light' ? (
+              <LogoLight width="70%" height="70%" alt="Logcation" />
+            ) : (
+              <LogoDark width="70%" height="70%" alt="Logcation" />
+            )}
           </Box>
           <Box>
             <SettingButton link="/setting" />
