@@ -5,7 +5,15 @@
  */
 
 import React from 'react';
-import {Flex, Text, Box, Center, Divider, Image} from '@chakra-ui/react';
+import {
+  Flex,
+  Text,
+  Box,
+  Center,
+  Divider,
+  Image,
+  useColorMode,
+} from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import {colors} from '../utils/colors';
@@ -51,6 +59,7 @@ const OtherPageButton = ({title, link}: {title: string; link: string}) => {
  */
 const Top = () => {
   const [log] = useRecoilState(logState);
+  const {colorMode} = useColorMode();
 
   return (
     <React.Fragment>
@@ -58,7 +67,11 @@ const Top = () => {
         <Flex width="20rem" justifyContent="center" alignItems="center">
           <Box>
             <Image
-              src="/static/images/logcation.svg"
+              src={
+                colorMode === 'light'
+                  ? '/static/images/logcation.svg'
+                  : '/static/images/logcation_dark.svg'
+              }
               htmlWidth="70%"
               htmlHeight="70%"
               alt="Logcation"
