@@ -137,7 +137,11 @@ export const Direct = () => {
             >
               保存
             </Button>
-            <Button backgroundColor={colors('buttonSecondly')} onClick={close}>
+            <Button
+              color={colors('textPrimary')}
+              variant="ghost"
+              onClick={close}
+            >
               キャンセル
             </Button>
           </ModalFooter>

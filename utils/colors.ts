@@ -10,15 +10,15 @@ import {Theme} from '../@types/Theme';
 const dark: Theme = {
   background: 'gray.800',
 
-  mainPrimary: '#344350', // TODO: 調整
-  mainSecondly: '#bdd7ee', // TODO: 調整
+  mainPrimary: '#345470',
+  mainSecondly: '#bdd7ee',
 
   textPrimary: '#d6d6d6',
   textSecondly: '#b5b5b5',
   textTertiary: '#050505',
 
-  buttonPrimary: '#8a585b', // TODO: 調整
-  buttonSecondly: '#0f0f0f',
+  buttonPrimary: '#bf6d72',
+  buttonSecondly: '#333945',
   buttonIconSecondly: '#b5b5b5',
 
   divider: '#0f0f0f',
