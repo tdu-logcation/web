@@ -30,7 +30,6 @@ import {
   ButtonProps,
   useToast,
   Divider,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {
@@ -43,7 +42,7 @@ import LogUtil from '../utils/LogUtil';
 import {formatDate, formatTableShow, exportLog} from '../utils/formatUtil';
 import {useTable, useSortBy} from 'react-table';
 import {IoArrowUpOutline, IoArrowDownOutline} from 'react-icons/io5';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
 import {TableData} from '../@types/historyTable';
 import {tableShow, tableInit} from '../utils/table';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -123,10 +122,7 @@ export const History = () => {
         <Button
           borderRadius="1.5rem"
           width="20rem"
-          backgroundColor={useColorModeValue(
-            colors.light.buttonSecondly,
-            colors.dark.buttonSecondly
-          )}
+          backgroundColor={colors('buttonSecondly')}
           padding="1rem .5rem 1rem .5rem"
           {...props}
         >
@@ -185,25 +181,11 @@ export const History = () => {
   return (
     <OtherPage title="履歴">
       <UtilButton onClick={onOpen}>
-        <Text
-          color={useColorModeValue(
-            colors.light.textPrimary,
-            colors.dark.textPrimary
-          )}
-        >
-          フィルター
-        </Text>
+        <Text color={colors('textPrimary')}>フィルター</Text>
       </UtilButton>
       <CopyToClipboard onCopy={() => setIsCopy(true)} text={exportLog(log)}>
         <UtilButton>
-          <Text
-            color={useColorModeValue(
-              colors.light.textPrimary,
-              colors.dark.textPrimary
-            )}
-          >
-            クリップボードにコピー
-          </Text>
+          <Text color={colors('textPrimary')}>クリップボードにコピー</Text>
         </UtilButton>
       </CopyToClipboard>
 
@@ -214,13 +196,7 @@ export const History = () => {
           <ModalCloseButton size="lg" />
           <ModalBody padding="1rem 2rem 2.5rem 2rem">
             <Box>{showButton()}</Box>
-            <Divider
-              colorScheme={useColorModeValue(
-                colors.light.divider,
-                colors.dark.divider
-              )}
-              borderWidth="1px"
-            />
+            <Divider colorScheme={colors('divider')} borderWidth="1px" />
             <FormControl
               display="flex"
               alignItems="center"
@@ -268,14 +244,8 @@ export const History = () => {
                   <Th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     padding=".5rem .1rem .5rem .1rem"
-                    backgroundColor={useColorModeValue(
-                      colors.light.mainSecondly,
-                      colors.dark.mainSecondly
-                    )}
-                    color={useColorModeValue(
-                      colors.light.textTertiary,
-                      colors.dark.textTertiary
-                    )}
+                    backgroundColor={colors('mainSecondly')}
+                    color={colors('textTertiary')}
                     fontSize="1.2rem"
                   >
                     <Center>

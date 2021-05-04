@@ -5,50 +5,28 @@
  */
 
 import React from 'react';
-import {
-  Flex,
-  Text,
-  Box,
-  Center,
-  Divider,
-  Image,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import {Flex, Text, Box, Center, Divider, Image} from '@chakra-ui/react';
 import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
 import {Direct} from './Directly';
 import {useRecoilState} from 'recoil';
 import {logState} from '../utils/recoilAtoms';
 import {tweetLink} from '../utils/formatUtil';
 import {PageJump} from './OtherPage';
-import ColorModeSwitch from './settings/ColorModeSwitch';
 
 const SettingButton = ({link}: {link: string}) => (
   <PageJump
     buttonProps={{
       borderRadius: '2rem',
       leftIcon: <IoSettingsSharp />,
-      backgroundColor: useColorModeValue(
-        colors.light.buttonSecondly,
-        colors.dark.buttonSecondly
-      ),
-      color: useColorModeValue(
-        colors.light.buttonIconSecondly,
-        colors.dark.buttonIconSecondly
-      ),
+      backgroundColor: colors('buttonSecondly'),
+      color: colors('buttonIconSecondly'),
       width: '6.2rem',
     }}
     link={link}
   >
-    <Text
-      color={useColorModeValue(
-        colors.light.textPrimary,
-        colors.dark.textPrimary
-      )}
-    >
-      設定
-    </Text>
+    <Text color={colors('textPrimary')}>設定</Text>
   </PageJump>
 );
 
@@ -58,22 +36,12 @@ const OtherPageButton = ({title, link}: {title: string; link: string}) => {
       buttonProps={{
         borderRadius: '1.5rem',
         width: '20rem',
-        backgroundColor: useColorModeValue(
-          colors.light.buttonSecondly,
-          colors.dark.buttonSecondly
-        ),
+        backgroundColor: colors('buttonSecondly'),
         padding: '1rem .5rem 1rem .5rem',
       }}
       link={link}
     >
-      <Text
-        color={useColorModeValue(
-          colors.light.textPrimary,
-          colors.dark.textPrimary
-        )}
-      >
-        {title}
-      </Text>
+      <Text color={colors('textPrimary')}>{title}</Text>
     </PageJump>
   );
 };
@@ -96,7 +64,6 @@ const Top = () => {
               alt="Logcation"
             />
           </Box>
-          <ColorModeSwitch />
           <Box>
             <SettingButton link="/setting" />
           </Box>
@@ -106,10 +73,7 @@ const Top = () => {
       <Direct />
       <Center margin="2rem 0 2rem 0">
         <Divider
-          colorScheme={useColorModeValue(
-            colors.light.divider,
-            colors.dark.divider
-          )}
+          colorScheme={colors('divider')}
           borderWidth="1px"
           width="20rem"
         />

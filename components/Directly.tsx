@@ -20,9 +20,8 @@ import {
   Input,
   ModalFooter,
   useToast,
-  useColorModeValue,
 } from '@chakra-ui/react';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
 import React from 'react';
 import {useRecoilState} from 'recoil';
 import {directText, logState} from '../utils/recoilAtoms';
@@ -92,10 +91,7 @@ export const Direct = () => {
   return (
     <Center>
       <Button
-        backgroundColor={useColorModeValue(
-          colors.light.buttonPrimary,
-          colors.dark.buttonPrimary
-        )}
+        backgroundColor={colors('buttonPrimary')}
         borderRadius="1.5rem"
         padding="2rem 3rem 2rem 3rem"
         width="20rem"
@@ -104,10 +100,7 @@ export const Direct = () => {
         <Text
           fontWeight="medium"
           fontSize="1.2rem"
-          color={useColorModeValue(
-            colors.light.textPrimary,
-            colors.dark.textPrimary
-          )}
+          color={colors('textPrimary')}
         >
           座席コードを直接入力する
         </Text>
@@ -121,13 +114,7 @@ export const Direct = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader
-            color={useColorModeValue(
-              colors.light.textPrimary,
-              colors.dark.textPrimary
-            )}
-            margin="1rem 0 .5rem 0"
-          >
+          <ModalHeader color={colors('textPrimary')} margin="1rem 0 .5rem 0">
             座席コードを直接入力する
           </ModalHeader>
           <ModalCloseButton size="lg" />
@@ -144,22 +131,13 @@ export const Direct = () => {
 
           <ModalFooter>
             <Button
-              backgroundColor={useColorModeValue(
-                colors.light.mainPrimary,
-                colors.dark.mainPrimary
-              )}
+              backgroundColor={colors('mainPrimary')}
               mr={3}
               onClick={save}
             >
               保存
             </Button>
-            <Button
-              backgroundColor={useColorModeValue(
-                colors.light.buttonSecondly,
-                colors.dark.buttonSecondly
-              )}
-              onClick={close}
-            >
+            <Button backgroundColor={colors('buttonSecondly')} onClick={close}>
               キャンセル
             </Button>
           </ModalFooter>

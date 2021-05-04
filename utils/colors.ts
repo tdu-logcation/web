@@ -4,7 +4,12 @@
  * Copyright (C) 2021 logcation
  */
 
-export const dark = {
+import {useColorModeValue} from '@chakra-ui/react';
+import {Theme} from '../@types/Theme';
+
+const dark: Theme = {
+  background: 'gray.800',
+
   mainPrimary: '#344350', // TODO: 調整
   mainSecondly: '#bdd7ee', // TODO: 調整
 
@@ -18,7 +23,9 @@ export const dark = {
 
   divider: '#0f0f0f',
 };
-export const light = {
+const light: Theme = {
+  background: '#fff',
+
   mainPrimary: '#bdd7ee',
   mainSecondly: '#406b94',
 
@@ -32,3 +39,10 @@ export const light = {
 
   divider: '#f2f2f2',
 };
+
+/**
+ * カラー選択
+ * @param colorName カラー名 keyof Theme
+ */
+export const colors = (colorName: keyof Theme): string =>
+  useColorModeValue(light[colorName], dark[colorName]);

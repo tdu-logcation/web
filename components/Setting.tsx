@@ -13,7 +13,6 @@ import {
   ListIcon,
   Link,
   Flex,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import {
   IoCloudUploadOutline,
@@ -21,7 +20,8 @@ import {
   IoBugOutline,
 } from 'react-icons/io5';
 import {HiExternalLink} from 'react-icons/hi';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
+import ColorModeSwitch from './settings/ColorModeSwitch';
 
 export const Setting = () => {
   return (
@@ -38,23 +38,17 @@ export const Setting = () => {
           <ListItem>
             <ListIcon
               as={IoCloudUploadOutline}
-              color={useColorModeValue(
-                colors.light.mainSecondly,
-                colors.dark.mainSecondly
-              )}
+              color={colors('mainSecondly')}
             />
             別のログデータを読み込む
             <ReadLog />
           </ListItem>
           <ListItem>
+            <ColorModeSwitch />
+          </ListItem>
+          <ListItem>
             <Flex>
-              <ListIcon
-                as={IoBugOutline}
-                color={useColorModeValue(
-                  colors.light.mainSecondly,
-                  colors.dark.mainSecondly
-                )}
-              />
+              <ListIcon as={IoBugOutline} color={colors('mainSecondly')} />
               <Link
                 href="https://github.com/tdu-logcation/web/issues"
                 isExternal
@@ -68,13 +62,7 @@ export const Setting = () => {
           </ListItem>
           <ListItem>
             <Flex>
-              <ListIcon
-                as={IoLogoGithub}
-                color={useColorModeValue(
-                  colors.light.mainSecondly,
-                  colors.dark.mainSecondly
-                )}
-              />
+              <ListIcon as={IoLogoGithub} color={colors('mainSecondly')} />
               <Link href="https://github.com/tdu-logcation/web" isExternal>
                 <Flex>
                   ソースコードを見る

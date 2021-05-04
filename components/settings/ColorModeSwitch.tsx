@@ -1,35 +1,24 @@
-import {VFC} from 'react';
-import {
-  Icon,
-  IconButton,
-  useColorMode,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import React, {VFC} from 'react';
+import {Switch, useColorMode, ListIcon, Text, Flex} from '@chakra-ui/react';
 import {IoMoon, IoSunny} from 'react-icons/io5';
-import * as colors from '../../utils/colors';
+import {colors} from '../../utils/colors';
 
 const ColorModeSwitch: VFC = () => {
   const {colorMode, toggleColorMode} = useColorMode();
 
   return (
-    <IconButton
-      py={'1rem'}
-      mx={1}
-      aria-label={
-        'カラーテーマを' +
-        (colorMode === 'light' ? 'ダークモード' : 'ライトモード') +
-        'に変更'
-      }
-      icon={
-        colorMode === 'light' ? <Icon as={IoMoon} /> : <Icon as={IoSunny} />
-      }
-      color={useColorModeValue(
-        colors.light.buttonIconSecondly,
-        colors.dark.buttonIconSecondly
-      )}
-      bgColor={'transparent'}
-      onClick={() => toggleColorMode()}
-    />
+    <React.Fragment>
+      <ListIcon
+        as={colorMode === 'light' ? IoMoon : IoSunny}
+        color={colors('mainSecondly')}
+      />
+      <Flex>
+        <Switch onClick={() => toggleColorMode()} />
+        <Text>
+          {(colorMode === 'light' ? 'ダークモード' : 'ライトモード') + 'に変更'}
+        </Text>
+      </Flex>
+    </React.Fragment>
   );
 };
 

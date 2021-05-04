@@ -13,14 +13,12 @@ import {
   Button,
   Center,
   ButtonProps,
-  useColorModeValue,
 } from '@chakra-ui/react';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
 import {IoHomeSharp} from 'react-icons/io5';
 import Link from 'next/link';
 import {useRecoilState} from 'recoil';
 import {useCameraState, qrReadState} from '../utils/recoilAtoms';
-import ColorModeSwitch from './settings/ColorModeSwitch';
 
 export const OtherPage: React.FC<{title: string}> = props => {
   return (
@@ -32,38 +30,21 @@ export const OtherPage: React.FC<{title: string}> = props => {
               fontSize="1.3rem"
               fontWeight="bold"
               marginLeft="1.2rem"
-              color={useColorModeValue(
-                colors.light.textPrimary,
-                colors.dark.textPrimary
-              )}
+              color={colors('textPrimary')}
             >
               {props.title}
             </Text>
           </Box>
           <Spacer />
-          <ColorModeSwitch />
           <Link href="/">
             <Button
               borderRadius="2rem"
               leftIcon={<IoHomeSharp />}
-              backgroundColor={useColorModeValue(
-                colors.light.buttonSecondly,
-                colors.dark.buttonSecondly
-              )}
-              color={useColorModeValue(
-                colors.light.buttonIconSecondly,
-                colors.dark.buttonIconSecondly
-              )}
+              backgroundColor={colors('buttonSecondly')}
+              color={colors('buttonIconSecondly')}
               width="9rem"
             >
-              <Text
-                color={useColorModeValue(
-                  colors.light.textPrimary,
-                  colors.dark.textPrimary
-                )}
-              >
-                ホームへ戻る
-              </Text>
+              <Text color={colors('textPrimary')}>ホームへ戻る</Text>
             </Button>
           </Link>
         </Flex>

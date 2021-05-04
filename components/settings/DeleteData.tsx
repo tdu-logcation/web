@@ -16,11 +16,10 @@ import {
   ModalBody,
   ModalFooter,
   useToast,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {logState} from '../../utils/recoilAtoms';
-import * as colors from '../../utils/colors';
+import {colors} from '../../utils/colors';
 
 export const DeleteData = () => {
   const [log, setLog] = useRecoilState(logState);
@@ -51,10 +50,7 @@ export const DeleteData = () => {
     <Box>
       <Button
         size="xs"
-        color={useColorModeValue(
-          colors.light.textPrimary,
-          colors.dark.textPrimary
-        )}
+        color={colors('textPrimary')}
         variant="link"
         onClick={onOpen}
       >
@@ -65,25 +61,14 @@ export const DeleteData = () => {
         <ModalContent>
           <ModalHeader>本当に削除しますか？</ModalHeader>
           <ModalCloseButton size="lg" />
-          <ModalBody
-            color={useColorModeValue(
-              colors.light.textSecondly,
-              colors.dark.textSecondly
-            )}
-          >
+          <ModalBody color={colors('textSecondly')}>
             この操作は元には戻せません。
           </ModalBody>
 
           <ModalFooter>
             <Button
-              backgroundColor={useColorModeValue(
-                colors.light.mainPrimary,
-                colors.dark.mainPrimary
-              )}
-              color={useColorModeValue(
-                colors.light.textPrimary,
-                colors.dark.textPrimary
-              )}
+              backgroundColor={colors('mainPrimary')}
+              color={colors('textPrimary')}
               marginRight=".5rem"
               onClick={deleteLog}
             >
@@ -91,10 +76,7 @@ export const DeleteData = () => {
             </Button>
             <Button
               variant="ghost"
-              color={useColorModeValue(
-                colors.light.textPrimary,
-                colors.dark.textPrimary
-              )}
+              color={colors('textPrimary')}
               mr={3}
               onClick={onClose}
             >
