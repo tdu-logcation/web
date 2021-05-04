@@ -7,7 +7,7 @@ import {ParsedLog, LogCampus} from '../@types/log';
 
 export default class LogUtil {
   /* 正規表現 */
-  private senju_regular_expression = /^jp.ac.dendai\/(?<buildingNumber>[1-5])(?<floorNumber>1?[0-9])(?<roomNumber>[01][0-9][AB]?)-(?<seatNumber>[^-]+)$/;
+  private senju_regular_expression = /^jp.ac.dendai\/(?<buildingNumber>[1-5])(?<floorNumber>1?[0-9])(?<roomNumber>[0-2][0-9][AB]?)-(?<seatNumber>[^-]+)$/;
   private hatoyama_regular_expression = /^jp.ac.dendai\/2(?<buildingNumber>[01][0-9])(?<floorNumber>[01][0-9])(?<roomNumber>[0-9][0-9])-(?<seatNumber>[^-]+)$/;
 
   /* 座席コード */
