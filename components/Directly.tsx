@@ -50,7 +50,6 @@ export const Direct = () => {
     const logUtil = new LogUtil(data);
     if (logUtil.validateQrData()) {
       const nextLog = [...log];
-      const parsedQrData = logUtil.parseQrData();
 
       const datum: Log = {
         label: '',

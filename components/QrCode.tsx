@@ -113,7 +113,6 @@ const Qr = () => {
 
       if (logUtil.validateQrData()) {
         const nextLog = [...log];
-        const parsedQrData = logUtil.parseQrData();
 
         const data = {
           label: '',
