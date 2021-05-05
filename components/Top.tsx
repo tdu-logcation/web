@@ -10,10 +10,8 @@ import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import {colors} from '../utils/colors';
 import {Direct} from './Directly';
-import {useRecoilState} from 'recoil';
-import {logState} from '../utils/recoilAtoms';
-import {tweetLink} from '../utils/formatUtil';
 import {PageJump} from './OtherPage';
+import {Twitter} from './Share';
 import LogoLight from '../assets/svgs/logcation.svg';
 import LogoDark from '../assets/svgs/logcation_dark.svg';
 
@@ -52,7 +50,6 @@ const OtherPageButton = ({title, link}: {title: string; link: string}) => {
  * トップページ
  */
 const Top = () => {
-  const [log] = useRecoilState(logState);
   const {colorMode} = useColorMode();
 
   return (
@@ -83,9 +80,7 @@ const Top = () => {
       <Center margin="1rem 0 1rem 0">
         <OtherPageButton title="着席履歴の確認" link="/history" />
       </Center>
-      <Center margin="1rem 0 1rem 0">
-        <OtherPageButton title="ツイート" link={tweetLink(log)} />
-      </Center>
+      <Twitter />
     </React.Fragment>
   );
 };

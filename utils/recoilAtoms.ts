@@ -107,7 +107,34 @@ export const isCopyState = atom<boolean>({
   default: false,
 });
 
+/**
+ * 外部入力ログ
+ */
 export const otherLogState = atom<string>({
   key: 'otherLog',
   default: '',
+});
+
+/**
+ * ログセーブの状態
+ */
+export const savedLogState = atom<boolean>({
+  key: 'savedLog',
+  default: false,
+});
+
+/**
+ * 読み取り完了の確認テキスト
+ */
+export const confirmationTextState = atom<string>({
+  key: 'confirmationText',
+  default: '',
+});
+
+/**
+ * Tweet link
+ */
+export const tweetLinkState = atom<string>({
+  key: 'tweetLink',
+  default: 'https://twitter.com/intent/tweet',
 });
