@@ -21,10 +21,10 @@ import {
   ModalFooter,
   useToast,
 } from '@chakra-ui/react';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
 import React from 'react';
 import {useRecoilState} from 'recoil';
-import {directText, logState} from '../utils/recoilAtoms';
+import {directText, logState, savedLogState} from '../utils/recoilAtoms';
 import LogUtil from '../utils/LogUtil';
 import {LogType, Log} from '../@types/log';
 
@@ -34,6 +34,7 @@ export const Direct = () => {
 
   const [text, setText] = useRecoilState(directText);
   const [log, setLog] = useRecoilState(logState);
+  const [, setSavedLog] = useRecoilState(savedLogState);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
@@ -49,7 +50,6 @@ export const Direct = () => {
     const logUtil = new LogUtil(data);
     if (logUtil.validateQrData()) {
       const nextLog = [...log];
-      const parsedQrData = logUtil.parseQrData();
 
       const datum: Log = {
         label: '',
@@ -64,20 +64,7 @@ export const Direct = () => {
       setLog(nextLog);
       onClose();
       setText('');
-
-      toast({
-        title: '追加完了',
-        description: (
-          <Text wordBreak="break-all">
-            {parsedQrData.buildingNumber}号館&nbsp;
-            {parsedQrData.floorNumber}階&nbsp;
-            {parsedQrData.roomNumber}教室
-          </Text>
-        ),
-        status: 'info',
-        duration: 4000,
-        isClosable: true,
-      });
+      setSavedLog(true);
     } else {
       toast({
         title: '座席コードが正しくありません',
@@ -91,13 +78,17 @@ export const Direct = () => {
   return (
     <Center>
       <Button
-        backgroundColor={colors.buttonPrimary}
+        backgroundColor={colors('buttonPrimary')}
         borderRadius="1.5rem"
         padding="2rem 3rem 2rem 3rem"
         width="20rem"
         onClick={onOpen}
       >
-        <Text fontWeight="medium" fontSize="1.2rem" color={colors.textPrimary}>
+        <Text
+          fontWeight="medium"
+          fontSize="1.2rem"
+          color={colors('textPrimary')}
+        >
           座席コードを直接入力する
         </Text>
       </Button>
@@ -110,7 +101,7 @@ export const Direct = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader color={colors.textPrimary} margin="1rem 0 .5rem 0">
+          <ModalHeader color={colors('textPrimary')} margin="1rem 0 .5rem 0">
             座席コードを直接入力する
           </ModalHeader>
           <ModalCloseButton size="lg" />
@@ -126,10 +117,18 @@ export const Direct = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button backgroundColor={colors.mainPrimary} mr={3} onClick={save}>
+            <Button
+              backgroundColor={colors('mainPrimary')}
+              mr={3}
+              onClick={save}
+            >
               保存
             </Button>
-            <Button backgroundColor={colors.buttonSecondly} onClick={close}>
+            <Button
+              color={colors('textPrimary')}
+              variant="ghost"
+              onClick={close}
+            >
               キャンセル
             </Button>
           </ModalFooter>

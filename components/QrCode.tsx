@@ -25,9 +25,10 @@ import {
   cameraComponentState,
   qrDataState,
   logState,
+  savedLogState,
 } from '../utils/recoilAtoms';
 import {LogType} from '../@types/log';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
 import LogUtil from '../utils/LogUtil';
 
 const QrTitle = ({text}: {text: string}) => (
@@ -38,9 +39,9 @@ const QrTitle = ({text}: {text: string}) => (
       alignItems="center"
       margin="0 1rem 0 0"
     >
-      <IoCameraSharp size="2rem" color={colors.mainSecondly} />
+      <IoCameraSharp size="2rem" color={colors('mainSecondly')} />
     </Box>
-    <Text fontWeight="bold" fontSize="1.3rem" color={colors.textPrimary}>
+    <Text fontWeight="bold" fontSize="1.3rem" color={colors('textPrimary')}>
       {text}
     </Text>
   </Flex>
@@ -61,7 +62,7 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
       <Spinner
         thickness="4px"
         size="xl"
-        color={colors.mainSecondly}
+        color={colors('mainSecondly')}
         position="absolute"
         zIndex="1"
       />
@@ -75,9 +76,9 @@ const qrStatus = (isLoad: boolean, isUseCamera: boolean, isQrRead: boolean) => {
         }}
       >
         {isQrRead ? (
-          <IoReloadOutline size="3rem" color={colors.mainSecondly} />
+          <IoReloadOutline size="3rem" color={colors('mainSecondly')} />
         ) : (
-          <IoVideocamOff size="3rem" color={colors.mainSecondly} />
+          <IoVideocamOff size="3rem" color={colors('mainSecondly')} />
         )}
       </button>
     );
@@ -92,6 +93,7 @@ const Qr = () => {
   const [isQrLoad] = useRecoilState(qrLoadState);
   const [useCamera] = useRecoilState(useCameraState);
   const [qrData] = useRecoilState(qrDataState);
+  const [, setSavedLog] = useRecoilState(savedLogState);
   const [cameraComponent, setCameraComponent] = useRecoilState(
     cameraComponentState
   );
@@ -111,7 +113,6 @@ const Qr = () => {
 
       if (logUtil.validateQrData()) {
         const nextLog = [...log];
-        const parsedQrData = logUtil.parseQrData();
 
         const data = {
           label: '',
@@ -124,20 +125,7 @@ const Qr = () => {
         nextLog.push(data);
 
         setLog(nextLog);
-
-        toast({
-          title: '読み取り完了',
-          description: (
-            <Text wordBreak="break-all">
-              {parsedQrData.buildingNumber}号館&nbsp;
-              {parsedQrData.floorNumber}階&nbsp;
-              {parsedQrData.roomNumber}教室
-            </Text>
-          ),
-          status: 'info',
-          duration: 4000,
-          isClosable: true,
-        });
+        setSavedLog(true);
       } else {
         toast({
           title: 'QRコードが正しくありません',
@@ -154,8 +142,9 @@ const Qr = () => {
     <AspectRatio max="100px" ratio={1}>
       <Box
         width="100px"
-        border="solid 2px #fff"
-        backgroundColor="#fff"
+        border={'solid 2px'}
+        borderColor={colors('background')}
+        backgroundColor={colors('background')}
         borderRadius="2rem"
         position="relative"
         zIndex="1"
@@ -177,7 +166,7 @@ const StatusText = () => {
   const [useCamera] = useRecoilState(useCameraState);
   const [isQrRead] = useRecoilState(qrReadState);
   return (
-    <Box color={colors.textSecondly}>
+    <Box color={colors('textSecondly')}>
       {cameraStatusText(isQrLoad, isQrRead, useCamera)}
     </Box>
   );
@@ -188,7 +177,7 @@ const QrCode = () => {
     <React.Fragment>
       <Center>
         <Box
-          backgroundColor={colors.mainPrimary}
+          backgroundColor={colors('mainPrimary')}
           margin="2rem 0 0 0"
           padding="1.5rem 1.5rem 0 1.5rem"
           borderRadius="1.5rem"
@@ -206,7 +195,7 @@ const QrCode = () => {
         </Box>
       </Center>
       <Center margin="1rem 0 1rem 0">
-        <Text fontWeight="bold" fontSize=".9rem" color={colors.textPrimary}>
+        <Text fontWeight="bold" fontSize=".9rem" color={colors('textPrimary')}>
           または
         </Text>
       </Center>

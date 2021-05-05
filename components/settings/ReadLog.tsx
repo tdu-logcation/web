@@ -3,7 +3,7 @@ import {Textarea, Box, Button, useToast} from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {logState, otherLogState} from '../../utils/recoilAtoms';
 import {formatOtherLog} from '../../utils/formatUtil';
-import * as colors from '../../utils/colors';
+import {colors} from '../../utils/colors';
 
 export const ReadLog = () => {
   const [log, setLog] = useRecoilState(logState);
@@ -30,7 +30,6 @@ export const ReadLog = () => {
     for (const element of otherLog.split('\n')) {
       const logData = formatOtherLog(element);
       if (logData) {
-        console.log(logData);
         isSuccess = true;
         data.push(logData);
       }
@@ -76,7 +75,7 @@ export const ReadLog = () => {
       <Button
         onClick={handleChange}
         marginLeft="66%"
-        color={colors.textPrimary}
+        color={colors('textPrimary')}
         variant="ghost"
       >
         読み込む
