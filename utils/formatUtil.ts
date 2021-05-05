@@ -179,7 +179,7 @@ function additionalText(logNumber: number): string {
     return '凄い！！！';
   }
   if (logNumber < 20) {
-    return '天才！！！！！';
+    return 'めっちゃ凄い！！！';
   }
   if (logNumber < 30) {
     return '実績を解除しました: 神';

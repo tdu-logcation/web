@@ -16,7 +16,7 @@ import {
   Button,
   Link,
 } from '@chakra-ui/react';
-import * as color from '../utils/colors';
+import {colors} from '../utils/colors';
 import {
   savedLogState,
   logState,
@@ -54,14 +54,18 @@ export const Twitter = () => {
         <ModalFooter>
           <Link href={tweet}>
             <Button
-              backgroundColor={color.mainPrimary}
-              color={color.textPrimary}
+              backgroundColor={colors('mainPrimary')}
+              color={colors('textPrimary')}
               onClick={onClose}
             >
               ツイート
             </Button>
           </Link>
-          <Button variant="ghost" color={color.textPrimary} onClick={onClose}>
+          <Button
+            variant="ghost"
+            color={colors('textPrimary')}
+            onClick={onClose}
+          >
             閉じる
           </Button>
         </ModalFooter>
