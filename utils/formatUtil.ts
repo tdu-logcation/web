@@ -127,7 +127,6 @@ export function formatOtherLog(otherLog: string): Log | null {
 export function resultText(log: Log[]): string {
   if (log.length !== 0) {
     const logData = new LogUtil(log[log.length - 1].code);
-    console.log('ok');
     if (logData.validateQrData()) {
       const data = logData.parseQrData();
 
@@ -147,7 +146,6 @@ export function tweetText(log: Log[]): string {
   const logLen = log.length;
   if (logLen !== 0) {
     const logData = new LogUtil(log[logLen - 1].code);
-    console.log('ok');
     if (logData.validateQrData()) {
       const data = logData.parseQrData();
 

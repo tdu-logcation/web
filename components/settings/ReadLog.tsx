@@ -30,7 +30,6 @@ export const ReadLog = () => {
     for (const element of otherLog.split('\n')) {
       const logData = formatOtherLog(element);
       if (logData) {
-        console.log(logData);
         isSuccess = true;
         data.push(logData);
       }
