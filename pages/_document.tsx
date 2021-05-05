@@ -13,7 +13,6 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from 'next/document';
-import theme from '../utils/theme';
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -115,7 +114,7 @@ class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
-          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <ColorModeScript initialColorMode="system" />
           <Main />
           <NextScript />
         </body>
