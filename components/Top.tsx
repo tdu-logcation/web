@@ -10,10 +10,8 @@ import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import * as colors from '../utils/colors';
 import {Direct} from './Directly';
-import {useRecoilState} from 'recoil';
-import {logState} from '../utils/recoilAtoms';
-import {tweetLink} from '../utils/formatUtil';
 import {PageJump} from './OtherPage';
+import {Twitter} from './Share';
 
 const SettingButton = ({link}: {link: string}) => (
   <PageJump
@@ -50,8 +48,6 @@ const OtherPageButton = ({title, link}: {title: string; link: string}) => {
  * トップページ
  */
 const Top = () => {
-  const [log] = useRecoilState(logState);
-
   return (
     <React.Fragment>
       <Center>
@@ -77,9 +73,7 @@ const Top = () => {
       <Center margin="1rem 0 1rem 0">
         <OtherPageButton title="着席履歴の確認" link="/history" />
       </Center>
-      <Center margin="1rem 0 1rem 0">
-        <OtherPageButton title="ツイート" link={tweetLink(log)} />
-      </Center>
+      <Twitter />
     </React.Fragment>
   );
 };

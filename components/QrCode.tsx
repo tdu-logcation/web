@@ -25,6 +25,7 @@ import {
   cameraComponentState,
   qrDataState,
   logState,
+  savedLogState,
 } from '../utils/recoilAtoms';
 import {LogType} from '../@types/log';
 import * as colors from '../utils/colors';
@@ -92,6 +93,7 @@ const Qr = () => {
   const [isQrLoad] = useRecoilState(qrLoadState);
   const [useCamera] = useRecoilState(useCameraState);
   const [qrData] = useRecoilState(qrDataState);
+  const [, setSavedLog] = useRecoilState(savedLogState);
   const [cameraComponent, setCameraComponent] = useRecoilState(
     cameraComponentState
   );
@@ -124,20 +126,7 @@ const Qr = () => {
         nextLog.push(data);
 
         setLog(nextLog);
-
-        toast({
-          title: '読み取り完了',
-          description: (
-            <Text wordBreak="break-all">
-              {parsedQrData.buildingNumber}号館&nbsp;
-              {parsedQrData.floorNumber}階&nbsp;
-              {parsedQrData.roomNumber}教室
-            </Text>
-          ),
-          status: 'info',
-          duration: 4000,
-          isClosable: true,
-        });
+        setSavedLog(true);
       } else {
         toast({
           title: 'QRコードが正しくありません',
