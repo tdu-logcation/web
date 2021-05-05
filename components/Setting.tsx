@@ -20,7 +20,8 @@ import {
   IoBugOutline,
 } from 'react-icons/io5';
 import {HiExternalLink} from 'react-icons/hi';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
+import ColorModeSwitch from './settings/ColorModeSwitch';
 
 export const Setting = () => {
   return (
@@ -35,13 +36,19 @@ export const Setting = () => {
           listStyleType="none"
         >
           <ListItem>
-            <ListIcon as={IoCloudUploadOutline} color={colors.mainSecondly} />
+            <ListIcon
+              as={IoCloudUploadOutline}
+              color={colors('mainSecondly')}
+            />
             別のログデータを読み込む
             <ReadLog />
           </ListItem>
           <ListItem>
+            <ColorModeSwitch />
+          </ListItem>
+          <ListItem>
             <Flex>
-              <ListIcon as={IoBugOutline} color={colors.mainSecondly} />
+              <ListIcon as={IoBugOutline} color={colors('mainSecondly')} />
               <Link
                 href="https://github.com/tdu-logcation/web/issues"
                 isExternal
@@ -55,7 +62,7 @@ export const Setting = () => {
           </ListItem>
           <ListItem>
             <Flex>
-              <ListIcon as={IoLogoGithub} color={colors.mainSecondly} />
+              <ListIcon as={IoLogoGithub} color={colors('mainSecondly')} />
               <Link href="https://github.com/tdu-logcation/web" isExternal>
                 <Flex>
                   ソースコードを見る
