@@ -4,6 +4,7 @@
  * Copyright (C) 2021 logcation
  */
 
+import {ColorModeScript} from '@chakra-ui/react';
 import Document, {
   Html,
   Head,
@@ -113,6 +114,7 @@ class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
+          <ColorModeScript initialColorMode="system" />
           <Main />
           <NextScript />
         </body>

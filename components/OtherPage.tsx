@@ -14,7 +14,7 @@ import {
   Center,
   ButtonProps,
 } from '@chakra-ui/react';
-import * as colors from '../utils/colors';
+import {colors} from '../utils/colors';
 import {IoHomeSharp} from 'react-icons/io5';
 import Link from 'next/link';
 import {useRecoilState} from 'recoil';
@@ -30,7 +30,7 @@ export const OtherPage: React.FC<{title: string}> = props => {
               fontSize="1.3rem"
               fontWeight="bold"
               marginLeft="1.2rem"
-              color={colors.textPrimary}
+              color={colors('textPrimary')}
             >
               {props.title}
             </Text>
@@ -40,11 +40,11 @@ export const OtherPage: React.FC<{title: string}> = props => {
             <Button
               borderRadius="2rem"
               leftIcon={<IoHomeSharp />}
-              backgroundColor={colors.buttonSecondly}
-              color={colors.buttonIconSecondly}
+              backgroundColor={colors('buttonSecondly')}
+              color={colors('buttonIconSecondly')}
               width="9rem"
             >
-              <Text color={colors.textPrimary}>ホームへ戻る</Text>
+              <Text color={colors('textPrimary')}>ホームへ戻る</Text>
             </Button>
           </Link>
         </Flex>
