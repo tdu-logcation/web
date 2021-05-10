@@ -185,7 +185,5 @@ function additionalText(logNumber: number): string {
   if (logNumber < 40) {
     return '開発者もびっくり！';
   }
-  if (logNumber < 50) {
-    return 'これ以上は定義してないので開発者に問い合わせてください…';
-  }
+  return 'これ以上は定義してないので開発者に問い合わせてください…';
 }
