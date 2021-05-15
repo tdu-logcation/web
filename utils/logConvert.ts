@@ -46,9 +46,8 @@ export class LogConvert {
    * @returns room number
    */
   roomName() {
-    const roomNumberStr = this.roomNumber.toString();
-    if (roomNumberStr in uniqueRoomNames) {
-      return uniqueRoomNames[roomNumberStr];
+    if (this.roomNumber in uniqueRoomNames) {
+      return uniqueRoomNames[this.roomNumber];
     }
     return `${this.roomNumber}教室`;
   }
