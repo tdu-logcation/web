@@ -7,6 +7,7 @@
 import {tableShow} from './table';
 import {Log, LogType} from '../@types/log';
 import LogUtil from './LogUtil';
+import {LogConvert} from './logConvert';
 
 /**
  * 日付をフォーマットします。
@@ -126,11 +127,9 @@ export function formatOtherLog(otherLog: string): Log | null {
  */
 export function resultText(log: Log[]): string {
   if (log.length !== 0) {
-    const logData = new LogUtil(log[log.length - 1].code);
-    if (logData.validateQrData()) {
-      const data = logData.parseQrData();
-
-      return `${data.buildingNumber}号館 ${data.floorNumber}階${data.roomNumber}教室`;
+    const logConvert = new LogConvert(log[log.length - 1]);
+    if (logConvert.isUseLog()) {
+      return logConvert.successText();
     }
   }
 
@@ -145,45 +144,14 @@ export function resultText(log: Log[]): string {
 export function tweetText(log: Log[]): string {
   const logLen = log.length;
   if (logLen !== 0) {
-    const logData = new LogUtil(log[logLen - 1].code);
-    if (logData.validateQrData()) {
-      const data = logData.parseQrData();
-
+    const logConvert = new LogConvert(log[logLen - 1]);
+    if (logConvert.isUseLog()) {
       const hashTag = 'Logcation';
       const link = window.location.href;
 
-      const tweet = `I'm at ${
-        data.roomNumber
-      }教室%0d%0d合計ログ数: ${logLen}%0d${additionalText(logLen)}%0d`;
+      const tweet = logConvert.tweetText(logLen);
 
       return `https://twitter.com/intent/tweet?text=${tweet}&url=${link}&hashtags=${hashTag}`;
     }
   }
-}
-
-/**
- * 余計な一言
- * @param logNumber log number.
- * @returns text
- */
-function additionalText(logNumber: number): string {
-  if (logNumber === 1) {
-    return 'はじめてのログ！';
-  }
-  if (logNumber < 5) {
-    return '頑張っている！';
-  }
-  if (logNumber < 10) {
-    return '凄い！！！';
-  }
-  if (logNumber < 20) {
-    return 'めっちゃ凄い！！！';
-  }
-  if (logNumber < 30) {
-    return '実績を解除しました: 神';
-  }
-  if (logNumber < 40) {
-    return '開発者もびっくり！';
-  }
-  return 'これ以上は定義してないので開発者に問い合わせてください…';
 }
