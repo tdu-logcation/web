@@ -37,6 +37,7 @@ import {
   tableShowState,
   tableDateShortState,
   isCopyState,
+  uniqueRoomNameState,
 } from '../utils/recoilAtoms';
 import {LogConvert} from '../utils/logConvert';
 import {formatTableShow, exportLog} from '../utils/formatUtil';
@@ -52,8 +53,11 @@ import {HistorySettings} from './HistorySettings';
 export const History = () => {
   const [log] = useRecoilState(logState);
   const [show, setShow] = useRecoilState(tableShowState);
-  const [dateType, setDateType] = useRecoilState(tableDateShortState);
   const [isCopy, setIsCopy] = useRecoilState(isCopyState);
+
+  const [dateType, setDateType] = useRecoilState(tableDateShortState);
+  const [roomType, setRoomType] = useRecoilState(uniqueRoomNameState);
+
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
 
@@ -62,7 +66,7 @@ export const History = () => {
       [...log].reverse().map(log => {
         const logConvert = new LogConvert(log);
         if (logConvert.isUseLog()) {
-          return logConvert.historyTableText(dateType);
+          return logConvert.historyTableText(dateType, roomType);
         }
         return {
           date: 'Null',
@@ -73,7 +77,7 @@ export const History = () => {
           campus: 'Null',
         };
       }),
-    [dateType]
+    [dateType, roomType]
   );
 
   const columns = React.useMemo(
@@ -194,29 +198,11 @@ export const History = () => {
               setIsChecked={setDateType}
               text="短い日時"
             />
-            {/* <FormControl
-              display="flex"
-              alignItems="center"
-              margin=".5rem .2rem .5rem .2rem"
-            >
-              <Switch
-                isChecked={dateType}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setDateType(event.target.checked);
-                }}
-                id="dateShort"
-                size="lg"
-              />
-              <FormLabel
-                htmlFor="dateShort"
-                mb="0"
-                marginLeft="1rem"
-                fontSize="1.2em"
-                fontWeight="bold"
-              >
-                短い日時
-              </FormLabel>
-            </FormControl> */}
+            <HistorySettings
+              isChecked={roomType}
+              setIsChecked={setRoomType}
+              text="特殊な部屋名"
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
