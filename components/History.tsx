@@ -38,8 +38,8 @@ import {
   tableDateShortState,
   isCopyState,
 } from '../utils/recoilAtoms';
-import LogUtil from '../utils/LogUtil';
-import {formatDate, formatTableShow, exportLog} from '../utils/formatUtil';
+import {LogConvert} from '../utils/logConvert';
+import {formatTableShow, exportLog} from '../utils/formatUtil';
 import {useTable, useSortBy} from 'react-table';
 import {IoArrowUpOutline, IoArrowDownOutline} from 'react-icons/io5';
 import {colors} from '../utils/colors';
@@ -59,18 +59,9 @@ export const History = () => {
   const data: TableData[] = React.useMemo(
     () =>
       [...log].reverse().map(log => {
-        const logUtil = new LogUtil(log.code);
-        if (logUtil.validateQrData()) {
-          const parsedData = logUtil.parseQrData();
-          const campus = logUtil.getLogCampus();
-          return {
-            date: formatDate(log.date, dateType),
-            building: parseInt(parsedData.buildingNumber),
-            floor: parseInt(parsedData.floorNumber),
-            room: parsedData.roomNumber,
-            seat: parsedData.seatNumber,
-            campus: campus,
-          };
+        const logConvert = new LogConvert(log);
+        if (logConvert.isUseLog()) {
+          return logConvert.historyTableText(dateType);
         }
         return {
           date: 'Null',
