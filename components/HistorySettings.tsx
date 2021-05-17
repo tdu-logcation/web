@@ -7,7 +7,8 @@ export const HistorySettings: React.FC<{
     valOrUpdater: boolean | ((currVal: boolean) => boolean)
   ) => void;
   text: string;
-}> = ({isChecked, setIsChecked, text}) => {
+  id: string;
+}> = ({isChecked, setIsChecked, text, id}) => {
   return (
     <FormControl
       display="flex"
@@ -19,11 +20,11 @@ export const HistorySettings: React.FC<{
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setIsChecked(event.target.checked);
         }}
-        id="dateShort"
+        id={id}
         size="lg"
       />
       <FormLabel
-        htmlFor="dateShort"
+        htmlFor={id}
         mb="0"
         marginLeft="1rem"
         fontSize="1.2em"

@@ -190,19 +190,24 @@ export const History = () => {
         <ModalContent>
           <ModalHeader>フィルター</ModalHeader>
           <ModalCloseButton size="lg" />
-          <ModalBody padding="1rem 2rem 2.5rem 2rem">
+          <ModalBody padding="1rem 2rem 1rem 2rem">
             <Box>{showButton()}</Box>
             <Divider colorScheme={colors('divider')} borderWidth="1px" />
             <HistorySettings
               isChecked={dateType}
               setIsChecked={setDateType}
               text="短い日時"
+              id="shortDate"
             />
             <HistorySettings
               isChecked={roomType}
               setIsChecked={setRoomType}
               text="特殊な部屋名"
+              id="uniqueRoom"
             />
+            <Center margin="1rem 0 .5rem 0">
+              <Text fontWeight="bold">総ログ数: {log.length}</Text>
+            </Center>
           </ModalBody>
         </ModalContent>
       </Modal>
