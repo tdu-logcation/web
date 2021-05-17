@@ -47,6 +47,7 @@ import {TableData} from '../@types/historyTable';
 import {tableShow, tableInit} from '../utils/table';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {OtherPage} from './OtherPage';
+import {HistorySettings} from './HistorySettings';
 
 export const History = () => {
   const [log] = useRecoilState(logState);
@@ -188,7 +189,12 @@ export const History = () => {
           <ModalBody padding="1rem 2rem 2.5rem 2rem">
             <Box>{showButton()}</Box>
             <Divider colorScheme={colors('divider')} borderWidth="1px" />
-            <FormControl
+            <HistorySettings
+              isChecked={dateType}
+              setIsChecked={setDateType}
+              text="短い日時"
+            />
+            {/* <FormControl
               display="flex"
               alignItems="center"
               margin=".5rem .2rem .5rem .2rem"
@@ -210,7 +216,7 @@ export const History = () => {
               >
                 短い日時
               </FormLabel>
-            </FormControl>
+            </FormControl> */}
           </ModalBody>
         </ModalContent>
       </Modal>
