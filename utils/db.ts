@@ -12,6 +12,7 @@ export class DB {
   private name: string;
   private version: number;
   private db: IDBPDatabase<MyDB>;
+  // TODO: sort
 
   constructor(name: string, version = 1) {
     this.name = name;

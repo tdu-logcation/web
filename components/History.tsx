@@ -30,6 +30,10 @@ import {
   ButtonProps,
   useToast,
   Divider,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {
@@ -39,9 +43,10 @@ import {
   tableDateShortState,
   isCopyState,
   uniqueRoomNameState,
+  logLenState,
 } from '../utils/recoilAtoms';
 import {LogConvert} from '../utils/logConvert';
-import {formatTableShow, exportLog} from '../utils/formatUtil';
+import {formatTableShow, exportLog, logLenText} from '../utils/formatUtil';
 import {useTable, useSortBy} from 'react-table';
 import {IoArrowUpOutline, IoArrowDownOutline} from 'react-icons/io5';
 import {colors} from '../utils/colors';
@@ -57,6 +62,9 @@ export const History = () => {
   const [logCount, setLogCount] = useRecoilState(logCountState);
   const [show, setShow] = useRecoilState(tableShowState);
   const [isCopy, setIsCopy] = useRecoilState(isCopyState);
+  const [logLen, setLogLen] = useRecoilState(logLenState);
+
+  const [logLenFast, setLogLenFast] = React.useState(15);
 
   const [dateType, setDateType] = useRecoilState(tableDateShortState);
   const [roomType, setRoomType] = useRecoilState(uniqueRoomNameState);
@@ -68,12 +76,11 @@ export const History = () => {
     const f = async () => {
       const db: DB = new DB('log');
       await db.openDB();
-      console.log(await db.getAll());
       setLogTable(await db.getAll());
       setLogCount(await db.count());
     };
     f();
-  }, []);
+  }, [logLen]);
 
   const data: TableData[] = React.useMemo(() => {
     return [...logTable].reverse().map(log => {
@@ -221,8 +228,30 @@ export const History = () => {
               id="uniqueRoom"
             />
             <Center margin="1rem 0 .5rem 0">
-              <Text fontWeight="bold">合計ログ数: {logCount}</Text>
+              <Text fontWeight="bold">
+                合計ログ数: {logCount} / 表示ログ: {logLenText(logLenFast)}
+              </Text>
             </Center>
+            <Slider
+              defaultValue={logLen}
+              min={1}
+              max={15}
+              step={0}
+              onChange={value => {
+                setLogLenFast(value);
+              }}
+              onChangeEnd={value => {
+                setLogLen(value);
+              }}
+              isReadOnly={false}
+              isDisabled={false}
+            >
+              <SliderTrack>
+                <Box position="relative" right={10} />
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb boxSize={6} />
+            </Slider>
           </ModalBody>
         </ModalContent>
       </Modal>

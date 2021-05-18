@@ -171,3 +171,12 @@ export const logCountState = atom<number>({
   key: 'logCount',
   default: 0,
 });
+
+/**
+ * 表示するログ数
+ */
+
+export const logLenState = atom<number>({
+  key: 'logLen',
+  default: 15,
+});

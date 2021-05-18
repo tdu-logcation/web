@@ -155,3 +155,13 @@ export function tweetText(log: Log[]): string {
     }
   }
 }
+
+/**
+ * 表示するログの量
+ */
+export function logLenText(len: number): string {
+  if (len === 15.0) {
+    return '全期間';
+  }
+  return `過去${Math.floor(len)}日`;
+}

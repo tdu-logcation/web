@@ -36,6 +36,12 @@ export const ReadLog = () => {
       if (logData) {
         isSuccess = true;
         data.push(logData);
+
+        try {
+          await db.add(logData);
+        } catch (e) {
+          null;
+        }
       }
     }
 
@@ -49,15 +55,6 @@ export const ReadLog = () => {
           return 1;
         }
       });
-
-      // 重複要素がある場合があるので同期的処理
-      for (const element of data) {
-        try {
-          await db.add(element);
-        } catch (e) {
-          null;
-        }
-      }
 
       setLog(data);
       toast({
