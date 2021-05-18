@@ -33,7 +33,8 @@ import {
 } from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
 import {
-  logState,
+  logCountState,
+  logTableState,
   tableShowState,
   tableDateShortState,
   isCopyState,
@@ -49,9 +50,11 @@ import {tableShow, tableInit} from '../utils/table';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {OtherPage} from './OtherPage';
 import {HistorySettings} from './HistorySettings';
+import {DB} from '../utils/db';
 
 export const History = () => {
-  const [log] = useRecoilState(logState);
+  const [logTable, setLogTable] = useRecoilState(logTableState);
+  const [logCount, setLogCount] = useRecoilState(logCountState);
   const [show, setShow] = useRecoilState(tableShowState);
   const [isCopy, setIsCopy] = useRecoilState(isCopyState);
 
@@ -61,24 +64,33 @@ export const History = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
 
-  const data: TableData[] = React.useMemo(
-    () =>
-      [...log].reverse().map(log => {
-        const logConvert = new LogConvert(log);
-        if (logConvert.isUseLog()) {
-          return logConvert.historyTableText(dateType, roomType);
-        }
-        return {
-          date: 'Null',
-          building: 0,
-          floor: 0,
-          room: 'Null',
-          seat: 'Null',
-          campus: 'Null',
-        };
-      }),
-    [dateType, roomType]
-  );
+  React.useEffect(() => {
+    const f = async () => {
+      const db: DB = new DB('log');
+      await db.openDB();
+      console.log(await db.getAll());
+      setLogTable(await db.getAll());
+      setLogCount(await db.count());
+    };
+    f();
+  }, []);
+
+  const data: TableData[] = React.useMemo(() => {
+    return [...logTable].reverse().map(log => {
+      const logConvert = new LogConvert(log);
+      if (logConvert.isUseLog()) {
+        return logConvert.historyTableText(dateType, roomType);
+      }
+      return {
+        date: 'Null',
+        building: 0,
+        floor: 0,
+        room: 'Null',
+        seat: 'Null',
+        campus: 'Null',
+      };
+    });
+  }, [logTable, dateType, roomType]);
 
   const columns = React.useMemo(
     () =>
@@ -179,7 +191,10 @@ export const History = () => {
       <UtilButton onClick={onOpen}>
         <Text color={colors('textPrimary')}>フィルター</Text>
       </UtilButton>
-      <CopyToClipboard onCopy={() => setIsCopy(true)} text={exportLog(log)}>
+      <CopyToClipboard
+        onCopy={() => setIsCopy(true)}
+        text={exportLog(logTable)}
+      >
         <UtilButton>
           <Text color={colors('textPrimary')}>クリップボードにコピー</Text>
         </UtilButton>
@@ -206,7 +221,7 @@ export const History = () => {
               id="uniqueRoom"
             />
             <Center margin="1rem 0 .5rem 0">
-              <Text fontWeight="bold">総ログ数: {log.length}</Text>
+              <Text fontWeight="bold">合計ログ数: {logCount}</Text>
             </Center>
           </ModalBody>
         </ModalContent>

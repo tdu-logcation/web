@@ -155,3 +155,19 @@ export const isMoveIndexedDBState = atom<boolean>({
   default: false,
   effects_UNSTABLE: [localStorageEffect('isMoveIndexedDB')],
 });
+
+/**
+ * ログ表示テーブル
+ */
+export const logTableState = atom<Log[]>({
+  key: 'logTable',
+  default: [],
+});
+
+/**
+ * 合計ログ数
+ */
+export const logCountState = atom<number>({
+  key: 'logCount',
+  default: 0,
+});
