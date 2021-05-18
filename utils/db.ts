@@ -1,4 +1,4 @@
-import {openDB, IDBPDatabase, DBSchema} from 'idb';
+import {openDB, deleteDB, IDBPDatabase, DBSchema} from 'idb';
 import {Log} from '../@types/log';
 
 interface MyDB extends DBSchema {
@@ -35,7 +35,9 @@ export class DB {
 
     await Promise.all(
       logs.map(value => {
-        tx.store.add(value);
+        tx.store.add(value).catch(e => {
+          console.log(e);
+        });
       })
     );
 
@@ -48,5 +50,9 @@ export class DB {
 
   async getAll(): Promise<Log[]> {
     return await this.db.getAll('log');
+  }
+
+  async deleteDB() {
+    await deleteDB(this.name);
   }
 }

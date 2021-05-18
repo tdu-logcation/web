@@ -15,7 +15,14 @@ export const MoveIndexedDB = () => {
           const db: DB = new DB('log');
 
           await db.openDB();
-          await db.addMulti(logs);
+
+          for (const element of logs) {
+            try {
+              await db.add(element);
+            } catch (e) {
+              null;
+            }
+          }
 
           setIsMoved(true);
         }

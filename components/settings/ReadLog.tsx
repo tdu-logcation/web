@@ -4,6 +4,7 @@ import {useRecoilState} from 'recoil';
 import {logState, otherLogState} from '../../utils/recoilAtoms';
 import {formatOtherLog} from '../../utils/formatUtil';
 import {colors} from '../../utils/colors';
+import {DB} from '../../utils/db';
 
 export const ReadLog = () => {
   const [log, setLog] = useRecoilState(logState);
@@ -14,7 +15,7 @@ export const ReadLog = () => {
     setOtherLog(event.target.value);
   };
 
-  const handleChange = () => {
+  const handleChange = async () => {
     if (otherLog === '') {
       toast({
         title: 'ログデータを入力してください',
@@ -26,6 +27,9 @@ export const ReadLog = () => {
     }
     let isSuccess = false;
     const data = [...log];
+
+    const db: DB = new DB('log');
+    await db.openDB();
 
     for (const element of otherLog.split('\n')) {
       const logData = formatOtherLog(element);
@@ -45,6 +49,16 @@ export const ReadLog = () => {
           return 1;
         }
       });
+
+      // 重複要素がある場合があるので同期的処理
+      for (const element of data) {
+        try {
+          await db.add(element);
+        } catch (e) {
+          null;
+        }
+      }
+
       setLog(data);
       toast({
         title: 'ログを更新しました。',

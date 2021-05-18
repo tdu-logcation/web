@@ -20,14 +20,18 @@ import {
 import {useRecoilState} from 'recoil';
 import {logState} from '../../utils/recoilAtoms';
 import {colors} from '../../utils/colors';
+import {DB} from '../../utils/db';
 
 export const DeleteData = () => {
   const [log, setLog] = useRecoilState(logState);
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
 
-  const deleteLog = () => {
+  const deleteLog = async () => {
     if (log.length !== 0) {
+      const db: DB = new DB('log');
+      await db.deleteDB();
+
       setLog([]);
       toast({
         title: '完全に削除しました',
