@@ -30,6 +30,7 @@ export const DeleteData = () => {
   const deleteLog = async () => {
     if (log.length !== 0) {
       const db: DB = new DB('log');
+      await db.openDB();
       await db.deleteDB();
 
       setLog([]);

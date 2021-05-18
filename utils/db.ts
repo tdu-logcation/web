@@ -53,6 +53,10 @@ export class DB {
   }
 
   async deleteDB() {
-    await deleteDB(this.name);
+    await this.db.clear('log');
+  }
+
+  async count(): Promise<number> {
+    return await this.db.count('log');
   }
 }
