@@ -139,7 +139,19 @@ export const tweetLinkState = atom<string>({
   default: 'https://twitter.com/intent/tweet',
 });
 
+/**
+ * 特殊な部屋名を表示するか
+ */
 export const uniqueRoomNameState = atom<boolean>({
   key: 'uniqueRoomName',
   default: true,
+});
+
+/**
+ * LocalStorageのログデータをIndexedDBに保存するか
+ */
+export const isMoveIndexedDBState = atom<boolean>({
+  key: 'isMoveIndexDB',
+  default: false,
+  effects_UNSTABLE: [localStorageEffect('isMoveIndexedDB')],
 });
