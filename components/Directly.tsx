@@ -27,6 +27,7 @@ import {useRecoilState} from 'recoil';
 import {directText, logState, savedLogState} from '../utils/recoilAtoms';
 import LogUtil from '../utils/LogUtil';
 import {LogType, Log} from '../@types/log';
+import {DB} from '../utils/db';
 
 export const Direct = () => {
   const toast = useToast();
@@ -45,9 +46,13 @@ export const Direct = () => {
     setText('');
   };
 
-  const save = () => {
+  const save = async () => {
     const data = `jp.ac.dendai/${text}`;
     const logUtil = new LogUtil(data);
+
+    const db: DB = new DB('log');
+    await db.openDB();
+
     if (logUtil.validateQrData()) {
       const nextLog = [...log];
 
@@ -58,6 +63,8 @@ export const Direct = () => {
         type: LogType.normal,
         campus: logUtil.getLogCampus(),
       };
+
+      await db.add(datum);
 
       nextLog.push(datum);
 
