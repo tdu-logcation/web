@@ -1,4 +1,4 @@
-import {openDB, deleteDB, IDBPDatabase, DBSchema} from 'idb';
+import {openDB, IDBPDatabase, DBSchema} from 'idb';
 import {Log} from '../@types/log';
 
 interface MyDB extends DBSchema {
