@@ -30,6 +30,7 @@ import {
 import {LogType} from '../@types/log';
 import {colors} from '../utils/colors';
 import LogUtil from '../utils/LogUtil';
+import {DB} from '../utils/db';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -105,37 +106,45 @@ const Qr = () => {
   }, []);
 
   React.useEffect(() => {
-    if (isQrRead || !useCamera) {
-      setCameraComponent(false);
-    }
-    if (isQrRead) {
-      const logUtil = new LogUtil(qrData);
-
-      if (logUtil.validateQrData()) {
-        const nextLog = [...log];
-
-        const data = {
-          label: '',
-          code: qrData,
-          date: new Date().toLocaleString('ja-JP'),
-          type: LogType.normal,
-          campus: logUtil.getLogCampus(),
-        };
-
-        nextLog.push(data);
-
-        setLog(nextLog);
-        setSavedLog(true);
-      } else {
-        toast({
-          title: 'QRコードが正しくありません',
-          description: <Text wordBreak="break-all">{qrData}</Text>,
-          status: 'error',
-          duration: 4000,
-          isClosable: true,
-        });
+    const f = async () => {
+      if (isQrRead || !useCamera) {
+        setCameraComponent(false);
       }
-    }
+      if (isQrRead) {
+        const logUtil = new LogUtil(qrData);
+
+        const db: DB = new DB('log');
+        await db.openDB();
+
+        if (logUtil.validateQrData()) {
+          const nextLog = [...log];
+
+          const data = {
+            label: '',
+            code: qrData,
+            date: new Date().toLocaleString('ja-JP'),
+            type: LogType.normal,
+            campus: logUtil.getLogCampus(),
+          };
+
+          await db.add(data);
+
+          nextLog.push(data);
+
+          setLog(nextLog);
+          setSavedLog(true);
+        } else {
+          toast({
+            title: 'QRコードが正しくありません',
+            description: <Text wordBreak="break-all">{qrData}</Text>,
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+          });
+        }
+      }
+    };
+    f();
   }, [isQrRead, useCamera]);
 
   return (
