@@ -37,6 +37,7 @@ import {
   tableShowState,
   tableDateShortState,
   isCopyState,
+  uniqueRoomNameState,
 } from '../utils/recoilAtoms';
 import {LogConvert} from '../utils/logConvert';
 import {formatTableShow, exportLog} from '../utils/formatUtil';
@@ -47,12 +48,16 @@ import {TableData} from '../@types/historyTable';
 import {tableShow, tableInit} from '../utils/table';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {OtherPage} from './OtherPage';
+import {HistorySettings} from './HistorySettings';
 
 export const History = () => {
   const [log] = useRecoilState(logState);
   const [show, setShow] = useRecoilState(tableShowState);
-  const [dateType, setDateType] = useRecoilState(tableDateShortState);
   const [isCopy, setIsCopy] = useRecoilState(isCopyState);
+
+  const [dateType, setDateType] = useRecoilState(tableDateShortState);
+  const [roomType, setRoomType] = useRecoilState(uniqueRoomNameState);
+
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
 
@@ -61,7 +66,7 @@ export const History = () => {
       [...log].reverse().map(log => {
         const logConvert = new LogConvert(log);
         if (logConvert.isUseLog()) {
-          return logConvert.historyTableText(dateType);
+          return logConvert.historyTableText(dateType, roomType);
         }
         return {
           date: 'Null',
@@ -72,7 +77,7 @@ export const History = () => {
           campus: 'Null',
         };
       }),
-    [dateType]
+    [dateType, roomType]
   );
 
   const columns = React.useMemo(
@@ -185,32 +190,24 @@ export const History = () => {
         <ModalContent>
           <ModalHeader>フィルター</ModalHeader>
           <ModalCloseButton size="lg" />
-          <ModalBody padding="1rem 2rem 2.5rem 2rem">
+          <ModalBody padding="1rem 2rem 1rem 2rem">
             <Box>{showButton()}</Box>
             <Divider colorScheme={colors('divider')} borderWidth="1px" />
-            <FormControl
-              display="flex"
-              alignItems="center"
-              margin=".5rem .2rem .5rem .2rem"
-            >
-              <Switch
-                isChecked={dateType}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setDateType(event.target.checked);
-                }}
-                id="dateShort"
-                size="lg"
-              />
-              <FormLabel
-                htmlFor="dateShort"
-                mb="0"
-                marginLeft="1rem"
-                fontSize="1.2em"
-                fontWeight="bold"
-              >
-                短い日時
-              </FormLabel>
-            </FormControl>
+            <HistorySettings
+              isChecked={dateType}
+              setIsChecked={setDateType}
+              text="短い日時"
+              id="shortDate"
+            />
+            <HistorySettings
+              isChecked={roomType}
+              setIsChecked={setRoomType}
+              text="特殊な部屋名"
+              id="uniqueRoom"
+            />
+            <Center margin="1rem 0 .5rem 0">
+              <Text fontWeight="bold">総ログ数: {log.length}</Text>
+            </Center>
           </ModalBody>
         </ModalContent>
       </Modal>

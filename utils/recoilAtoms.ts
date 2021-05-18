@@ -138,3 +138,8 @@ export const tweetLinkState = atom<string>({
   key: 'tweetLink',
   default: 'https://twitter.com/intent/tweet',
 });
+
+export const uniqueRoomNameState = atom<boolean>({
+  key: 'uniqueRoomName',
+  default: true,
+});

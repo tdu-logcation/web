@@ -74,12 +74,12 @@ export class LogConvert {
   /**
    * 履歴確認テキスト
    */
-  historyTableText(dateType: boolean): TableData {
+  historyTableText(dateType: boolean, roomType: boolean): TableData {
     return {
       date: formatDate(this.date, dateType),
       building: parseInt(this.buildingNumber),
       floor: parseInt(this.floorNumber),
-      room: this.roomName(),
+      room: roomType ? this.roomName() : `${this.roomNumber}教室`,
       seat: this.seatNumber,
       campus: this.campus,
     };
