@@ -38,7 +38,13 @@ export const ReadLog = () => {
         data.push(logData);
 
         try {
-          await db.add(logData);
+          await db.add({
+            label: logData.label,
+            code: logData.code,
+            type: logData.type,
+            campus: logData.campus,
+            date: new Date(logData.date),
+          });
         } catch (e) {
           null;
         }

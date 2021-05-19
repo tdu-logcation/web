@@ -15,14 +15,20 @@ export enum LogCampus {
   hatoyama = '鳩山',
 }
 
-export interface Log {
+interface LogBase {
   label: string;
   code: string;
-  date: string;
   type: LogType;
   campus: LogCampus;
 }
 
+export interface Log extends LogBase {
+  date: string;
+}
+
+export interface DBLog extends LogBase {
+  date: Date;
+}
 export interface ParsedLog {
   buildingNumber: string;
   floorNumber: string;

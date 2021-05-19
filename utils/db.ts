@@ -1,10 +1,10 @@
 import {openDB, IDBPDatabase, DBSchema} from 'idb';
-import {Log} from '../@types/log';
+import {DBLog} from '../@types/log';
 
 interface MyDB extends DBSchema {
   log: {
     key: string;
-    value: Log;
+    value: DBLog;
   };
 }
 
@@ -27,11 +27,11 @@ export class DB {
     });
   }
 
-  async add(log: Log) {
+  async add(log: DBLog) {
     await this.db.add('log', log);
   }
 
-  async addMulti(logs: Log[]) {
+  async addMulti(logs: DBLog[]) {
     const tx = this.db.transaction('log', 'readwrite');
 
     await Promise.all(
@@ -45,11 +45,11 @@ export class DB {
     await tx.done;
   }
 
-  async get(date: string): Promise<Log> {
+  async get(date: string): Promise<DBLog> {
     return await this.db.get('log', date);
   }
 
-  async getAll(): Promise<Log[]> {
+  async getAll(): Promise<DBLog[]> {
     return await this.db.getAll('log');
   }
 
