@@ -3,7 +3,7 @@ import {DBLog} from '../@types/log';
 
 interface MyDB extends DBSchema {
   log: {
-    key: string;
+    key: Date;
     value: DBLog;
   };
 }
@@ -45,12 +45,36 @@ export class DB {
     await tx.done;
   }
 
-  async get(date: string): Promise<DBLog> {
+  async get(date: Date): Promise<DBLog> {
     return await this.db.get('log', date);
   }
 
   async getAll(): Promise<DBLog[]> {
     return await this.db.getAll('log');
+  }
+
+  async getPeriod(days: number) {
+    const keys = (await this.db.getAllKeys('log')).reverse();
+    const now = new Date();
+    const logs: DBLog[] = [];
+
+    for await (const cursor of keys) {
+      if (
+        days === 15 ||
+        days >= Math.abs(now.valueOf() - cursor.valueOf()) / 86400000
+      ) {
+        logs.push(await this.get(cursor));
+      } else {
+        // dbは日付でソート済み前提
+        break;
+      }
+    }
+
+    return logs.reverse();
+  }
+
+  async getLatest(): Promise<DBLog> {
+    return (await this.getPeriod(1)).reverse()[0];
   }
 
   async deleteDB() {

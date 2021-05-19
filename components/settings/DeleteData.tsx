@@ -28,12 +28,17 @@ export const DeleteData = () => {
   const toast = useToast();
 
   const deleteLog = async () => {
+    const db: DB = new DB('log');
+    await db.openDB();
+
+    // 下方互換
     if (log.length !== 0) {
-      const db: DB = new DB('log');
-      await db.openDB();
+      setLog([]);
+    }
+
+    if ((await db.count()) !== 0) {
       await db.deleteDB();
 
-      setLog([]);
       toast({
         title: '完全に削除しました',
         status: 'info',

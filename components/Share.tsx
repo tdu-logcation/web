@@ -19,28 +19,34 @@ import {
 import {colors} from '../utils/colors';
 import {
   savedLogState,
-  logState,
   tweetLinkState,
   confirmationTextState,
 } from '../utils/recoilAtoms';
 import {useRecoilState} from 'recoil';
 import {resultText, tweetText} from '../utils/formatUtil';
+import {DB} from '../utils/db';
 
 export const Twitter = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   const [savedLog, setSavedLog] = useRecoilState(savedLogState);
-  const [log] = useRecoilState(logState);
   const [text, setText] = useRecoilState(confirmationTextState);
   const [tweet, setTweet] = useRecoilState(tweetLinkState);
 
   React.useEffect(() => {
-    if (savedLog) {
-      onOpen();
-      setSavedLog(false);
-      setText(resultText(log));
-      setTweet(tweetText(log));
-    }
+    const f = async () => {
+      const db: DB = new DB('log');
+      await db.openDB();
+      if (savedLog) {
+        const latestLog = await db.getLatest();
+        console.log(latestLog);
+        onOpen();
+        setSavedLog(false);
+        setText(resultText(latestLog));
+        setTweet(tweetText(latestLog, await db.count()));
+      }
+    };
+    f();
   }, [savedLog]);
 
   return (

@@ -76,7 +76,7 @@ export const History = () => {
     const f = async () => {
       const db: DB = new DB('log');
       await db.openDB();
-      setLogTable(await db.getAll());
+      setLogTable(await db.getPeriod(logLen));
       setLogCount(await db.count());
     };
     f();
@@ -184,7 +184,7 @@ export const History = () => {
   React.useEffect(() => {
     if (isCopy) {
       toast({
-        title: 'クリップボードにコピーしました',
+        title: `${logLenText(logLenFast)}をコピーしました`,
         status: 'success',
         duration: 4000,
         isClosable: true,
@@ -229,7 +229,7 @@ export const History = () => {
             />
             <Center margin="1rem 0 .5rem 0">
               <Text fontWeight="bold">
-                合計ログ数: {logCount} / 表示ログ: {logLenText(logLenFast)}
+                表示ログ: {logLenText(logLenFast)} / 合計ログ数: {logCount}
               </Text>
             </Center>
             <Slider

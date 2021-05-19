@@ -24,7 +24,6 @@ import {
   useCameraState,
   cameraComponentState,
   qrDataState,
-  logState,
   savedLogState,
 } from '../utils/recoilAtoms';
 import {LogType, DBLog} from '../@types/log';
@@ -98,8 +97,6 @@ const Qr = () => {
   const [cameraComponent, setCameraComponent] =
     useRecoilState(cameraComponentState);
 
-  const [log, setLog] = useRecoilState(logState);
-
   React.useEffect(() => {
     setCameraComponent(true);
   }, []);
@@ -116,17 +113,6 @@ const Qr = () => {
         await db.openDB();
 
         if (logUtil.validateQrData()) {
-          const nextLog = [...log];
-
-          // TODO: LocalStorage保存を削除
-          const data = {
-            label: '',
-            code: qrData,
-            date: new Date().toLocaleString('ja-JP'),
-            type: LogType.normal,
-            campus: logUtil.getLogCampus(),
-          };
-
           const dBData: DBLog = {
             label: '',
             code: qrData,
@@ -136,10 +122,6 @@ const Qr = () => {
           };
 
           await db.add(dBData);
-
-          nextLog.push(data);
-
-          setLog(nextLog);
           setSavedLog(true);
         } else {
           toast({

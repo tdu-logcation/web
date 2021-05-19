@@ -5,7 +5,7 @@
  */
 
 import {atom, DefaultValue} from 'recoil';
-import {Log} from '../@types/log';
+import {Log, DBLog} from '../@types/log';
 import {tableInit} from './table';
 
 const localStorageEffect =
@@ -161,7 +161,7 @@ export const isMoveIndexedDBState = atom<boolean>({
 /**
  * ログ表示テーブル
  */
-export const logTableState = atom<Log[]>({
+export const logTableState = atom<DBLog[]>({
   key: 'logTable',
   default: [],
 });
