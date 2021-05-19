@@ -15,10 +15,17 @@ export const MoveIndexedDB = () => {
           const db: DB = new DB('log');
 
           await db.openDB();
+          await db.deleteDB();
 
           for (const element of logs) {
             try {
-              await db.add(element);
+              await db.add({
+                label: element.label,
+                code: element.code,
+                type: element.type,
+                campus: element.campus,
+                date: new Date(element.date),
+              });
             } catch (e) {
               null;
             }

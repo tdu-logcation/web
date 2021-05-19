@@ -26,7 +26,7 @@ import React from 'react';
 import {useRecoilState} from 'recoil';
 import {directText, logState, savedLogState} from '../utils/recoilAtoms';
 import LogUtil from '../utils/LogUtil';
-import {LogType, Log} from '../@types/log';
+import {LogType, Log, DBLog} from '../@types/log';
 import {DB} from '../utils/db';
 
 export const Direct = () => {
@@ -64,7 +64,15 @@ export const Direct = () => {
         campus: logUtil.getLogCampus(),
       };
 
-      await db.add(datum);
+      const dbData: DBLog = {
+        label: '',
+        code: data,
+        date: new Date(),
+        type: LogType.normal,
+        campus: logUtil.getLogCampus(),
+      };
+
+      await db.add(dbData);
 
       nextLog.push(datum);
 
