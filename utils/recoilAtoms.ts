@@ -8,20 +8,22 @@ import {atom, DefaultValue} from 'recoil';
 import {Log} from '../@types/log';
 import {tableInit} from './table';
 
-const localStorageEffect = (key: string) => ({setSelf, onSet}) => {
-  const savedValue = localStorage.getItem(key);
-  if (savedValue !== null) {
-    setSelf(JSON.parse(savedValue));
-  }
-
-  onSet((newValue: DefaultValue | string) => {
-    if (newValue instanceof DefaultValue) {
-      localStorage.removeItem(key);
-    } else {
-      localStorage.setItem(key, JSON.stringify(newValue));
+const localStorageEffect =
+  (key: string) =>
+  ({setSelf, onSet}) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue !== null) {
+      setSelf(JSON.parse(savedValue));
     }
-  });
-};
+
+    onSet((newValue: DefaultValue | string) => {
+      if (newValue instanceof DefaultValue) {
+        localStorage.removeItem(key);
+      } else {
+        localStorage.setItem(key, JSON.stringify(newValue));
+      }
+    });
+  };
 
 /**
  * - 読み取り完了: true

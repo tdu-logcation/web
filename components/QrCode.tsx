@@ -95,9 +95,8 @@ const Qr = () => {
   const [useCamera] = useRecoilState(useCameraState);
   const [qrData] = useRecoilState(qrDataState);
   const [, setSavedLog] = useRecoilState(savedLogState);
-  const [cameraComponent, setCameraComponent] = useRecoilState(
-    cameraComponentState
-  );
+  const [cameraComponent, setCameraComponent] =
+    useRecoilState(cameraComponentState);
 
   const [log, setLog] = useRecoilState(logState);
 
