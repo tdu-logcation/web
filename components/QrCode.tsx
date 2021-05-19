@@ -27,7 +27,7 @@ import {
   logState,
   savedLogState,
 } from '../utils/recoilAtoms';
-import {LogType} from '../@types/log';
+import {LogType, DBLog} from '../@types/log';
 import {colors} from '../utils/colors';
 import LogUtil from '../utils/LogUtil';
 import {DB} from '../utils/db';
@@ -119,6 +119,7 @@ const Qr = () => {
         if (logUtil.validateQrData()) {
           const nextLog = [...log];
 
+          // TODO: LocalStorage保存を削除
           const data = {
             label: '',
             code: qrData,
@@ -127,7 +128,15 @@ const Qr = () => {
             campus: logUtil.getLogCampus(),
           };
 
-          await db.add(data);
+          const dBData: DBLog = {
+            label: '',
+            code: qrData,
+            date: new Date(),
+            type: LogType.normal,
+            campus: logUtil.getLogCampus(),
+          };
+
+          await db.add(dBData);
 
           nextLog.push(data);
 
