@@ -151,7 +151,7 @@ export const uniqueRoomNameState = atom<boolean>({
  * LocalStorageのログデータをIndexedDBに保存するか
  */
 export const isMoveIndexedDBState = atom<boolean>({
-  key: 'isMoveIndexDB',
+  key: '_isMoveIndexDB',
   default: false,
-  effects_UNSTABLE: [localStorageEffect('isMoveIndexedDB')],
+  effects_UNSTABLE: [localStorageEffect('_isMoveIndexedDB')],
 });
