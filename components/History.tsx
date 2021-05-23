@@ -44,6 +44,7 @@ import {
   isCopyState,
   uniqueRoomNameState,
   logLenState,
+  logLenFastState,
 } from '../utils/recoilAtoms';
 import {LogConvert} from '../utils/logConvert';
 import {formatTableShow, exportLog, logLenText} from '../utils/formatUtil';
@@ -51,7 +52,7 @@ import {useTable, useSortBy} from 'react-table';
 import {IoArrowUpOutline, IoArrowDownOutline} from 'react-icons/io5';
 import {colors} from '../utils/colors';
 import {TableData} from '../@types/historyTable';
-import {tableShow, tableInit} from '../utils/table';
+import {tableShow, tableInit, maxDay} from '../utils/table';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {OtherPage} from './OtherPage';
 import {HistorySettings} from './HistorySettings';
@@ -64,7 +65,7 @@ export const History = () => {
   const [isCopy, setIsCopy] = useRecoilState(isCopyState);
   const [logLen, setLogLen] = useRecoilState(logLenState);
 
-  const [logLenFast, setLogLenFast] = React.useState(15);
+  const [logLenFast, setLogLenFast] = useRecoilState(logLenFastState);
 
   const [dateType, setDateType] = useRecoilState(tableDateShortState);
   const [roomType, setRoomType] = useRecoilState(uniqueRoomNameState);
@@ -235,7 +236,7 @@ export const History = () => {
             <Slider
               defaultValue={logLen}
               min={1}
-              max={15}
+              max={maxDay}
               step={0}
               onChange={value => {
                 setLogLenFast(value);

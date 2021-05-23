@@ -4,7 +4,7 @@
  * Copyright (C) 2021 logcation
  */
 
-import {tableShow} from './table';
+import {tableShow, maxDay} from './table';
 import {LogType, DBLog} from '../@types/log';
 import LogUtil from './LogUtil';
 import {LogConvert} from './logConvert';
@@ -161,7 +161,7 @@ export function tweetText(log: DBLog, logLen: number): string {
  * 表示するログの量
  */
 export function logLenText(len: number): string {
-  if (len === 15.0) {
+  if (len === maxDay) {
     return '全期間';
   }
   return `過去${Math.floor(len)}日`;

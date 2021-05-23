@@ -6,7 +6,7 @@
 
 import {atom, DefaultValue} from 'recoil';
 import {Log, DBLog} from '../@types/log';
-import {tableInit} from './table';
+import {tableInit, maxDay} from './table';
 
 const localStorageEffect =
   (key: string) =>
@@ -177,8 +177,15 @@ export const logCountState = atom<number>({
 /**
  * 表示するログ数
  */
-
 export const logLenState = atom<number>({
   key: 'logLen',
-  default: 15,
+  default: maxDay,
+});
+
+/**
+ * リアルタイム表示ログ数
+ */
+export const logLenFastState = atom<number>({
+  key: 'logLenFast',
+  default: maxDay,
 });

@@ -1,5 +1,6 @@
 import {openDB, IDBPDatabase, DBSchema} from 'idb';
 import {DBLog} from '../@types/log';
+import {maxDay} from './table';
 
 interface MyDB extends DBSchema {
   log: {
@@ -60,7 +61,7 @@ export class DB {
 
     for await (const cursor of keys) {
       if (
-        days === 15 ||
+        days === maxDay ||
         days >= Math.abs(now.valueOf() - cursor.valueOf()) / 86400000
       ) {
         logs.push(await this.get(cursor));
