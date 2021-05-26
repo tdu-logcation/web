@@ -5,23 +5,25 @@
  */
 
 import {atom, DefaultValue} from 'recoil';
-import {Log} from '../@types/log';
-import {tableInit} from './table';
+import {Log, DBLog} from '../@types/log';
+import {tableInit, maxDay} from './table';
 
-const localStorageEffect = (key: string) => ({setSelf, onSet}) => {
-  const savedValue = localStorage.getItem(key);
-  if (savedValue !== null) {
-    setSelf(JSON.parse(savedValue));
-  }
-
-  onSet((newValue: DefaultValue | string) => {
-    if (newValue instanceof DefaultValue) {
-      localStorage.removeItem(key);
-    } else {
-      localStorage.setItem(key, JSON.stringify(newValue));
+const localStorageEffect =
+  (key: string) =>
+  ({setSelf, onSet}) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue !== null) {
+      setSelf(JSON.parse(savedValue));
     }
-  });
-};
+
+    onSet((newValue: DefaultValue | string) => {
+      if (newValue instanceof DefaultValue) {
+        localStorage.removeItem(key);
+      } else {
+        localStorage.setItem(key, JSON.stringify(newValue));
+      }
+    });
+  };
 
 /**
  * - 読み取り完了: true
@@ -154,4 +156,36 @@ export const isMoveIndexedDBState = atom<boolean>({
   key: '_isMoveIndexDB',
   default: false,
   effects_UNSTABLE: [localStorageEffect('_isMoveIndexedDB')],
+});
+
+/**
+ * ログ表示テーブル
+ */
+export const logTableState = atom<DBLog[]>({
+  key: 'logTable',
+  default: [],
+});
+
+/**
+ * 合計ログ数
+ */
+export const logCountState = atom<number>({
+  key: 'logCount',
+  default: 0,
+});
+
+/**
+ * 表示するログ数
+ */
+export const logLenState = atom<number>({
+  key: 'logLen',
+  default: maxDay,
+});
+
+/**
+ * リアルタイム表示ログ数
+ */
+export const logLenFastState = atom<number>({
+  key: 'logLenFast',
+  default: maxDay,
 });

@@ -9,12 +9,15 @@ import {ChakraProvider} from '@chakra-ui/react';
 import {RecoilRoot} from 'recoil';
 import React from 'react';
 import theme from '../utils/theme';
+import NoSSR from 'react-no-ssr';
 
 const MyApp = ({Component, pageProps}: AppProps) => (
   <RecoilRoot>
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <NoSSR>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </NoSSR>
   </RecoilRoot>
 );
 

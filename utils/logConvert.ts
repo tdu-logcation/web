@@ -1,4 +1,4 @@
-import {Log, LogCampus} from '../@types/log';
+import {LogCampus, DBLog} from '../@types/log';
 import LogUtil from './LogUtil';
 import {uniqueRoomNames} from './uniqueRoomNames';
 import {TableData} from '../@types/historyTable';
@@ -6,7 +6,7 @@ import {formatDate} from '../utils/formatUtil';
 
 export class LogConvert {
   private campus: LogCampus;
-  private date: string;
+  private date: Date;
   private label: string;
   private code: string;
 
@@ -17,7 +17,7 @@ export class LogConvert {
   private roomNumber: string;
   private seatNumber: string;
 
-  constructor(log: Log) {
+  constructor(log: DBLog) {
     this.code = log.code;
     this.date = log.date;
     this.campus = log.campus;
