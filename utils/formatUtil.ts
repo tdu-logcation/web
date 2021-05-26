@@ -4,8 +4,8 @@
  * Copyright (C) 2021 logcation
  */
 
-import {tableShow} from './table';
-import {Log, LogType} from '../@types/log';
+import {tableShow, maxDay} from './table';
+import {LogType, DBLog} from '../@types/log';
 import LogUtil from './LogUtil';
 import {LogConvert} from './logConvert';
 
@@ -15,17 +15,15 @@ import {LogConvert} from './logConvert';
  * @param date date object
  * @returns フォーマットした文字列
  */
-export function formatDate(dateStr: string, isShort: boolean) {
-  const date = new Date(dateStr);
-
+export function formatDate(dateData: Date, isShort: boolean) {
   const week = ['日', '月', '火', '水', '木', '金', '土'];
 
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const weekDay = week[date.getDay()];
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minutes = date.getMinutes();
+  const year = dateData.getFullYear();
+  const month = dateData.getMonth() + 1;
+  const weekDay = week[dateData.getDay()];
+  const day = dateData.getDate();
+  const hour = dateData.getHours();
+  const minutes = dateData.getMinutes();
 
   if (isShort) {
     return `${day}日 ${hour}:${('00' + minutes).slice(-2)}`;
@@ -61,15 +59,20 @@ export function formatTableShow(showData: boolean[]) {
  * @param log ログデータ
  * @returns フォーマットした文字列
  */
-export function exportLog(log: Log[]): string {
+export function exportLog(log: DBLog[]): string {
+  if (log.length === 0) {
+    return 'ログデータはありません。';
+  }
+
   // TODO: 日時を指定してその期間のみにする
   const formattedLogs = log.map(element => {
-    const date = new Date(element.date);
-    return `"${element.label}",${date.getFullYear()}/${padding(
-      date.getMonth() + 1
-    )}/${padding(date.getDate())},${padding(date.getHours())}:${padding(
-      date.getMinutes()
-    )}:${padding(date.getSeconds())},"${element.code}"`;
+    return `"${element.label}",${element.date.getFullYear()}/${padding(
+      element.date.getMonth() + 1
+    )}/${padding(element.date.getDate())},${padding(
+      element.date.getHours()
+    )}:${padding(element.date.getMinutes())}:${padding(
+      element.date.getSeconds()
+    )},"${element.code}"`;
   });
 
   return formattedLogs.join('\n');
@@ -89,10 +92,13 @@ const padding = (element: number): string => ('00' + element).slice(-2);
  * @param otherLog 外部ログデータ
  * @returns ログデータ
  */
-export function formatOtherLog(otherLog: string): Log | null {
-  const regularExpression = /^"(?<label>[^"]*)",\s?(?<date>.+),\s?(?<time>.+),\s?"(?<code>jp.ac.dendai\/[^"]+)"$/;
-  const dateExpression = /^(?<year>[0-9]{4})\/(?<month>[0-1][0-9])\/(?<date>[0-3][0-9])$/;
-  const timeExpression = /^(?<hour>[0-2][0-9]):(?<minute>[0-5][0-9]):(?<sec>[0-5][0-9])$/;
+export function formatOtherLog(otherLog: string): DBLog | null {
+  const regularExpression =
+    /^"(?<label>[^"]*)",\s?(?<date>.+),\s?(?<time>.+),\s?"(?<code>jp.ac.dendai\/[^"]+)"$/;
+  const dateExpression =
+    /^(?<year>[0-9]{4})\/(?<month>[0-1][0-9])\/(?<date>[0-3][0-9])$/;
+  const timeExpression =
+    /^(?<hour>[0-2][0-9]):(?<minute>[0-5][0-9]):(?<sec>[0-5][0-9])$/;
 
   if (regularExpression.test(otherLog)) {
     const logData = otherLog.match(regularExpression).groups;
@@ -110,7 +116,7 @@ export function formatOtherLog(otherLog: string): Log | null {
           Number(time.hour),
           Number(time.minute),
           Number(time.sec)
-        ).toLocaleString('ja-JP'),
+        ),
         type: LogType.normal,
         campus: logUtil.getLogCampus(),
       };
@@ -125,12 +131,10 @@ export function formatOtherLog(otherLog: string): Log | null {
  * @param log Log[]
  * @returns text
  */
-export function resultText(log: Log[]): string {
-  if (log.length !== 0) {
-    const logConvert = new LogConvert(log[log.length - 1]);
-    if (logConvert.isUseLog()) {
-      return logConvert.successText();
-    }
+export function resultText(log: DBLog): string {
+  const logConvert = new LogConvert(log);
+  if (logConvert.isUseLog()) {
+    return logConvert.successText();
   }
 
   return 'Error: ログを読み込めませんでした';
@@ -141,17 +145,24 @@ export function resultText(log: Log[]): string {
  * @param log Log[]
  * @returns tweet url
  */
-export function tweetText(log: Log[]): string {
-  const logLen = log.length;
-  if (logLen !== 0) {
-    const logConvert = new LogConvert(log[logLen - 1]);
-    if (logConvert.isUseLog()) {
-      const hashTag = 'Logcation';
-      const link = window.location.href;
+export function tweetText(log: DBLog, logLen: number): string {
+  const logConvert = new LogConvert(log);
+  if (logConvert.isUseLog()) {
+    const hashTag = 'Logcation';
+    const link = window.location.href;
 
-      const tweet = logConvert.tweetText(logLen);
+    const tweet = logConvert.tweetText(logLen);
 
-      return `https://twitter.com/intent/tweet?text=${tweet}&url=${link}&hashtags=${hashTag}`;
-    }
+    return `https://twitter.com/intent/tweet?text=${tweet}&url=${link}&hashtags=${hashTag}`;
   }
+}
+
+/**
+ * 表示するログの量
+ */
+export function logLenText(len: number): string {
+  if (len === maxDay) {
+    return '全期間';
+  }
+  return `過去${Math.floor(len)}日`;
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 import {Textarea, Box, Button, useToast} from '@chakra-ui/react';
 import {useRecoilState} from 'recoil';
-import {logState, otherLogState} from '../../utils/recoilAtoms';
+import {otherLogState} from '../../utils/recoilAtoms';
 import {formatOtherLog} from '../../utils/formatUtil';
 import {colors} from '../../utils/colors';
 import {DB} from '../../utils/db';
 
 export const ReadLog = () => {
-  const [log, setLog] = useRecoilState(logState);
   const [otherLog, setOtherLog] = useRecoilState(otherLogState);
   const toast = useToast();
 
@@ -26,7 +25,6 @@ export const ReadLog = () => {
       return;
     }
     let isSuccess = false;
-    const data = [...log];
 
     const db: DB = new DB('log');
     await db.openDB();
@@ -35,7 +33,6 @@ export const ReadLog = () => {
       const logData = formatOtherLog(element);
       if (logData) {
         isSuccess = true;
-        data.push(logData);
 
         try {
           await db.add({
@@ -52,17 +49,6 @@ export const ReadLog = () => {
     }
 
     if (isSuccess) {
-      // 日付順にソート
-      data.sort((a, b) => {
-        if (a.date < b.date) {
-          return -1;
-        }
-        if (a.date > b.date) {
-          return 1;
-        }
-      });
-
-      setLog(data);
       toast({
         title: 'ログを更新しました。',
         status: 'info',
