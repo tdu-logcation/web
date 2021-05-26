@@ -9,4 +9,7 @@ export interface UniqueRoomNames {
 export const uniqueRoomNames: UniqueRoomNames = {
   '1201': '丹羽ホール',
   '2305': '学生厚生',
+  '201': 'プレゼンテーションホール',
+  '203': '第1メディアルーム',
+  '204': '第2メディアルーム',
 };
