@@ -25,6 +25,7 @@ class MyDocument extends Document {
     return (
       <Html lang="ja-JP" dir="ltr">
         <Head>
+          <meta name="viewport" content="initial-scale=1, viewport-fit=cover" />
           <meta name="msapplication-TileColor" content="#000" />
           {/* safari */}
           <meta name="apple-mobile-web-app-capable" content="yes" />

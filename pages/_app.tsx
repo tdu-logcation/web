@@ -10,12 +10,15 @@ import {RecoilRoot} from 'recoil';
 import React from 'react';
 import theme from '../utils/theme';
 import NoSSR from 'react-no-ssr';
+import {SafeArea} from '../components/SafeArea';
 
 const MyApp = ({Component, pageProps}: AppProps) => (
   <RecoilRoot>
     <NoSSR>
       <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
+        <SafeArea>
+          <Component {...pageProps} />
+        </SafeArea>
       </ChakraProvider>
     </NoSSR>
   </RecoilRoot>
