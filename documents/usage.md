@@ -5,7 +5,7 @@ Next.jsで開発しています。
 ## Install dependencies
 
 ```bash
-yarn install --dev
+yarn install
 ```
 
 ## Build and Run
