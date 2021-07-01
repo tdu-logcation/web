@@ -86,6 +86,15 @@ export class LogConvert {
   }
 
   private additionalText(logNumber: number): string {
+    // 特殊
+    if (logNumber === 42) {
+      return '生命、宇宙、そして万物についての究極の疑問の答え！';
+    } else if (logNumber === 334) {
+      return 'なんでや！阪神関係ないやろ！';
+    } else if ((logNumber & (logNumber - 1)) === 0 || logNumber % 10 === 0) {
+      return 'キリ番！！！';
+    }
+
     if (logNumber === 1) {
       return 'はじめてのログ！';
     }
@@ -98,12 +107,6 @@ export class LogConvert {
     if (logNumber < 20) {
       return 'めっちゃ凄い！！！';
     }
-    if (logNumber < 30) {
-      return '実績を解除しました: 神';
-    }
-    if (logNumber < 40) {
-      return '開発者もびっくり！';
-    }
-    return 'これ以上は定義してないので開発者に問い合わせてください…';
+    return '開発者もびっくり！';
   }
 }
