@@ -5,9 +5,9 @@
 
 ## is何？
 
-新型コロナウイルス感染症を発症した場合、その人がどこにいたかを確認する事ができる[着座履歴記録アプリ「リレキログ」](https://www.dendai.ac.jp/news/20201116-01.html)のProgressive Web Appsバージョンです。。
+新型コロナウイルス感染症を発症した場合、その人がどこにいたかを確認する事ができる[着座履歴記録アプリ「リレキログ」](https://www.dendai.ac.jp/news/20201116-01.html)のProgressive Web Appsバージョンです。
 
-- 履歴はすべてローカル(local storage)で保存しています。
+- 履歴はすべてローカル(Indexed DB)で保存しています。
 - Webベースのアプリケーションのため、iOS、Android含むさまざまなプラットフォームで動作します。
 
 **注意**: このプロジェクトは学生主導で開発されており、大学非公式です。使用の際は自己責任でお願いします。
@@ -37,8 +37,7 @@
 
 ## お問い合わせ
 
-- Yuto Watanabe
-  - [お問い合わせページ](https://cateiru.com/contact)
+[@cateiru](https://twitter.com/cateiru)か[@fujiwaraizuho](https://twitter.com/fujiwaraizuho)のTwitter DMに直接ご連絡ください。
 
 ## LICENSE
 
