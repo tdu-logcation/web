@@ -20,7 +20,7 @@ import {
   useCameraState,
   qrDataState,
 } from '../utils/recoilAtoms';
-import {Center} from '@chakra-ui/react';
+import {Center, useToast} from '@chakra-ui/react';
 
 const QrReader = () => {
   const [isQrRead, setIsQrRead] = useRecoilState(qrReadState);
@@ -31,11 +31,23 @@ const QrReader = () => {
   const videoElement = document.createElement('video');
   const canvasElement = React.useRef<HTMLCanvasElement>(null);
 
+  const toast = useToast();
+
   let canvasContext: CanvasRenderingContext2D | null = null;
   let animationFrame = 0;
   let videoStream: MediaStream = null;
 
   React.useEffect(() => {
+    if (typeof navigator.mediaDevices === 'undefined') {
+      toast({
+        title: 'SSL通信ではないためカメラは使用できません',
+        status: 'warning',
+      });
+      setUseCamera(false);
+
+      return;
+    }
+
     canvasContext = canvasElement.current.getContext('2d');
 
     setUseCamera(true);
