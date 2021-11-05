@@ -8,19 +8,27 @@ Next.jsで開発しています。
 yarn install
 ```
 
-## Build and Run
+## ローカルでデバッグする
+
+WebRTCはSSL通信でないと使えないため、オレオレ認証局を作成します。
 
 ```bash
-# dev run
+# `./certificates`内にcrtファイルと.keyファイルを作成します。
+# macで開発している場合、.keyファイルをキーチェンに入れるとブラウザで開いたときに警告がでません。（finderでkeyファイルを開いてください）
+yarn certification
+
+# SSL（https）でデバッグ
+# URL: https://localhost:3000
+yarn dev:ssl
+
+# 通常デバッグ（カメラは使用できない）
+# URL: http://localhost
 yarn dev
+```
 
-# build
-yarn build
+## 静的ファイル出力
 
-# start
-yarn start
-
-# export static files
+```bash
 yarn export
 ```
 

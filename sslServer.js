@@ -7,7 +7,7 @@ const next = require('next');
 const https = require('https');
 const fs = require('fs');
 
-const port = parseInt(process.env.PORT || '443');
+const port = 3000;
 const host = '0.0.0.0';
 
 const app = next({
