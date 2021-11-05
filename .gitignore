@@ -261,3 +261,6 @@ yarn-error.log*
 
 public/*.js
 public/*.map
+
+certificates/*.crt
+certificates/*.key
