@@ -42,7 +42,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          repository: cateiru/my-github-profile-summary-cards
+          repository: tdu-logcation/web
           github_token: ${{ secrets.GITHUB_TOKEN }}
       
       
