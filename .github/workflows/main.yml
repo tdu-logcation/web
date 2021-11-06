@@ -36,18 +36,20 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          
-          git switch master
-          git pull
-          
+
           git status
           git add .
           git commit -m "Update version" || echo "Nothing to commit"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+          
+#       - name: Push changes
+#         uses: ad-m/github-push-action@master
+#         with:
+#           repository: tdu-logcation/web
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
         with:
-          repository: tdu-logcation/web
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
-      
-      
+          token: ${{ secrets.GITHUB_TOKEN }}
+          delete-branch: false
+          base: master
