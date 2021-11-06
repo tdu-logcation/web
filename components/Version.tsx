@@ -12,7 +12,7 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react';
-import {v} from '../utils/version';
+import {v, isDev} from '../utils/version';
 import {version} from '../utils/recoilAtoms';
 import React from 'react';
 import {colors} from '../utils/colors';
@@ -22,7 +22,7 @@ const Version = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   React.useEffect(() => {
-    if (_version !== v || v === 'dev') {
+    if (_version !== v || isDev) {
       // バージョンの更新とモーダル表示
       onOpen();
       setVersion(v);
@@ -47,7 +47,7 @@ const Version = () => {
             <Link
               isExternal
               href={
-                v !== 'dev'
+                !isDev
                   ? `https://github.com/tdu-logcation/web/releases/tag/${v}/`
                   : 'https://github.com/tdu-logcation/web'
               }
