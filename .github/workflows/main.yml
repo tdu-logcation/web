@@ -21,6 +21,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Set tag env
+        run: echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+  
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
@@ -45,7 +48,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           repository: tdu-logcation/web
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ env.TAG }}
       
       - uses: everlytic/branch-merge@1.1.2
         with:
