@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalContent,
   Link,
+  Text,
 } from '@chakra-ui/react';
 import {v} from '../utils/version';
 import {version} from '../utils/recoilAtoms';
@@ -21,7 +22,7 @@ const Version = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   React.useEffect(() => {
-    if (_version !== v) {
+    if (_version !== v || v === 'dev') {
       // バージョンの更新とモーダル表示
       onOpen();
       setVersion(v);
@@ -39,13 +40,22 @@ const Version = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Logcation 新着情報</ModalHeader>
+          <ModalHeader>Logcation "{v}" 新着情報</ModalHeader>
           <ModalCloseButton size="lg" />
           <ModalBody>
             詳しくは、
-            <br />
-            <Link isExternal>
-              https://github.com/hello-slide/front/releases/tag{v}/
+            <Link
+              isExternal
+              href={
+                v !== 'dev'
+                  ? `https://github.com/tdu-logcation/web/releases/tag/${v}/`
+                  : 'https://github.com/tdu-logcation/web'
+              }
+              _hover={{color: 'blue.300'}}
+            >
+              <Text fontWeight="bold" textDecoration="underline" as="span">
+                リリースノート
+              </Text>
             </Link>
             を参照してください。
           </ModalBody>
