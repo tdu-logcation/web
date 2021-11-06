@@ -30,7 +30,7 @@ jobs:
           template: templates/version.ts.jinja
           output_file: utils/version.ts
         env:
-          VERSION: "${GITHUB_REF##*/}"
+          VERSION: ${{ GITHUB_REF##*/ }}
           
       - name: Commit
         run: |
@@ -41,15 +41,15 @@ jobs:
           git add .
           git commit -m "Update version" || echo "Nothing to commit"
           
-#       - name: Push changes
-#         uses: ad-m/github-push-action@master
-#         with:
-#           repository: tdu-logcation/web
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          delete-branch: false
-          base: master
+          repository: tdu-logcation/web
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - uses: everlytic/branch-merge@1.1.2
+        with:
+          github_token: ${{ github.token }}
+          source_ref: ${{ github.ref }}
+          target_branch: 'master'
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
