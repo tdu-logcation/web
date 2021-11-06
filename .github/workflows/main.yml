@@ -32,8 +32,9 @@ jobs:
         with:
           template: templates/version.ts.jinja
           output_file: utils/version.ts
-        env:
-          VERSION: ${{ env.TAG }}
+          strict: true
+          variables: |
+            version=${{ env.TAG }}
           
       - name: Commit
         run: |
