@@ -36,6 +36,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          
+          git swich -c master orign/master
+          
           git status
           git add .
           git commit -m "Update version" || echo "Nothing to commit"
