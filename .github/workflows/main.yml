@@ -36,24 +36,24 @@ jobs:
           variables: |
             version=${{ env.TAG }}
           
-      - name: Commit
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-          git status
-          git add .
-          git commit -m "Update version" || echo "Nothing to commit"
-          
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Use Node.js
+        uses: actions/setup-node@v1
         with:
-          repository: tdu-logcation/web
-          github_token: ${{ github.token }}
-      
-      - uses: everlytic/branch-merge@1.1.2
+          node-version: '15.x'
+  
+      - name: Install dependencies...
+        run: yarn install --frozen-lockfile
+      - name: Build...
+        run: yarn run build
+      - name: Export static html...
+        run: yarn run export
+      - name: Setting jekyll...
+        run: touch ./.nojekyll
+      - name: add CNAME
+        run: cp ./path/to/CNAME ./out/
+        
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ github.token }}
-          source_ref: ${{ github.ref }}
-          target_branch: 'master'
-          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
