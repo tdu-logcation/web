@@ -37,7 +37,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          git swich -c master orign/master
+          git switch -c master orign/master
           
           git status
           git add .
