@@ -1,1 +1,1 @@
-export const v = 'develop';
+export const v = 'v1.0.1';
