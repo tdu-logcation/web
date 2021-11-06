@@ -15,3 +15,17 @@ jobs:
         run: yarn install --dev
       - name: Run gts
         run: yarn lint
+
+      - name: Set version
+        uses: cuchi/jinja2-action@v1.2.0
+        with:
+          template: templates/version.ts.jinja
+          output_file: utils/version.ts
+          strict: true
+          variables: |
+            version=test
+      
+      - name: Run gts2
+        run: yarn lint
+      - name: build
+        run: yarn build
