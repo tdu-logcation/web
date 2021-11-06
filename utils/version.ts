@@ -1,1 +1,1 @@
-export const v = '${GITHUB_REF##*/}';
+export const v = 'develop';
