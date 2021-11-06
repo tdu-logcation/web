@@ -189,3 +189,12 @@ export const logLenFastState = atom<number>({
   key: 'logLenFast',
   default: maxDay,
 });
+
+/**
+ * バージョン情報
+ */
+export const version = atom<string>({
+  key: 'version',
+  default: '',
+  effects_UNSTABLE: [localStorageEffect('version')],
+});
