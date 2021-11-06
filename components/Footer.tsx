@@ -6,7 +6,7 @@
 
 import {Box, Text, Center, Flex, Spacer, Link} from '@chakra-ui/react';
 import {colors} from '../utils/colors';
-import {HiExternalLink} from 'react-icons/hi';
+import {v} from '../utils/version';
 
 export const Footer = () => {
   return (
@@ -16,10 +16,7 @@ export const Footer = () => {
           <Box>
             <Link href="https://github.com/tdu-logcation/web" isExternal>
               <Box color={colors('textSecondly')} fontSize=".7rem">
-                <Flex>
-                  GitHub
-                  <HiExternalLink />
-                </Flex>
+                {v}
               </Box>
             </Link>
           </Box>
