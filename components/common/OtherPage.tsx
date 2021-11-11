@@ -14,11 +14,11 @@ import {
   Center,
   ButtonProps,
 } from '@chakra-ui/react';
-import {colors} from '../utils/colors';
+import {colors} from '../../utils/colors';
 import {IoHomeSharp} from 'react-icons/io5';
 import Link from 'next/link';
 import {useRecoilState} from 'recoil';
-import {useCameraState, qrReadState} from '../utils/recoilAtoms';
+import {useCameraState, qrReadState} from '../../utils/recoilAtoms';
 
 export const OtherPage: React.FC<{title: string}> = props => {
   return (

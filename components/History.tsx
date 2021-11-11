@@ -54,7 +54,7 @@ import {colors} from '../utils/colors';
 import {TableData} from '../@types/historyTable';
 import {tableShow, tableInit, maxDay} from '../utils/table';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {OtherPage} from './OtherPage';
+import {OtherPage} from './common/OtherPage';
 import {HistorySettings} from './HistorySettings';
 import {DB} from '../utils/db';
 

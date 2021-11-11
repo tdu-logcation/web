@@ -5,8 +5,8 @@
  */
 
 import {Box, Text, Center, Flex, Spacer, Link} from '@chakra-ui/react';
-import {colors} from '../utils/colors';
-import {v} from '../utils/version';
+import {colors} from '../../utils/colors';
+import {v} from '../../utils/version';
 
 export const Footer = () => {
   return (
