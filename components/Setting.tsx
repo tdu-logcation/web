@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2021 logcation
  */
-import {OtherPage} from './OtherPage';
+import {OtherPage} from './common/OtherPage';
 import {DeleteData} from './settings/DeleteData';
 import {ReadLog} from './settings/ReadLog';
 import {

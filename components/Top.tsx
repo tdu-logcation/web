@@ -10,7 +10,7 @@ import {IoSettingsSharp} from 'react-icons/io5';
 import QrCode from './QrCode';
 import {colors} from '../utils/colors';
 import {Direct} from './Directly';
-import {PageJump} from './OtherPage';
+import {PageJump} from './common/OtherPage';
 import {Twitter} from './Share';
 import LogoLight from '../assets/svgs/logcation.svg';
 import LogoDark from '../assets/svgs/logcation_dark.svg';
