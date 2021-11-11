@@ -3,3 +3,4 @@ public/*.js
 out/*
 sslServer.js
 templates/*.jinja
+@types/react-table-config.d.ts
