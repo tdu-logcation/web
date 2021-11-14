@@ -22,6 +22,7 @@ import {
 import {HiExternalLink} from 'react-icons/hi';
 import {colors} from '../utils/colors';
 import ColorModeSwitch from './settings/ColorModeSwitch';
+import Sync from './settings/Sync';
 
 export const Setting = () => {
   return (
@@ -45,6 +46,9 @@ export const Setting = () => {
           </ListItem>
           <ListItem>
             <ColorModeSwitch />
+          </ListItem>
+          <ListItem>
+            <Sync />
           </ListItem>
           <ListItem>
             <Flex>

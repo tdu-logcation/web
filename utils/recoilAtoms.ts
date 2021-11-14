@@ -198,3 +198,9 @@ export const version = atom<string>({
   default: '',
   effects_UNSTABLE: [localStorageEffect('version')],
 });
+
+export const isCloud = atom<boolean>({
+  key: 'isCloud',
+  default: false,
+  effects_UNSTABLE: [localStorageEffect('isCloud')],
+});
