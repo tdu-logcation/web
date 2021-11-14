@@ -22,18 +22,22 @@ import {
   Input,
   Text,
   Checkbox,
+  Link,
 } from '@chakra-ui/react';
 import {colors} from '../../utils/colors';
 import {IoSyncOutline} from 'react-icons/io5';
 import React from 'react';
 import {isCloud} from '../../utils/recoilAtoms';
 import {useRecoilState} from 'recoil';
+import useCreateUser from '../../hooks/useCreateUser';
 
 const Sync = () => {
   const [cloud, setCloud] = useRecoilState(isCloud);
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [userName, setUserName] = React.useState('');
+  const [userNameState, setUserNameState] = React.useState(false);
   const [startOk, setStartOk] = React.useState(false);
+  const [createUser] = useCreateUser();
 
   const handleChange = () => {
     if (!cloud) {
@@ -44,8 +48,15 @@ const Sync = () => {
   };
 
   const start = () => {
+    if (userName.length === 0) {
+      setUserNameState(true);
+      return;
+    }
+    setUserNameState(false);
+    setUserName('');
     onClose();
-    setCloud(true);
+
+    createUser(userName);
   };
 
   const inputUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +74,7 @@ const Sync = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>クラウド同期を使う</ModalHeader>
+          <ModalHeader>クラウド同期を開始する</ModalHeader>
           <ModalCloseButton size="lg" />
           <ModalBody>
             <Text>
@@ -73,10 +84,15 @@ const Sync = () => {
             <Input
               marginY="1rem"
               placeholder="ユーザ名"
+              value={userName}
               onChange={inputUserName}
+              isInvalid={userNameState}
             />
             <Checkbox isChecked={startOk} onChange={() => setStartOk(!startOk)}>
-              利用規約に同意する
+              <Link href="/terms" fontWeight="bold">
+                利用規約
+              </Link>
+              に同意する
             </Checkbox>
           </ModalBody>
           <ModalFooter>

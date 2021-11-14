@@ -18,6 +18,7 @@ import {
   IoCloudUploadOutline,
   IoLogoGithub,
   IoBugOutline,
+  IoStarOutline,
 } from 'react-icons/io5';
 import {HiExternalLink} from 'react-icons/hi';
 import {colors} from '../utils/colors';
@@ -49,6 +50,12 @@ export const Setting = () => {
           </ListItem>
           <ListItem>
             <Sync />
+          </ListItem>
+          <ListItem>
+            <Flex>
+              <ListIcon as={IoStarOutline} color={colors('mainSecondly')} />
+              <Link href="/terms">クラウド同期利用規約</Link>
+            </Flex>
           </ListItem>
           <ListItem>
             <Flex>
