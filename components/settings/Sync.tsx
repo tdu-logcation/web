@@ -26,10 +26,11 @@ import {
 import {colors} from '../../utils/colors';
 import {IoSyncOutline} from 'react-icons/io5';
 import React from 'react';
-import {isCloud} from '../../utils/recoilAtoms';
-import {useRecoilState} from 'recoil';
+import {isCloud, userInfo} from '../../utils/recoilAtoms';
+import {useRecoilState, useSetRecoilState} from 'recoil';
 import useCreateUser from '../../hooks/useCreateUser';
 import useLoginUser from '../../hooks/useLoginUser';
+import useDeleteUser from '../../hooks/useDeleteUser';
 import Link from 'next/link';
 
 const Sync = () => {
@@ -46,14 +47,26 @@ const Sync = () => {
   const [isLogin, setIsLogin] = React.useState(false);
   const [createUser] = useCreateUser();
   const [loginUser] = useLoginUser();
+  const [logoutUser] = useDeleteUser();
+  const setUserInfo = useSetRecoilState(userInfo);
 
   const handleChange = () => {
     if (!cloud) {
       onOpen();
     } else {
-      //   setCloud(false);
       onOpenLogout();
     }
+  };
+
+  const logout = (isDelete: boolean) => {
+    if (isDelete) {
+      logoutUser();
+    } else {
+      setUserInfo(null);
+      setCloud(false);
+    }
+
+    onCloseLogout();
   };
 
   const start = () => {
@@ -112,7 +125,10 @@ const Sync = () => {
             />
             <Switch
               marginY=".5rem"
-              onChange={() => setIsLogin(v => !v)}
+              onChange={() => {
+                setIsLogin(v => !v);
+                setUserName('');
+              }}
               isChecked={isLogin}
             >
               IDを入力してログインする
@@ -157,16 +173,32 @@ const Sync = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>クラウド同期をログアウトする</ModalHeader>
+          <ModalHeader>クラウド同期をオフにする</ModalHeader>
           <ModalCloseButton size="lg" />
-          <ModalBody></ModalBody>
+          <ModalBody>
+            「オフ」を選択するとクラウドからログアウトします。クラウド上にはログデータ、ユーザデータが残ります。
+            <br />
+            「クラウド削除」をクラウドのデータを削除してログアウトします。クラウド上のすべてのデータは消え、他端末でログインしている場合もログアウトされます。
+            <br />
+            ローカル上のデータは引き続き残ります。
+          </ModalBody>
           <ModalFooter>
             <Button
               backgroundColor={colors('mainPrimary')}
-              //   onClick={() => {}}
-              disabled={!startOk}
+              onClick={() => {
+                logout(true);
+              }}
             >
-              ログアウト
+              クラウド削除
+            </Button>
+            <Button
+              backgroundColor={colors('mainPrimary')}
+              onClick={() => {
+                logout(false);
+              }}
+              marginX=".5rem"
+            >
+              オフにする
             </Button>
             <Button
               color={colors('textPrimary')}

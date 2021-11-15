@@ -1,22 +1,20 @@
 import {useSetRecoilState} from 'recoil';
-import {userInfo, isCloud} from '../utils/recoilAtoms';
+import {isCloud} from '../utils/recoilAtoms';
 import API from '../utils/api';
 import {useToast} from '@chakra-ui/react';
+import useGetUserInfo from './useGetUserInfo';
 
 const useCreateUser = () => {
-  const setUserInfo = useSetRecoilState(userInfo);
   const setCloud = useSetRecoilState(isCloud);
   const toast = useToast();
+  const {getUserInfoById} = useGetUserInfo();
 
   const create = (userName: string) => {
     const api = new API();
     api
       .createAccount(userName)
       .then(res => {
-        setUserInfo({
-          name: userName,
-          id: res,
-        });
+        getUserInfoById(res);
         setCloud(true);
       })
       .catch(error => {

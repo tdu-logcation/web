@@ -16,6 +16,10 @@ import {LogConvert} from './logConvert';
  * @returns フォーマットした文字列
  */
 export function formatDate(dateData: Date, isShort: boolean) {
+  if (typeof dateData === 'undefined' || !(dateData instanceof Date)) {
+    return '';
+  }
+
   const week = ['日', '月', '火', '水', '木', '金', '土'];
 
   const year = dateData.getFullYear();

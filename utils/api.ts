@@ -1,9 +1,4 @@
-export interface UserInfo {
-  id: string;
-  name: string;
-  create_date: string;
-  number_of_logs: number;
-}
+import {UserInfo} from '../@types/cloud';
 
 export default class API {
   private api = 'https://api.tdu.app';
@@ -29,7 +24,16 @@ export default class API {
     const res = await fetch(`${this.userApi}?id=${id}`, option);
     await this.checkStatus(res);
 
-    return (await res.json()) as UserInfo;
+    const resJson = await res.json();
+    const userInfo: UserInfo = {
+      id: resJson['id'],
+      name: resJson['name'],
+      numberOfLogs: resJson['number_of_logs'],
+      createDate: resJson['create_date'],
+      updateDate: new Date(),
+    };
+
+    return userInfo;
   }
 
   public async changeName(id: string, userName: string) {

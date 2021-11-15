@@ -24,8 +24,22 @@ import {HiExternalLink} from 'react-icons/hi';
 import {colors} from '../utils/colors';
 import ColorModeSwitch from './settings/ColorModeSwitch';
 import Sync from './settings/Sync';
+import UserInfo from './settings/UserInfo';
+import {useRecoilValue} from 'recoil';
+import {isCloud} from '../utils/recoilAtoms';
+import useGetUserInfo from '../hooks/useGetUserInfo';
+import React from 'react';
 
 export const Setting = () => {
+  const cloud = useRecoilValue(isCloud);
+  const {getUserInfo} = useGetUserInfo();
+
+  React.useEffect(() => {
+    if (cloud) {
+      getUserInfo();
+    }
+  }, []);
+
   return (
     <OtherPage title="設定">
       <Center>
@@ -51,6 +65,11 @@ export const Setting = () => {
           <ListItem>
             <Sync />
           </ListItem>
+          {cloud && (
+            <ListItem>
+              <UserInfo />
+            </ListItem>
+          )}
           <ListItem>
             <Flex>
               <ListIcon as={IoStarOutline} color={colors('mainSecondly')} />
