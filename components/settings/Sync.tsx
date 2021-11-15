@@ -22,7 +22,6 @@ import {
   Input,
   Text,
   Checkbox,
-  Link,
 } from '@chakra-ui/react';
 import {colors} from '../../utils/colors';
 import {IoSyncOutline} from 'react-icons/io5';
@@ -30,6 +29,7 @@ import React from 'react';
 import {isCloud} from '../../utils/recoilAtoms';
 import {useRecoilState} from 'recoil';
 import useCreateUser from '../../hooks/useCreateUser';
+import Link from 'next/link';
 
 const Sync = () => {
   const [cloud, setCloud] = useRecoilState(isCloud);
@@ -89,8 +89,14 @@ const Sync = () => {
               isInvalid={userNameState}
             />
             <Checkbox isChecked={startOk} onChange={() => setStartOk(!startOk)}>
-              <Link href="/terms" fontWeight="bold">
-                利用規約
+              <Link href="/terms">
+                <Text
+                  fontWeight="bold"
+                  as="span"
+                  _hover={{textDecoration: 'underline'}}
+                >
+                  利用規約
+                </Text>
               </Link>
               に同意する
             </Checkbox>
