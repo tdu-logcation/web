@@ -12,13 +12,8 @@ export default class API {
   private logApi = `${this.api}/user`;
 
   public async createAccount(userName: string): Promise<string> {
-    const option: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `user_name=${userName}`,
-    };
+    const option = this.fetchOption('POST');
+    option['body'] = `user_name=${userName}`;
 
     const res = await fetch(this.userApi, option);
     this.checkStatus(res.status);
@@ -38,13 +33,8 @@ export default class API {
   }
 
   public async changeName(id: string, userName: string) {
-    const option: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `id=${id}&user_name=${userName}`,
-    };
+    const option = this.fetchOption('POST');
+    option['body'] = `id=${id}&user_name=${userName}`;
 
     const res = await fetch(this.userApi, option);
 
@@ -52,9 +42,7 @@ export default class API {
   }
 
   public async deleteUser(id: string) {
-    const option: RequestInit = {
-      method: 'DELETE',
-    };
+    const option = this.fetchOption('DELETE');
 
     const res = await fetch(`${this.userApi}?id=${id}`, option);
 
@@ -62,9 +50,7 @@ export default class API {
   }
 
   public async rank(): Promise<string[]> {
-    const option: RequestInit = {
-      method: 'GET',
-    };
+    const option = this.fetchOption('GET');
 
     const res = await fetch(`${this.api}/rank`, option);
     this.checkStatus(res.status);
@@ -76,5 +62,26 @@ export default class API {
     if (status !== 200) {
       throw new Error(`HTTPステータス: ${status}`);
     }
+  }
+
+  private fetchOption(method: string): RequestInit {
+    const base: RequestInit = {
+      credentials: 'include',
+      mode: 'cors',
+    };
+
+    if (method === 'POST') {
+      return {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        ...base,
+      };
+    }
+    return {
+      method: method,
+      ...base,
+    };
   }
 }
