@@ -37,7 +37,9 @@ const RankingTable = () => {
                 <Td>
                   <Text textAlign="center">{index + 1}</Text>
                 </Td>
-                <Td>{value.name}</Td>
+                <Td>
+                  <Text textAlign="center">{value.name}</Text>
+                </Td>
                 <Td>
                   <Text textAlign="center">{value.number_of_logs}</Text>
                 </Td>

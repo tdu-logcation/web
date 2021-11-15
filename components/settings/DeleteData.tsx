@@ -41,7 +41,9 @@ export const DeleteData = () => {
 
     if ((await db.count()) !== 0 || cloud) {
       await db.deleteDB();
-      deleteUser();
+      if (cloud) {
+        deleteUser();
+      }
 
       toast({
         title: '完全に削除しました',

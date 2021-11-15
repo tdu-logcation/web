@@ -10,3 +10,12 @@ export interface Rank {
   name: string;
   number_of_logs: number;
 }
+
+export interface CloudLog {
+  id: string;
+  date: string;
+  campus: string;
+  log_type: string;
+  label: string;
+  code: string;
+}

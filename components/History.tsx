@@ -35,7 +35,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from '@chakra-ui/react';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {
   logCountState,
   logTableState,
@@ -45,6 +45,8 @@ import {
   uniqueRoomNameState,
   logLenState,
   logLenFastState,
+  userInfo,
+  isCloud,
 } from '../utils/recoilAtoms';
 import {LogConvert} from '../utils/logConvert';
 import {formatTableShow, exportLog, logLenText} from '../utils/formatUtil';
@@ -57,6 +59,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {OtherPage} from './common/OtherPage';
 import {HistorySettings} from './HistorySettings';
 import {DB} from '../utils/db';
+import useSync from '../hooks/useSync';
 
 export const History = () => {
   const [logTable, setLogTable] = useRecoilState(logTableState);
@@ -73,6 +76,16 @@ export const History = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
 
+  const [success, sync] = useSync();
+  const user = useRecoilValue(userInfo);
+  const cloud = useRecoilValue(isCloud);
+
+  React.useEffect(() => {
+    if (cloud) {
+      sync(user.id);
+    }
+  }, []);
+
   React.useEffect(() => {
     const f = async () => {
       const db: DB = new DB('log');
@@ -81,7 +94,7 @@ export const History = () => {
       setLogCount(await db.count());
     };
     f();
-  }, [logLen]);
+  }, [logLen, success]);
 
   const data: TableData[] = React.useMemo(() => {
     return [...logTable].reverse().map(log => {

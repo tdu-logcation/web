@@ -20,6 +20,7 @@ const useGetUserInfo = () => {
         return info;
       })
       .catch(() => {
+        // TODO: 改善
         setCloud(false);
         setUserInfo(null);
         toast({
@@ -41,6 +42,7 @@ const useGetUserInfo = () => {
         return info;
       })
       .catch(() => {
+        // TODO: 改善
         setCloud(false);
         setUserInfo(null);
         toast({
