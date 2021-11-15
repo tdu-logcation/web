@@ -217,3 +217,11 @@ export const userInfo = atom<UserInfo>({
   default: null,
   effects_UNSTABLE: [localStorageEffect('userInfo')],
 });
+
+/**
+ * ロード画面
+ */
+export const LoadState = atom<boolean>({
+  key: 'load',
+  default: false,
+});
