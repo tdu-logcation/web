@@ -16,7 +16,7 @@ export default class API {
     option['body'] = `user_name=${userName}`;
 
     const res = await fetch(this.userApi, option);
-    this.checkStatus(res.status);
+    await this.checkStatus(res);
 
     return (await res.json())['id'];
   }
@@ -27,7 +27,7 @@ export default class API {
     };
 
     const res = await fetch(`${this.userApi}?id=${id}`, option);
-    this.checkStatus(res.status);
+    await this.checkStatus(res);
 
     return (await res.json()) as UserInfo;
   }
@@ -38,7 +38,7 @@ export default class API {
 
     const res = await fetch(this.userApi, option);
 
-    this.checkStatus(res.status);
+    await this.checkStatus(res);
   }
 
   public async deleteUser(id: string) {
@@ -46,21 +46,21 @@ export default class API {
 
     const res = await fetch(`${this.userApi}?id=${id}`, option);
 
-    this.checkStatus(res.status);
+    await this.checkStatus(res);
   }
 
   public async rank(): Promise<string[]> {
     const option = this.fetchOption('GET');
 
     const res = await fetch(`${this.api}/rank`, option);
-    this.checkStatus(res.status);
+    await this.checkStatus(res);
 
     return (await res.json()) as string[];
   }
 
-  private checkStatus(status: number) {
-    if (status !== 200) {
-      throw new Error(`HTTPステータス: ${status}`);
+  private async checkStatus(res: Response) {
+    if (!res.ok) {
+      throw new Error(`${res.status}: ${(await res.text()) || 'No Text'}`);
     }
   }
 

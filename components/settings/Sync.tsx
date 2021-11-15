@@ -29,21 +29,30 @@ import React from 'react';
 import {isCloud} from '../../utils/recoilAtoms';
 import {useRecoilState} from 'recoil';
 import useCreateUser from '../../hooks/useCreateUser';
+import useLoginUser from '../../hooks/useLoginUser';
 import Link from 'next/link';
 
 const Sync = () => {
   const [cloud, setCloud] = useRecoilState(isCloud);
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const {
+    isOpen: isOpenLogout,
+    onOpen: onOpenLogout,
+    onClose: onCloseLogout,
+  } = useDisclosure();
   const [userName, setUserName] = React.useState('');
   const [userNameState, setUserNameState] = React.useState(false);
   const [startOk, setStartOk] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
   const [createUser] = useCreateUser();
+  const [loginUser] = useLoginUser();
 
   const handleChange = () => {
     if (!cloud) {
       onOpen();
     } else {
-      setCloud(false);
+      //   setCloud(false);
+      onOpenLogout();
     }
   };
 
@@ -56,7 +65,11 @@ const Sync = () => {
     setUserName('');
     onClose();
 
-    createUser(userName);
+    if (isLogin) {
+      loginUser(userName);
+    } else {
+      createUser(userName);
+    }
   };
 
   const inputUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,17 +90,33 @@ const Sync = () => {
           <ModalHeader>クラウド同期を開始する</ModalHeader>
           <ModalCloseButton size="lg" />
           <ModalBody>
-            <Text>
-              ユーザ名を設定します。
-              ランキングに表示されるため、特定されない名前をご使用ください。
-            </Text>
+            {isLogin ? (
+              <Text>
+                ログを同期するにはIDを入力してください。
+                <br />
+                すでにログインしているユーザが対象です。
+              </Text>
+            ) : (
+              <Text>
+                ユーザ名を設定します。
+                <br />
+                ランキングに表示されるため、特定されない名前をご使用ください。
+              </Text>
+            )}
             <Input
-              marginY="1rem"
-              placeholder="ユーザ名"
+              marginTop="1rem"
+              placeholder={isLogin ? 'ID' : 'ユーザ名'}
               value={userName}
               onChange={inputUserName}
               isInvalid={userNameState}
             />
+            <Switch
+              marginY=".5rem"
+              onChange={() => setIsLogin(v => !v)}
+              isChecked={isLogin}
+            >
+              IDを入力してログインする
+            </Switch>
             <Checkbox isChecked={startOk} onChange={() => setStartOk(!startOk)}>
               <Link href="/terms">
                 <Text
@@ -113,6 +142,36 @@ const Sync = () => {
               color={colors('textPrimary')}
               variant="ghost"
               onClick={onClose}
+            >
+              閉じる
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal
+        isOpen={isOpenLogout}
+        onClose={onCloseLogout}
+        isCentered
+        motionPreset="slideInBottom"
+        size="sm"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>クラウド同期をログアウトする</ModalHeader>
+          <ModalCloseButton size="lg" />
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              backgroundColor={colors('mainPrimary')}
+              //   onClick={() => {}}
+              disabled={!startOk}
+            >
+              ログアウト
+            </Button>
+            <Button
+              color={colors('textPrimary')}
+              variant="ghost"
+              onClick={onCloseLogout}
             >
               閉じる
             </Button>
