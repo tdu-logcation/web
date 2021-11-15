@@ -5,3 +5,8 @@ export interface UserInfo {
   createDate?: string;
   updateDate?: Date;
 }
+
+export interface Rank {
+  name: string;
+  number_of_logs: number;
+}

@@ -1,4 +1,4 @@
-import {UserInfo} from '../@types/cloud';
+import {UserInfo, Rank} from '../@types/cloud';
 
 export default class API {
   private api = 'https://api.tdu.app';
@@ -53,13 +53,13 @@ export default class API {
     await this.checkStatus(res);
   }
 
-  public async rank(): Promise<string[]> {
+  public async rank(): Promise<Rank[]> {
     const option = this.fetchOption('GET');
 
     const res = await fetch(`${this.api}/rank`, option);
     await this.checkStatus(res);
 
-    return (await res.json()) as string[];
+    return (await res.json()) as Rank[];
   }
 
   private async checkStatus(res: Response) {
