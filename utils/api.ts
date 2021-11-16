@@ -63,6 +63,7 @@ export default class API {
 
   public async rank(): Promise<Rank[]> {
     const option = this.fetchOption('GET');
+    option.cache = 'default';
 
     const res = await fetch(`${this.api}/rank`, option);
     await this.checkStatus(res, () => {});
@@ -142,6 +143,7 @@ export default class API {
     const base: RequestInit = {
       credentials: 'include',
       mode: 'cors',
+      cache: 'no-store',
     };
 
     if (method === 'POST') {

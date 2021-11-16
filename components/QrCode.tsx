@@ -17,7 +17,7 @@ import {
 import {IoCameraSharp, IoVideocamOff, IoReloadOutline} from 'react-icons/io5';
 import QrReader from './QrReader';
 import {cameraStatusText} from '../utils/qrUtil';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {
   qrReadState,
   qrLoadState,
@@ -25,11 +25,13 @@ import {
   cameraComponentState,
   qrDataState,
   savedLogState,
+  isCloud,
 } from '../utils/recoilAtoms';
 import {LogType, DBLog} from '../@types/log';
 import {colors} from '../utils/colors';
 import LogUtil from '../utils/LogUtil';
 import {DB} from '../utils/db';
+import useAddLog from '../hooks/useAddLog';
 
 const QrTitle = ({text}: {text: string}) => (
   <Flex>
@@ -97,6 +99,9 @@ const Qr = () => {
   const [cameraComponent, setCameraComponent] =
     useRecoilState(cameraComponentState);
 
+  const cloud = useRecoilValue(isCloud);
+  const add = useAddLog();
+
   React.useEffect(() => {
     setCameraComponent(true);
   }, []);
@@ -122,6 +127,11 @@ const Qr = () => {
           };
 
           await db.add(dBData);
+
+          if (cloud) {
+            add([dBData]);
+          }
+
           setSavedLog(true);
         } else {
           toast({

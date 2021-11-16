@@ -23,11 +23,12 @@ import {
 } from '@chakra-ui/react';
 import {colors} from '../utils/colors';
 import React from 'react';
-import {useRecoilState} from 'recoil';
-import {directText, savedLogState} from '../utils/recoilAtoms';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {directText, savedLogState, isCloud} from '../utils/recoilAtoms';
 import LogUtil from '../utils/LogUtil';
 import {LogType, DBLog} from '../@types/log';
 import {DB} from '../utils/db';
+import useAddLog from '../hooks/useAddLog';
 
 export const Direct = () => {
   const toast = useToast();
@@ -35,6 +36,9 @@ export const Direct = () => {
 
   const [text, setText] = useRecoilState(directText);
   const [, setSavedLog] = useRecoilState(savedLogState);
+
+  const cloud = useRecoilValue(isCloud);
+  const add = useAddLog();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
@@ -62,6 +66,10 @@ export const Direct = () => {
       };
 
       await db.add(dbData);
+
+      if (cloud) {
+        add([dbData]);
+      }
 
       onClose();
       setText('');
