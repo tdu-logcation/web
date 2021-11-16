@@ -11,11 +11,19 @@ export interface Rank {
   number_of_logs: number;
 }
 
-export interface CloudLog {
-  id: string;
+export interface SendCloudLog {
   date: string;
   campus: string;
   log_type: string;
   label: string;
   code: string;
+}
+
+export interface SendData {
+  id: string;
+  logs: SendCloudLog[];
+}
+
+export interface CloudLog extends SendCloudLog {
+  id: string;
 }

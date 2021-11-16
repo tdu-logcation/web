@@ -14,10 +14,10 @@ const useSync = (): [boolean, (id: string) => void] => {
   const setCloud = useSetRecoilState(isCloud);
   const setUser = useSetRecoilState(userInfo);
 
-  const _sync = async (id: string) => {
+  const _sync = async (id: string, handler: () => void) => {
     await db.openDB();
 
-    const cloudLogs = await api.getLogs(id);
+    const cloudLogs = await api.getLogs(id, handler);
     const localLogs = await db.getAll();
 
     const localNotFoundLogs: DBLog[] = [];
@@ -42,14 +42,14 @@ const useSync = (): [boolean, (id: string) => void] => {
     }
 
     await db.addMulti(localNotFoundLogs);
-
-    for (const element of cloudNotFoundLogs) {
-      await api.addLog(id, element);
-    }
+    await api.addLog(id, cloudNotFoundLogs, handler);
   };
 
   const sync = (id: string) => {
-    _sync(id)
+    _sync(id, () => {
+      setCloud(false);
+      setUser(null);
+    })
       .then(() => {
         setSuccess(true);
       })

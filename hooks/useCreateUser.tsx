@@ -15,12 +15,22 @@ const useCreateUser = () => {
   const create = (userName: string) => {
     setLoad(true);
     const api = new API();
-    api.createAccount(userName).then(res => {
-      getUserInfoById(res);
-      setCloud(true);
-      sync(res);
-      setLoad(false);
-    });
+    api
+      .createAccount(userName)
+      .then(res => {
+        getUserInfoById(res);
+        setCloud(true);
+        sync(res);
+        setLoad(false);
+      })
+      .catch(error => {
+        toast({
+          title: 'アカウントを作成できませんでした',
+          description: (error as ErrorEvent).message,
+          status: 'error',
+          isClosable: true,
+        });
+      });
   };
 
   return [create];

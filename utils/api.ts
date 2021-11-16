@@ -1,4 +1,10 @@
-import {UserInfo, Rank, CloudLog} from '../@types/cloud';
+import {
+  UserInfo,
+  Rank,
+  CloudLog,
+  SendCloudLog,
+  SendData,
+} from '../@types/cloud';
 import {DBLog} from '../@types/log';
 import {LogCampus, LogType} from '../@types/log';
 
@@ -10,21 +16,21 @@ export default class API {
 
   public async createAccount(userName: string): Promise<string> {
     const option = this.fetchOption('POST');
-    option['body'] = `user_name=${userName}`;
+    option.body = `user_name=${userName}`;
 
     const res = await fetch(this.userApi, option);
-    await this.checkStatus(res);
+    await this.checkStatus(res, () => {});
 
     return (await res.json())['id'];
   }
 
-  public async getUserInfo(id: string): Promise<UserInfo> {
+  public async getUserInfo(id: string, handler: () => void): Promise<UserInfo> {
     const option: RequestInit = {
       method: 'GET',
     };
 
     const res = await fetch(`${this.userApi}?id=${id}`, option);
-    await this.checkStatus(res);
+    await this.checkStatus(res, handler);
 
     const resJson = await res.json();
     const userInfo: UserInfo = {
@@ -38,13 +44,13 @@ export default class API {
     return userInfo;
   }
 
-  public async changeName(id: string, userName: string) {
+  public async changeName(id: string, userName: string, handler: () => void) {
     const option = this.fetchOption('POST');
-    option['body'] = `id=${id}&user_name=${userName}`;
+    option.body = `id=${id}&user_name=${userName}`;
 
     const res = await fetch(this.userApi, option);
 
-    await this.checkStatus(res);
+    await this.checkStatus(res, handler);
   }
 
   public async deleteUser(id: string) {
@@ -52,32 +58,51 @@ export default class API {
 
     const res = await fetch(`${this.userApi}?id=${id}`, option);
 
-    await this.checkStatus(res);
+    await this.checkStatus(res, () => {});
   }
 
   public async rank(): Promise<Rank[]> {
     const option = this.fetchOption('GET');
 
     const res = await fetch(`${this.api}/rank`, option);
-    await this.checkStatus(res);
+    await this.checkStatus(res, () => {});
 
     return (await res.json()) as Rank[];
   }
 
-  public async addLog(id: string, log: DBLog) {
+  public async addLog(id: string, logs: DBLog[], handler: () => void) {
+    const formattedLogs = logs.map<SendCloudLog>(v => {
+      const log: SendCloudLog = {
+        date: v.date.toISOString(),
+        campus: v.campus,
+        log_type: `${v.type}`,
+        label: v.label,
+        code: v.code,
+      };
+
+      return log;
+    });
+
+    const sendData: SendData = {
+      id: id,
+      logs: formattedLogs,
+    };
+
     const option = this.fetchOption('POST');
-    option['body'] = `id=${id}&date=${log.date.toISOString()}&campus=${
-      log.campus
-    }&log_type=${log.type}&code=${log.code}`;
+    option.headers = {
+      'Content-Type': 'application/json',
+    };
+
+    option.body = JSON.stringify(sendData);
 
     const res = await fetch(this.logApi, option);
-    await this.checkStatus(res);
+    await this.checkStatus(res, handler);
   }
 
-  public async getLogs(id: string): Promise<DBLog[]> {
+  public async getLogs(id: string, handler: () => void): Promise<DBLog[]> {
     const option = this.fetchOption('GET');
     const res = await fetch(`${this.logApi}?id=${id}`, option);
-    await this.checkStatus(res);
+    await this.checkStatus(res, handler);
 
     const contents = (await res.json()) as CloudLog[];
     const logs: DBLog[] = [];
@@ -95,8 +120,11 @@ export default class API {
     return logs;
   }
 
-  private async checkStatus(res: Response) {
+  private async checkStatus(res: Response, handler: () => void) {
     if (!res.ok) {
+      if (res.status === 400) {
+        handler();
+      }
       throw new Error(`${res.status}: ${(await res.text()) || 'No Text'}`);
     }
   }

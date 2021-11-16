@@ -13,16 +13,16 @@ const useGetUserInfo = () => {
     const api = new API();
 
     api
-      .getUserInfo(_userInfo.id)
+      .getUserInfo(_userInfo.id, () => {
+        setCloud(false);
+        setUserInfo(null);
+      })
       .then(info => {
         setUserInfo(info);
 
         return info;
       })
       .catch(() => {
-        // TODO: 改善
-        setCloud(false);
-        setUserInfo(null);
         toast({
           title: 'ログアウトしました',
           status: 'info',
@@ -35,16 +35,16 @@ const useGetUserInfo = () => {
     const api = new API();
 
     api
-      .getUserInfo(id)
+      .getUserInfo(id, () => {
+        setCloud(false);
+        setUserInfo(null);
+      })
       .then(info => {
         setUserInfo(info);
 
         return info;
       })
       .catch(() => {
-        // TODO: 改善
-        setCloud(false);
-        setUserInfo(null);
         toast({
           title: 'ログアウトしました',
           status: 'info',
