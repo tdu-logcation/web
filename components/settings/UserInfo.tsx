@@ -84,7 +84,9 @@ const UserInfo = () => {
             <UnorderedList>
               <ListItem>ユーザ名: {_userInfo?.name}</ListItem>
               <ListItem>ユーザID: {_userInfo?.id}</ListItem>
-              <ListItem>作成日: {_userInfo?.createDate}</ListItem>
+              <ListItem>
+                作成日: {formatDate(new Date(_userInfo?.createDate), false)}
+              </ListItem>
               <ListItem>
                 更新日: {formatDate(_userInfo?.updateDate, false)}
               </ListItem>
