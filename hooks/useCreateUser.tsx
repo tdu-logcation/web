@@ -12,7 +12,7 @@ const useCreateUser = () => {
   const setLoad = useSetRecoilState(LoadState);
   const [, sync] = useSync();
 
-  const create = (userName: string) => {
+  const create = (userName: string, endHandler: () => void) => {
     setLoad(true);
     const api = new API();
     api
@@ -22,6 +22,8 @@ const useCreateUser = () => {
         setCloud(true);
         sync(res);
         setLoad(false);
+
+        endHandler();
       })
       .catch(error => {
         toast({

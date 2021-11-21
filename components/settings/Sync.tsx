@@ -22,12 +22,15 @@ import {
   Input,
   Text,
   Checkbox,
+  Textarea,
+  Flex,
+  useClipboard,
 } from '@chakra-ui/react';
 import {colors} from '../../utils/colors';
 import {IoSyncOutline} from 'react-icons/io5';
 import React from 'react';
 import {isCloud, userInfo} from '../../utils/recoilAtoms';
-import {useRecoilState, useSetRecoilState} from 'recoil';
+import {useRecoilState} from 'recoil';
 import useCreateUser from '../../hooks/useCreateUser';
 import useLoginUser from '../../hooks/useLoginUser';
 import useDeleteUser from '../../hooks/useDeleteUser';
@@ -41,6 +44,11 @@ const Sync = () => {
     onOpen: onOpenLogout,
     onClose: onCloseLogout,
   } = useDisclosure();
+  const {
+    isOpen: isOpenShowId,
+    onOpen: onOpenShowId,
+    onClose: onCloseShowId,
+  } = useDisclosure();
   const [userName, setUserName] = React.useState('');
   const [userNameState, setUserNameState] = React.useState(false);
   const [startOk, setStartOk] = React.useState(false);
@@ -48,7 +56,8 @@ const Sync = () => {
   const [createUser] = useCreateUser();
   const [loginUser] = useLoginUser();
   const [logoutUser] = useDeleteUser();
-  const setUserInfo = useSetRecoilState(userInfo);
+  const [user, setUserInfo] = useRecoilState(userInfo);
+  const {onCopy} = useClipboard(user?.id);
 
   const handleChange = () => {
     if (!cloud) {
@@ -81,7 +90,10 @@ const Sync = () => {
     if (isLogin) {
       loginUser(userName);
     } else {
-      createUser(userName);
+      createUser(userName, () => {
+        // ユーザにID保存を促すモーダルを表示
+        onOpenShowId();
+      });
     }
   };
 
@@ -211,6 +223,52 @@ const Sync = () => {
               color={colors('textPrimary')}
               variant="ghost"
               onClick={onCloseLogout}
+            >
+              閉じる
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Modal
+        isOpen={isOpenShowId}
+        onClose={onCloseShowId}
+        isCentered
+        motionPreset="slideInBottom"
+        size="sm"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>IDを保管してください</ModalHeader>
+          <ModalCloseButton size="lg" />
+          <ModalBody>
+            <Text>
+              IDはほかデバイスでログインする際や、再度ログインする場合に必要になります。
+              <br />
+              忘れてしまうとログインできなくなってしまうため、
+              <Text as="span" fontWeight="bold" textDecoration="underline">
+                大切に保管
+              </Text>
+              してください。
+              <br />
+              （IDは設定からいつでもコピーすることができます。）
+            </Text>
+            <Flex marginTop="1rem" alignItems="center">
+              <Textarea value={user ? user.id : 'Loading...'} resize="none" />
+              <Button
+                backgroundColor={colors('mainPrimary')}
+                onClick={onCopy}
+                size="sm"
+                marginLeft=".5rem"
+              >
+                コピー
+              </Button>
+            </Flex>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color={colors('textPrimary')}
+              variant="ghost"
+              onClick={onCloseShowId}
             >
               閉じる
             </Button>
