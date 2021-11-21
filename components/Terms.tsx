@@ -7,6 +7,7 @@ import {
   ListItem,
   OrderedList,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 
 const Header: React.FC = ({children}) => {
   return (
@@ -24,7 +25,7 @@ const TermsBody = () => {
   return (
     <OtherPage title="利用規約">
       <Center>
-        <Box width={['95%', '90%', '50%']}>
+        <Box width={['99%', '90%', '50%']}>
           <Header>はじめに</Header>
           <Body>
             この利用規約（以下、「本規約）は、tdu-logcationプロジェクト（以下、「当プロジェクト」）が運営するLogcation（以下、「本サービス」）のクラウド同期を利用するうえでの利用条件を定めるものです。
@@ -77,7 +78,7 @@ const TermsBody = () => {
           <Body>
             ユーザーは、本サービスの利用にあたり、以下の行為をしてはなりません。
           </Body>
-          <OrderedList>
+          <OrderedList marginTop="1rem">
             <ListItem>法令または公序良俗に違反する行為</ListItem>
             <ListItem>犯罪行為に関連する行為</ListItem>
             <ListItem>
@@ -185,11 +186,19 @@ const TermsBody = () => {
           <Body>
             当プロジェクトは、必要と判断した場合には、ユーザーに通知することなくいつでも本規約を変更することができるものとします。なお、本規約の変更後、本サービスの利用を開始した場合には、当該ユーザーは変更後の規約に同意したものとみなします。
           </Body>
-          <Header>第12条（権利義務の譲渡の禁止）</Header>
+          <Header>第12条（個人情報の取扱い）</Header>
+          <Body>
+            当プロジェクトは、本サービスの利用によって取得する個人情報については、当プロジェクト「
+            <Text as="span" textDecoration="underline">
+              <Link href="/privacy">プライバシーポリシー</Link>
+            </Text>
+            」に従い適切に取り扱うものとします。
+          </Body>
+          <Header>第13条（権利義務の譲渡の禁止）</Header>
           <Body>
             ユーザーは、当プロジェクトの書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務を第三者に譲渡し、または担保に供することはできません。
           </Body>
-          <Header>第13条（準拠法・裁判管轄）</Header>
+          <Header>第14条（準拠法・裁判管轄）</Header>
           <OrderedList>
             <ListItem>
               本規約の解釈にあたっては、日本法を準拠法とします。

@@ -138,7 +138,7 @@ const Sync = () => {
               isInvalid={userNameState}
             />
             <Switch
-              marginY=".5rem"
+              marginY="1rem"
               onChange={() => {
                 setIsLogin(v => !v);
                 setUserName('');
@@ -147,14 +147,21 @@ const Sync = () => {
             >
               IDを入力してログインする
             </Switch>
-            <Checkbox isChecked={startOk} onChange={() => setStartOk(!startOk)}>
+            <Checkbox
+              isChecked={startOk}
+              onChange={() => setStartOk(!startOk)}
+              marginTop=".5rem"
+              size="lg"
+            >
               <Link href="/terms">
-                <Text
-                  fontWeight="bold"
-                  as="span"
-                  _hover={{textDecoration: 'underline'}}
-                >
+                <Text fontWeight="bold" as="span" textDecoration="underline">
                   利用規約
+                </Text>
+              </Link>
+              と
+              <Link href="/privacy">
+                <Text fontWeight="bold" as="span" textDecoration="underline">
+                  プライバシーポリシー
                 </Text>
               </Link>
               に同意する

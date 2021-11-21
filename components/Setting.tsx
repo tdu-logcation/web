@@ -19,6 +19,7 @@ import {
   IoLogoGithub,
   IoBugOutline,
   IoStarOutline,
+  IoLockClosedOutline,
 } from 'react-icons/io5';
 import {HiExternalLink} from 'react-icons/hi';
 import {colors} from '../utils/colors';
@@ -74,6 +75,15 @@ export const Setting = () => {
             <Flex>
               <ListIcon as={IoStarOutline} color={colors('mainSecondly')} />
               <Link href="/terms">クラウド同期利用規約</Link>
+            </Flex>
+          </ListItem>
+          <ListItem>
+            <Flex>
+              <ListIcon
+                as={IoLockClosedOutline}
+                color={colors('mainSecondly')}
+              />
+              <Link href="/privacy">クラウド同期プライバシーポリシー</Link>
             </Flex>
           </ListItem>
           <ListItem>
