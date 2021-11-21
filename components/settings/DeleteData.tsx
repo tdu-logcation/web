@@ -17,15 +17,18 @@ import {
   ModalFooter,
   useToast,
 } from '@chakra-ui/react';
-import {useRecoilState} from 'recoil';
-import {logState} from '../../utils/recoilAtoms';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {logState, isCloud} from '../../utils/recoilAtoms';
 import {colors} from '../../utils/colors';
 import {DB} from '../../utils/db';
+import useDeleteUser from '../../hooks/useDeleteUser';
 
 export const DeleteData = () => {
   const [log, setLog] = useRecoilState(logState);
   const {isOpen, onOpen, onClose} = useDisclosure();
   const toast = useToast();
+  const cloud = useRecoilValue(isCloud);
+  const [deleteUser] = useDeleteUser();
 
   const deleteLog = async () => {
     const db: DB = new DB('log');
@@ -36,8 +39,11 @@ export const DeleteData = () => {
       setLog([]);
     }
 
-    if ((await db.count()) !== 0) {
+    if ((await db.count()) !== 0 || cloud) {
       await db.deleteDB();
+      if (cloud) {
+        deleteUser();
+      }
 
       toast({
         title: '完全に削除しました',
@@ -72,6 +78,7 @@ export const DeleteData = () => {
           <ModalHeader>本当に削除しますか？</ModalHeader>
           <ModalCloseButton size="lg" />
           <ModalBody color={colors('textSecondly')}>
+            {cloud && 'ローカルと、クラウド上のデータもすべて削除されます。'}
             この操作は元には戻せません。
           </ModalBody>
 

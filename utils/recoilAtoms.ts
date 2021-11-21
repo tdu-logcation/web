@@ -7,6 +7,7 @@
 import {atom, DefaultValue} from 'recoil';
 import {Log, DBLog} from '../@types/log';
 import {tableInit, maxDay} from './table';
+import {UserInfo} from '../@types/cloud';
 
 const localStorageEffect =
   (key: string) =>
@@ -197,4 +198,30 @@ export const version = atom<string>({
   key: 'version',
   default: '',
   effects_UNSTABLE: [localStorageEffect('version')],
+});
+
+/**
+ * クラウド同期しているか
+ */
+export const isCloud = atom<boolean>({
+  key: 'isCloud',
+  default: false,
+  effects_UNSTABLE: [localStorageEffect('isCloud')],
+});
+
+/**
+ * クラウドのユーザ情報
+ */
+export const userInfo = atom<UserInfo>({
+  key: 'userInfo',
+  default: null,
+  effects_UNSTABLE: [localStorageEffect('userInfo')],
+});
+
+/**
+ * ロード画面
+ */
+export const LoadState = atom<boolean>({
+  key: 'load',
+  default: false,
 });

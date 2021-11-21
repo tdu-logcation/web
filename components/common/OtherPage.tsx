@@ -20,16 +20,20 @@ import Link from 'next/link';
 import {useRecoilState} from 'recoil';
 import {useCameraState, qrReadState} from '../../utils/recoilAtoms';
 
-export const OtherPage: React.FC<{title: string}> = props => {
+export const OtherPage: React.FC<{
+  title: string;
+  size?: string;
+  marginLeft?: string;
+}> = props => {
   return (
     <React.Fragment>
       <Center marginBottom="2rem">
         <Flex width="20rem">
           <Box display="flex" justifyContent="center" alignItems="center">
             <Text
-              fontSize="1.3rem"
+              fontSize={props.size || '1.3rem'}
               fontWeight="bold"
-              marginLeft="1.2rem"
+              marginLeft={props.marginLeft || '1.2rem'}
               color={colors('textPrimary')}
             >
               {props.title}
